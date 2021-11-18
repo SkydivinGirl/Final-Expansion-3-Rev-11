@@ -1,0 +1,404 @@
+Name            FinalExpansion;
+Partno          fe3;
+Revision        032;
+Date            22/09/09;
+Designer        Winkler;
+Company         private;
+Location        None;
+Assembly        None;
+Device          f1504plcc44;
+
+
+
+PROPERTY ATMEL { preassign=keep }; /* Keep pin pre-assignments */
+/*Property Atmel {Pin_Keep = ON};*/
+PROPERTY ATMEL {JTAG=OFF};
+
+
+ 
+/*------------ Data Port, Input / Output */
+
+pin 28 = D0;			/* Data Port */
+pin 26 = D1;			/* Data Port */
+pin 24 = D2;			/* Data Port */
+pin 21 = D3;			/* Data Port */
+pin 25 = D4;			/* Data Port */
+pin 27 = D5;			/* Data Port */
+pin 29 = D6;			/* Data Port */
+pin 32 = D7;			/* Data Port */
+
+
+
+/*------------ Inputs */
+
+pin 16 = Blk1;		/* Block 1 */
+pin 14 = Blk2;		/* Block 2 */
+pin 13 = Blk3;		/* Block 3 */
+pin 12 = Blk5;		/* Block 5 */
+
+
+pin 43 = S02;			/* PHI2 */
+pin 1  = Reset;		/* /Reset */
+
+pin 6  = C_RW;		/* CPU R/W */
+pin 4  = IO;			/* IO select 3 */
+
+pin 11 = RAM1;		/* RAM select 1 */
+pin 9  = RAM2;		/* RAM select 2 */
+pin 8  = RAM3;		/* RAM select 3 */
+
+pin 17 = A0;			/* Register select */
+pin 18 = A1;			/* Register select */
+
+
+/*------------ Outputs */
+
+pin 33 = WE;			/* WRITE ENABLE */
+
+pin 20 = EE_CS;		/* EEPROM /CE */
+pin 19 = EE_OE;		/* EEPROM /OE */
+
+pin 31 = RAM_CS;		/* SRAM /CS */
+
+pin 34 = A13;			/* EEPROM A13, SRAM A13 */
+pin 38 = A14;			/* EEPROM A14, SRAM A14 */
+pin 37 = A15;			/* EEPROM A15, SRAM A15 */
+pin 41 = A16;			/* EEPROM A16, SRAM A16 */
+pin 36 = A17;			/* EEPROM A17, SRAM A17 */
+pin 39 = A18;			/* EEPROM A18, SRAM A18 */
+
+pin 7  = GS;			/* driver enable */
+
+
+
+
+	/* JTAG pins: 7,13,32,38 */
+
+
+/*------------ Nodes */
+
+
+/*NODE [La0..7];*/
+
+
+/* FLOORPLAN 1504
+       S02 D0  D1  D2  D3  D4  D5  D6  D7    
+PinNo  43  28  26  24  21  25  26  29  28
+MCell  --  40  36  33  17  35  37  41  48
+BNode  --- 640 636 633 617 635 637 641 648
+FoldB  --- 340 336 333 317 335 337 641 348
+*/
+
+
+
+/* REGISTER A */
+NODE La0;
+NODE La1;
+NODE La2;
+NODE La3;
+NODE La4;
+NODE La5;
+NODE La6;
+NODE La7;
+
+
+
+/*------------ equations */
+
+
+_Clk	  = !S02;
+
+_Write   = !C_RW;
+_Read    = C_RW;
+
+
+FIELD  _Data  = [D7..D0];
+FIELD  _Latch = [La7..La0];
+
+
+/* START IO LOCK */
+NODE LockBit;
+
+
+/* REGISTER B */
+NODE Lb0;
+NODE Lb1;
+NODE Lb2;
+NODE Lb3;
+NODE Lb4;
+NODE Lb5;
+NODE Lb6;
+NODE Lb7;
+
+
+
+
+
+/* ------------- INTERNAL REGISTER 1 -----------*/
+/* B5-7: 000=Start Mode	   			*/
+/*	  001=Flash Mode				*/
+/*	  010=Super ROM,				*/
+/*	  011=RAM/ROM,				*/
+/* 	  100=RAM 1,					*/
+/* 	  110=RAM 2,					*/
+/*       101=Super RAM,				*/
+/*       						*/
+/* Super ROM, Super RAM:				*/
+/* B0-4: EPROM A15-A19	 			*/
+/*       						*/
+/* Super ROM write ==> RAM bank 1			*/
+/*       						*/
+/*       						*/
+/* RAM1,RAM2,RAM/ROM:				*/
+/* B4: 1=Mode BLK5	 				*/
+/* B3: 1=Mode BLK3	 				*/
+/* B2: 1=Mode BLK2	 				*/
+/* B1: 1=Mode BLK1	 				*/
+/* B0: 1=write protect LORAM 			*/
+/*       						*/
+/* RAM1: 0=bank1, 1=read:bank1,write:bank2	*/
+/*       						*/
+/* RAM2: 0=bank1, 1=read:bank2,write:bank1	*/
+/*       						*/
+/* RAM/ROM: 0=RAM bank1, 				*/
+/*	     1=read ROM:bank0,write RAM:bank2	*/
+
+
+/* ------------- INTERNAL REGISTER 2 -----------*/
+/* B7: 1=IO lock (register invisible)		*/
+/* B6: 1=inverts A14          			*/
+/* B5: 1=inverts A13          			*/
+/* B4: 1=disable BLK5	 			*/
+/* B3: 1=disable BLK3	 			*/
+/* B2: 1=disable BLK2	 			*/
+/* B1: 1=disable BLK1	 			*/
+/* B0: 1=disable LORAM 				*/
+
+
+
+
+/* MODE SELECTION BY LATCH */
+Mod_START	= (!La7  & !La6  & !La5);      /*   0 / x00 */
+Mod_FLASH	= (!La7  & !La6  &  La5);      /*  32 / x20 */
+Mod_SROM	= (!La7  &  La6  & !La5);      /*  64 / x40 */
+Mod_ROMRAM	= (!La7  &  La6  &  La5);      /*  96 / x60 */
+
+Mod_RAM1	= ( La7  & !La6  & !La5);      /* 128 / x80 */
+Mod_RAM2	= ( La7  &  La6  & !La5);      /* 196 / xA0 */
+Mod_SRAM	= ( La7  & !La6  &  La5);      /* 144 / xC0 */
+
+
+
+Node _Lock;
+Node _Block_sel;
+
+
+
+Node _ROM;
+Node _RAM;
+
+Node Lsel;
+
+
+Node _banking;
+Node _bank0;
+Node _bank1;
+Node _bank2;
+
+
+
+
+/* BLOCK SELECT */
+_Blk0 = ((!RAM1 # !RAM2 # !RAM3) & !Lb0);
+_Blk1 = (!Blk1 & !Lb1);
+_Blk2 = (!Blk2 & !Lb2);
+_Blk3 = (!Blk3 & !Lb3);
+_Blk5 = (!Blk5 & !Lb4);
+
+
+/* LOCK BIT RULE */
+LockBit.d = _Read;
+LockBit.ck = _Blk5;
+LockBit.ap = !Reset;
+
+
+
+_Lock = (LockBit & Mod_START) # Lb7;
+
+
+
+
+
+/* BUS Register enable */
+Lsel = (!IO & !_Lock & A1 & Reset);
+LAsel = (Lsel & !A0);
+LBsel = (Lsel &  A0);
+
+LAce = LAsel & _Write;
+LAoe = LAsel & _Read & S02;
+
+LBce = LBsel & _Write;
+LBoe = LBsel & _Read & S02;
+
+
+
+/* BUS Register Read Back */
+[D0..D7]	= ([La0..La7] & LAoe) # ([Lb0..Lb7] & LBoe);
+[D0..D7].oe	= LAoe # LBoe;
+
+
+/* Write Register */
+[La0..La7].d		= [D0..D7].io;
+[La0..La7].ce		= LAce;
+[La0..La7].ck		= _Clk;			/* falling edge */
+[La0..La7].ar		= !Reset;
+
+[Lb0..Lb7].d		= [D0..D7].io;
+[Lb0..Lb7].ce		= LBce;
+[Lb0..Lb7].ck		= _Clk;			/* falling edge */
+[Lb0..Lb7].ar		= !Reset;
+
+
+
+
+/* full 8 KB block */
+_Block_sel = (_Blk1 # _Blk2 # _Blk3 # _Blk5); 
+
+
+/* MEMORY MODE */
+_mod_banking	= ((Mod_SROM & _Read) # Mod_FLASH # Mod_SRAM);
+_banking	= (_mod_banking & _Block_sel);
+_bank0 	= (_Blk0 & !Mod_START);
+
+
+
+
+/* BLK0 write enable */
+_WE_L		= ((!La0 # _mod_banking) & _bank0);
+
+
+
+
+/* BLK1-5 mode select */
+Node _SE_H;
+Node _NSE_H;
+
+_SE_1		= (La1 & _Blk1);
+_SE_2		= (La2 & _Blk2);
+_SE_3		= (La3 & _Blk3);
+_SE_5		= (La4 & _Blk5);
+_SE_H		= (_SE_1 # _SE_2 # _SE_3 # _SE_5);
+
+_NSE_1		= (!La1 & _Blk1);
+_NSE_2		= (!La2 & _Blk2);
+_NSE_3		= (!La3 & _Blk3);
+_NSE_5		= (!La4 & _Blk5);
+_NSE_H		= (_NSE_1 # _NSE_2 # _NSE_3 # _NSE_5);
+
+
+
+_SEL_1A	= _NSE_H & (
+		  (Mod_ROMRAM) #
+		  (Mod_RAM1) #
+		  (Mod_RAM2));
+
+_SEL_1B	= _SE_H & (
+		  (Mod_RAM1 & !_Write) #
+		  (Mod_RAM2 & !_Read));
+
+_SEL_1C	=  _Block_sel & (
+		  (Mod_SROM & _Write) #
+		  (Mod_START & _Write));
+
+
+_SEL_2		= _SE_H & (
+		  (Mod_ROMRAM & _Write) #
+		  (Mod_RAM1 & _Write) #
+		  (Mod_RAM2 & _Read));
+
+
+
+_bank1		= _SEL_1A # _SEL_1B # _SEL_1C;
+_bank2		= _SEL_2;
+
+
+
+
+/* ROM select */
+_ROM_R		= (Mod_SROM # (Mod_START & _Blk5) # (_SE_H & Mod_ROMRAM));
+_ROM   	= (((_ROM_R & _Read) # Mod_FLASH) & _Block_sel);
+
+
+
+/* RAM select */
+_RAM_0 	= ((_bank0 & _Read) # (_WE_L &  _Write));
+_RAM_1 	= (_bank1 # _bank2);
+_RAM_2 	= (Mod_SRAM & _Block_sel);
+_RAM_3 	= (Mod_SROM & _Block_sel & _Write);
+_RAM 		= (_RAM_0 # _RAM_1 # _RAM_2 # _RAM_3);
+
+
+
+
+
+
+
+/* RAM select */
+_WE		= (_WE_L # _RAM_1 # _RAM_2 # _RAM_3 # (Mod_FLASH & _Block_sel));
+
+
+
+
+
+/* SRAM/EEPROM ADRESS BY LATCH */
+A15		=  (La0 & _banking) # (_bank1);
+A16		=  (La1 & _banking) # (_bank2);
+A17		=  (La2 & _banking);
+A18		=  (La3 & _banking);
+
+
+/* CHIP SELECT DELAY - AVOIDS UNMEANT LOMEM WRITES */
+Node _CS_delay;
+
+_CS_delay     = (_bank0 # (_bank1 & A15) # (_bank2 & A16) # _banking # _ROM);
+
+
+
+
+
+/* Set Outputs: /CS && /WR */
+WE	= !(_Write & _CS_delay & _WE & S02);
+
+RAM_CS	= !(_RAM & _CS_delay & S02);
+
+EE_CS	= !(_ROM & _CS_delay & S02);
+EE_OE	= !(_ROM & _Read & S02); 
+
+
+GS	= !(_RAM # _ROM # Lsel);
+
+
+/* Set A13 and A14 */
+_B0 = !Blk1;
+_B1 = !Blk2;
+_B2 = !Blk3;
+_B3 = !Blk5;
+
+
+Node _A13;
+Node _A14;
+
+A13 = _A13 $ Lb5;
+A14 = _A14 $ Lb6;
+
+
+FIELD  _CMP   = [_B3..0];
+FIELD  ADR_DE = [_A14,_A13];
+
+
+ADR_DE =		(_CMP:1	&	['b'0,'b'0] )
+		#	(_CMP:2	&	['b'0,'b'1] )
+		#	(_CMP:4	&	['b'1,'b'0] )
+		#	(_CMP:8	&	['b'1,'b'1] )
+		;
+

@@ -1,0 +1,7 @@
+/* Copyright Information
+	 * @author	Tim Düsterhus
+	 * @copyright	2012-2014 Tim Düsterhus
+	 * @license	BSD 3-Clause License <http://opensource.org/licenses/BSD-3-Clause>
+	 * @package	be.bastelstu.wcf.nodePush
+ */
+(function(){!function(n,e){"use strict";var t,o,s,u,c,i,r,a,l,d;return o={log:function(n){},warn:function(n){},error:function(n){}},l=null,t=!1,c=!1,s={connect:n.Callbacks(),disconnect:n.Callbacks(),message:{}},u=function(n){return c?void 0:(c=!0,o.log("Initializing nodePush"),be.bastelstu.wcf.push.init(be.bastelstu.wcf.nodePush),null==e.io?void o.error("nodePush not available, aborting"):(l=e.io(n),l.on("connect",function(){return o.log("Connected to nodePush"),l.emit("userID",WCF.User.userID)}),l.on("authenticated",function(){return o.log("Exchanged userID with nodePush"),t=!0,s.connect.fire()}),l.on("disconnect",function(){return t=!1,o.warn("Lost connection to nodePush"),s.disconnect.fire()}),l.on("message",function(n){return null!=s.message[n]?s.message[n].fire():void 0})))},i=function(e){return n.isFunction(e)?(s.connect.add(e),t&&setTimeout(function(){return e()},0),!0):!1},r=function(e){return n.isFunction(e)?(s.disconnect.add(e),!0):!1},a=function(e,t){var o;return n.isFunction(t)&&/^[a-zA-Z0-9-_]+\.[a-zA-Z0-9-_]+(\.[a-zA-Z0-9-_]+)+$/.test(e)?(null==(o=s.message)[e]&&(o[e]=n.Callbacks()),s.message[e].add(t),!0):!1},null==e.be&&(e.be={}),null==be.bastelstu&&(be.bastelstu={}),null==(d=be.bastelstu).wcf&&(d.wcf={}),be.bastelstu.wcf.nodePush={init:u,onConnect:i,onDisconnect:r,onMessage:a}}(jQuery,this)}).call(this);

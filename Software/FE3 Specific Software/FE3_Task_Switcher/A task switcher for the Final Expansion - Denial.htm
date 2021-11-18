@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>A task switcher for the Final Expansion - Denial</title>
+
+	<link rel="alternate" type="application/atom+xml" title="Feed - Denial" href="http://sleepingelephant.com/ipw-web/bulletin/bb/feed.php">			<link rel="alternate" type="application/atom+xml" title="Feed - New Topics" href="http://sleepingelephant.com/ipw-web/bulletin/bb/feed.php?mode=topics">		<link rel="alternate" type="application/atom+xml" title="Feed - Forum - Programming" href="http://sleepingelephant.com/ipw-web/bulletin/bb/feed.php?f=2">	<link rel="alternate" type="application/atom+xml" title="Feed - Topic - A task switcher for the Final Expansion" href="http://sleepingelephant.com/ipw-web/bulletin/bb/feed.php?f=2&amp;t=4834">
+	<link rel="canonical" href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?t=4834">
+
+<!--
+	phpBB style name: prosilver
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:
+-->
+
+<link href="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/print.css" rel="stylesheet" type="text/css" media="print" title="printonly">
+<link href="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/stylesheet.css" rel="stylesheet" type="text/css" media="screen, projection">
+<link href="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/stylesheet_002.css" rel="stylesheet" type="text/css" media="screen, projection">
+<link href="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/responsive.css" rel="stylesheet" type="text/css" media="only screen and (max-width: 700px), only screen and (max-device-width: 700px)">
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/prosilver/theme/tweaks.css?assets_version=9" rel="stylesheet" type="text/css" media="screen, projection" />
+<![endif]-->
+
+
+
+
+
+<script>try {  for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){    var lastpass_f = document.forms[lastpass_iter];    if(typeof(lastpass_f.lpsubmitorig)=="undefined"){      if (typeof(lastpass_f.submit) == "function") {        lastpass_f.lpsubmitorig = lastpass_f.submit;        lastpass_f.submit = function(){          var form = this;          try {            if (document.documentElement && 'createEvent' in document)            {              var forms = document.getElementsByTagName('form');              for (var i=0 ; i<forms.length ; ++i)                if (forms[i]==form)                {                  var element = document.createElement('lpformsubmitdataelement');                  element.setAttribute('formnum',i);                  element.setAttribute('from','submithook');                  document.documentElement.appendChild(element);                  var evt = document.createEvent('Events');                  evt.initEvent('lpformsubmit',true,false);                  element.dispatchEvent(evt);                  break;                }            }          } catch (e) {}          try {            form.lpsubmitorig();          } catch (e) {}        }      }    }  }} catch (e) {}</script></head>
+<body id="phpbb" class="notouch section-viewtopic ltr hasjs">
+
+
+<div id="wrap">
+	<a id="top" class="anchor" accesskey="t"></a>
+	<div id="page-header">
+		<div class="headerbar" role="banner">
+			<div class="inner">
+
+			<div id="site-description">
+				<a id="logo" class="logo" href="http://sleepingelephant.com/denial/" title="Home"><span class="imageset site_logo"></span></a>
+				<h1>Denial</h1>
+				<p>The Commodore Vic 20 Forum</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="./search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" placeholder="Search…" type="search">
+					<button class="button icon-button search-icon" type="submit" title="Search">Search</button>
+					<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php" class="button icon-button search-adv-icon" title="Advanced search">Advanced search</a>
+					
+				</fieldset>
+				</form>
+			</div>
+			
+			</div>
+		</div>
+				<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="linklist bulletin" role="menubar">
+
+		<li id="quick-links" class="small-icon responsive-menu dropdown-container" data-skip-responsive="true">
+			<a href="#" class="responsive-menu-link dropdown-trigger dropdown-toggle">Quick links</a>
+			<div class="dropdown hidden">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																								<li class="small-icon icon-search-unanswered"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php?search_id=unanswered" role="menuitem">Unanswered posts</a></li>
+						<li class="small-icon icon-search-active"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php?search_id=active_topics" role="menuitem">Active topics</a></li>
+						<li class="separator"></li>
+						<li class="small-icon icon-search"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php" role="menuitem">Search</a></li>
+					
+											<li class="separator"></li>
+												<li class="small-icon icon-team"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=team" role="menuitem">The team</a></li>										<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li class="small-icon icon-faq" data-skip-responsive="true"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/faq.php" rel="help" title="Frequently Asked Questions" role="menuitem">FAQ</a></li>
+						
+			<li class="small-icon icon-logout rightside" data-skip-responsive="true"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/ucp.php?mode=login" title="Login" accesskey="x" role="menuitem">Login</a></li>
+					<li class="small-icon icon-register rightside" data-skip-responsive="true"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/ucp.php?mode=register" role="menuitem">Register</a></li>
+						</ul>
+
+	<ul id="nav-breadcrumbs" class="linklist navlinks" role="menubar">
+						<li class="small-icon icon-home breadcrumbs" style="max-width: 1125px;">
+			<span class="crumb"><a href="http://sleepingelephant.com/denial/" itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-navbar-reference="home" title="Home">Home</a></span>						<span class="crumb"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/index.php" accesskey="h" itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-navbar-reference="index" title="Board index">Board index</a></span>
+											<span class="crumb"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=17" itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="17" title="Technical">Technical</a></span>
+															<span class="crumb"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=2" itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="2" title="Programming">Programming</a></span>
+												</li>
+		
+					<li class="rightside responsive-search" style="display: none;"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php" title="View the advanced search options" role="menuitem">Search</a></li>
+			</ul>
+
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&amp;t=4834">A task switcher for the Final Expansion</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Basic and Machine Language<br></div>
+<p>
+	<strong>Moderator:</strong> <a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=group&amp;g=3608">Moderators</a>
+</p>
+
+
+<div class="action-bar top">
+
+	<div class="buttons">
+		
+			<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/posting.php?mode=reply&amp;f=2&amp;t=4834" class="button icon-button reply-icon" title="Post a reply">
+			Post Reply		</a>
+	
+			</div>
+
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button icon-button tools-icon dropdown-trigger dropdown-select dropdown-toggle"></span>
+		<div class="dropdown hidden">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																								<li class="small-icon icon-print"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&amp;t=4834&amp;view=print" title="Print view" accesskey="p">Print view</a></li>							</ul>
+		</div>
+	</div>
+
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="./search.php">
+			<fieldset>
+				<input class="inputbox search tiny" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" type="search">
+				<button class="button icon-button search-icon" type="submit" title="Search">Search</button>
+				<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php" class="button icon-button search-adv-icon" title="Advanced search">Advanced search</a>
+				<input name="t" value="4834" type="hidden">
+<input name="sf" value="msgonly" type="hidden">
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			3 posts
+							• Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+			<div id="p57696" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57696">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=viewprofile&amp;u=3344" class="username">Kananga</a>							</dt>
+
+			<dd class="profile-rank">Vic 20 Afficionado</dd>
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php?author_id=3344&amp;sr=posts">317</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> Mon Mar 08, 2010 2:11 pm</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57696">
+
+			<h3 class="first"><a href="#p57696">A task switcher for the Final Expansion</a></h3>
+
+									<ul class="post-buttons">
+																																									<li>
+							<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/posting.php?mode=quote&amp;f=2&amp;p=57696" title="Reply with quote" class="button icon-button quote-icon"><span>Quote</span></a>
+						</li>
+														<li class="responsive-menu hidden dropdown-container"><a href="javascript:void(0);" class="responsive-menu-link dropdown-toggle">&nbsp;</a><div class="dropdown hidden"><div class="pointer"><div class="pointer-inner"></div></div><ul class="dropdown-contents"></ul></div></li></ul>
+					
+						<p class="author"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?p=57696#p57696"><span class="imageset icon_post_target" title="Post">Post</span></a><span class="responsive-hide">by <strong><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=viewprofile&amp;u=3344" class="username">Kananga</a></strong> » </span>Thu Oct 14, 2010 8:49 am </p>
+			
+			
+			
+			<div class="content">There are of course more amazing things going 
+on, but here is another small contribution to the growing software pool 
+for the VIC-20:
+<br>
+<br>A task switcher for the VIC-20 &amp; FE3. <a href="http://vin20.googlecode.com/files/fe3ts_r1.zip" class="postlink">Link</a>
+<br>
+<br>(Already announced in the thread "WIP: VIC GUI", but now with more text <img class="smilies" src="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/icon_wink.gif" alt=";-)" title="Wink"> )
+<br>
+<br>--- README ---
+<br>FE3TS allows you to have up to eight virtual environments on your VIC-20 &amp; FE3.
+<br>FE3TS-SV is an example for the supervisor written in BASIC that demonstrates
+<br>how to use the task switcher.
+<br>
+<br>You can:
+<br>* create and reset environments
+<br>* switch between them by using the restore key
+<br>* save the state of an environment
+<br>* load the state of an environment
+<br>
+<br>Everything works fine unless you overwrite the 3K RAM expansion area at $0400-$0FFF.
+<br>
+<br>If the restore handler doesn't work, because the NMI vector was 
+overwritten, just type SYS 1033 to return to the supervisor (environment
+ 0).
+<br>
+<br>
+<br>Usage:
+<br>------
+<br><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><code>LOAD"FE3TS.PRG",8,1<br>NEW<br>LOAD"FE3TS-SV.PRG",8<br>RUN<br></code></div><br><br>Interface to FE3TS:<br>-------------------<br><br><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><code>SYS 1024</code></div><br>    Initialises the environment structures.<br><br><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><code>POKE 780, &lt;nr&gt; : SYS 1027</code></div><br>    Resets environment &lt;nr&gt;. (&lt;nr&gt; between 0..7)<br><br><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><code>POKE 780, &lt;nr&gt; : SYS 1030</code></div><br>
+    Switches to environment &lt;nr&gt;. Before you can switch to an 
+environments other than 0, you have to initialise it with a call to 
+"Reset".<br><br><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><code>SYS 1033</code></div><br>   Switches to environment 0. (Equivalent to POKE 780, 0 : SYS 1030)<br><br><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><code>POKE 780, &lt;nr&gt; : POKE 781, &lt;file&gt; : SYS 1036</code></div><br>
+   Writes environment &lt;nr&gt; to &lt;file&gt;. You have to open a 
+file in write mode before calling this routine and close it afterwards. 
+&lt;file&gt; is the logical file number you chose for your file. You can
+ write more than one environment to one file through successive calls to
+ this routine.<br><br><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><code>POKE 780, &lt;nr&gt; : POKE 781, &lt;file&gt; : SYS 1039</code></div>
+<br>   Reads environment &lt;nr&gt; from &lt;file&gt;. &lt;file&gt; is 
+the logical file number of a file and must be open for reading.</div>
+
+			
+									
+									<div id="sig57696" class="signature">Buy the new Bug-Wizard, the first 100 bugs are free!</div>
+						</div>
+
+		</div>
+
+		<div class="back2top"><a href="#top" class="top" title="Top">Top</a></div>
+
+		</div>
+	</div>
+
+	<hr class="divider">
+				<div id="p57798" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57798">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=viewprofile&amp;u=3111" class="username">Vic20-Ian</a>							</dt>
+
+			<dd class="profile-rank">Vic 20 Nerd</dd>
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php?author_id=3111&amp;sr=posts">843</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> Sun Aug 24, 2008 1:58 pm</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57798">
+
+			<h3><a href="#p57798"></a></h3>
+
+									<ul class="post-buttons">
+																																									<li>
+							<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/posting.php?mode=quote&amp;f=2&amp;p=57798" title="Reply with quote" class="button icon-button quote-icon"><span>Quote</span></a>
+						</li>
+														<li class="responsive-menu hidden dropdown-container"><a href="javascript:void(0);" class="responsive-menu-link dropdown-toggle">&nbsp;</a><div class="dropdown hidden"><div class="pointer"><div class="pointer-inner"></div></div><ul class="dropdown-contents"></ul></div></li></ul>
+					
+						<p class="author"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?p=57798#p57798"><span class="imageset icon_post_target" title="Post">Post</span></a><span class="responsive-hide">by <strong><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=viewprofile&amp;u=3111" class="username">Vic20-Ian</a></strong> » </span>Mon Oct 25, 2010 6:29 am </p>
+			
+			
+			
+			<div class="content">So the VIC now has a kind of unix like virtual console for 8 machines?
+<br>
+<br>If above = true then WOW!</div>
+
+			
+									
+									<div id="sig57798" class="signature">Vic20-Ian
+<br>
+<br>The best things in life are Vic-20
+<br>
+<br>Upgrade all new gadgets and mobiles to 3583 Bytes Free today! Ready</div>
+						</div>
+
+		</div>
+
+		<div class="back2top"><a href="#top" class="top" title="Top">Top</a></div>
+
+		</div>
+	</div>
+
+	<hr class="divider">
+				<div id="p57799" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57799">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=viewprofile&amp;u=3344" class="username">Kananga</a>							</dt>
+
+			<dd class="profile-rank">Vic 20 Afficionado</dd>
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="http://sleepingelephant.com/ipw-web/bulletin/bb/search.php?author_id=3344&amp;sr=posts">317</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> Mon Mar 08, 2010 2:11 pm</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57799">
+
+			<h3><a href="#p57799"></a></h3>
+
+									<ul class="post-buttons">
+																																									<li>
+							<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/posting.php?mode=quote&amp;f=2&amp;p=57799" title="Reply with quote" class="button icon-button quote-icon"><span>Quote</span></a>
+						</li>
+														<li class="responsive-menu hidden dropdown-container"><a href="javascript:void(0);" class="responsive-menu-link dropdown-toggle">&nbsp;</a><div class="dropdown hidden"><div class="pointer"><div class="pointer-inner"></div></div><ul class="dropdown-contents"></ul></div></li></ul>
+					
+						<p class="author"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?p=57799#p57799"><span class="imageset icon_post_target" title="Post">Post</span></a><span class="responsive-hide">by <strong><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=viewprofile&amp;u=3344" class="username">Kananga</a></strong> » </span>Mon Oct 25, 2010 11:39 am </p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Vic20-Ian wrote:</cite>So the VIC now has a kind of unix like virtual console for 8 machines?</div></blockquote>
+<br>Sorry, but no. It is neither multi-tasking nor multi-user.
+<br>
+<br>You have 8 virtual machines (with one dedicated to be the 
+supervisor), but they don't run simultaneously. If you switch back to 
+the supervisor, all RAM, Video &amp; CPU state is saved and you can
+<br>- switch to another machine.
+<br>- switch back to were you left.
+<br>- save the state to disk and load it again anytime later.
+<br>- hit reset (yellow button) to reset the active machine (only).
+<br>- (soft) reset the machine from the supervisor.
+<br>
+<br>I have to admit that it works better than I expected, considering 
+that the Vic-20 has no concept of memory protection. Also I do not see a
+ way to reliably save &amp; restore the state of the VIAs. It is just 
+not possible.
+<br>
+<br>Basically, I wanted to make use of the 512K RAM on the FE3 that is mostly idle, which is a shame <img class="smilies" src="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/icon_wink.gif" alt=";)" title="Wink"></div>
+
+			
+									
+									<div id="sig57799" class="signature">Buy the new Bug-Wizard, the first 100 bugs are free!</div>
+						</div>
+
+		</div>
+
+		<div class="back2top"><a href="#top" class="top" title="Top">Top</a></div>
+
+		</div>
+	</div>
+
+	<hr class="divider">
+	
+
+	<form id="viewtopic" method="post" action="./viewtopic.php?f=2&amp;t=4834">
+	<fieldset class="display-options" style="margin-top: 0; ">
+				<label>Display posts from previous: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+		<label>Sort by <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label> <label><select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+		<input name="sort" value="Go" class="button2" type="submit">
+			</fieldset>
+	</form>
+	<hr>
+
+<div class="action-bar bottom">
+	<div class="buttons">
+		
+			<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/posting.php?mode=reply&amp;f=2&amp;t=4834" class="button icon-button reply-icon" title="Post a reply">
+			Post Reply		</a>
+	
+			</div>
+
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button icon-button tools-icon dropdown-trigger dropdown-select dropdown-toggle"></span>
+		<div class="dropdown hidden">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																								<li class="small-icon icon-print"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?f=2&amp;t=4834&amp;view=print" title="Print view" accesskey="p">Print view</a></li>							</ul>
+		</div>
+	</div>
+
+	
+			<div class="pagination">
+			3 posts
+							• Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		<div class="clear"></div>
+</div>
+
+
+	<p class="jumpbox-return"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=2" class="left-box arrow-left" accesskey="r">Return to “Programming”</a></p>
+
+
+	<div class="dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+		<span title="Jump to" class="dropdown-trigger button dropdown-select dropdown-toggle">
+			Jump to		</span>
+		<div class="dropdown hidden">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																			<li><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=16">General</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=15">Announcement Board</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=1">General Topics</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=3">Buy, Sell, and Trade</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=4">Collecting and History</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=10">Games</a></li>
+																<li><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=17">Technical</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=2">Programming</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=11">Hardware and Tech</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=14">Emulation and Cross Development</a></li>
+																<li><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=18">Culture</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=5">Other Systems</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=13">International VIC</a></li>
+																<li>&nbsp; &nbsp;<a href="http://sleepingelephant.com/ipw-web/bulletin/bb/viewforum.php?f=12">Off Topic</a></li>
+										</ul>
+		</div>
+	</div>
+
+
+	<div class="stat-block online-list">
+		<h3>Who is online</h3>
+		<p>Users browsing this forum: <span style="color: #9E8DA7;" class="username-coloured">Bing [Bot]</span> and 1 guest</p>
+	</div>
+
+			</div>
+
+
+<div id="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="linklist bulletin" role="menubar">
+		<li class="small-icon icon-home breadcrumbs">
+			<span class="crumb"><a href="http://sleepingelephant.com/denial/" data-navbar-reference="home" title="Home">Home</a></span>						<span class="crumb"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/index.php" data-navbar-reference="index" title="Board index">Board index</a></span>
+					</li>
+		
+				<li class="responsive-menu hidden rightside dropdown-container"><a href="javascript:void(0);" class="responsive-menu-link dropdown-toggle">&nbsp;</a><div class="dropdown hidden"><div class="pointer"><div class="pointer-inner"></div></div><ul class="dropdown-contents"></ul></div></li><li class="rightside">All times are <abbr title="UTC-6">UTC-06:00</abbr></li>
+							<li class="small-icon icon-delete-cookies rightside"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/ucp.php?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">Delete all board cookies</a></li>
+									<li class="small-icon icon-team rightside" data-last-responsive="true"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=team" role="menuitem">The team</a></li>				<li class="small-icon icon-contact rightside" data-last-responsive="true"><a href="http://sleepingelephant.com/ipw-web/bulletin/bb/memberlist.php?mode=contactadmin" role="menuitem">Contact us</a></li>	</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				Powered by <a href="https://www.phpbb.com/">phpBB</a>® Forum Software © phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken">&nbsp;</div>
+	</div>
+	<div id="loading_indicator"></div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close"></a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close"></a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	</div>
+
+<script type="text/javascript" src="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/jquery.js"></script>
+<script type="text/javascript" src="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/core.js"></script>
+
+
+<script type="text/javascript" src="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/forum_fn.js"></script>
+
+<script type="text/javascript" src="A%20task%20switcher%20for%20the%20Final%20Expansion%20-%20Denial_files/ajax.js"></script>
+
+
+
+
+
+
+</body></html>

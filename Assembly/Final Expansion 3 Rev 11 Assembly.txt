@@ -1,0 +1,161 @@
+[b]Final Expansion 3 Rev 11 Assembly[/b]
+
+Verify the contents of your kit with the following Bill of Materials.  The ‘Markings’ column lists the text that can be found on each component.  Some of this text may be small or difficult to read so use a magnifying glass if necessary to identify them.
+
+The Chips are inserted into the sockets for shipping and should be separated before assembly.  Take care while doing this to prevent damaging the chip or the sockets.
+
+[b]Bill of Materials[/b]
+[code]Qty  Location               Markings    Description
+1    B1                                 Tactile Switch Red
+1    B2                                 Tactile Switch Black
+7    C1,C2,C3,C4,C5,C9,C10  104J        Multilayer Ceramic Capacitor 0.1uF
+1    C11                    220         Multilayer Ceramic Capacitor 22pF
+1    C12                    100uF10V    Aluminum Electrolytic Capacitor 100uF
+2    C6,C7                              Multilayer Ceramic Capacitor SMD 33pF
+1    C8                     22uF10V     Aluminum Electrolytic Capacitor 22uF
+1    CR2032                             CR2032 Battery Clip
+3    D1,D2,D3                           Schottky Diode 30V 200MA
+1    IC1                    AM29F040B   AM29F040B-90PI 512KB Flash DIP
+2    IC1,IC2                            IC Socket 32-Pin
+1    IC2                    AS6C4008    512K SRAM
+1    IC3                    SN74LS245N  IC Bus Transceiver 8BIT 20DIP
+1    IC4                                LCC Socket 44-Pin
+1    IC4                    ATF1504AS   CPLD
+1    IC5                                IC Socket 40-Pin
+1    IC5                    ATMEGA1284  ATmega 1284P AVR
+1    IC6                    MCP1703     LDO Voltage Regulator
+1    IC7                    8583T       Real Time Clock
+2    IEC                                Circular DIN Connector 6-Pin
+11   JP2,JP3,JP4,JP5                    Pin Header 11 Positions
+1    LABEL                              Label
+1    LED+R                              Diffused LED Red
+1    LED-G                              Diffused LED Green
+1    PCB                                PCB
+1    Q1                     A080F6F     Crystal 8MHz
+1    Q2                     32.768      Crystal 32.768KHz
+3    R1,R2,R3               O,O R,G     Carbon Film Resistor 3.3K ohm
+2    R12,R13                Y,P,BR,G    Carbon Film Resistor 470ohm
+5    R4,R5,R6,R8,R9         BR,GRY,R,G  Carbon Film Resistor 1.8K
+3    R7,R10,R11             BR,BL,O,G   Carbon Film Resistor 10K
+1    SD                     PD00305A    SD Card Slot
+1    SW1                    CTS 206-4   DIP Switch Array 4 Switches[/code]
+
+There is a small design error on the PCB.  Pins 20 and 21 are connected together and carry 5VDC but only Pin 21 should be connected.  Pin 20 is normally not connected to anything in the VIC-20 so this should not be a problem.  However, I highly suggest cutting the trace on Pin 20 before beginning assembly.  I left this choice up to you in case you don’t want to mar the PCB.  You can cut this trace right at the edge of the solder mask to minimize any unsightly damage done by the modification.
+
+Pin 20 is easily identified as it is below the 8/9/10/11 drive numbers.  The number 11 is directly above Pin 20.
+
+[url=https://postimg.org/image/glnnams7b/][img]https://s23.postimg.org/glnnams7b/001.jpg[/img][/url]
+
+The component installation order below can be changed to suit your assembly style.  However, if you change the order, you should read through the directions at least once before beginning assembly.
+
+[b]Surface Mount Components[/b]
+
+Install the surface mount components first.  These include two 33pF SMD capacitors (C6, C7), the LDO Voltage Regulator (IC6), and the Real Time Clock (IC7).
+ 
+[b]Diodes[/b]
+
+Next, install the three Schottky diodes (D1–D3).  Be sure to match the stripe on the diode to the stripe printed on the PCB.
+
+[b]Resistors[/b]
+
+Install all the resistors (R1–R13).  Resistors R1 and R3 should be pushed as close to R2 as possible during assembly.  This will make installing the 40-Pin socket around them easier.  Resistors R7 and R13 should similarly be pushed towards the center of the socket area.
+
+[url=https://postimg.org/image/72dyh64p3/][img]https://s23.postimg.org/72dyh64p3/002.jpg[/img][/url] [url=https://postimg.org/image/crysf8093/][img]https://s23.postimg.org/crysf8093/003.jpg[/img][/url]
+
+[b]Capacitors[/b]
+
+The blue ceramic capacitors are not polarized so direction does not matter.  Begin by installing the 22pF ceramic capacitor (C11).  It is located next to the Real Time Clock.  Next, install the remaining 0.1uF ceramic capacitors (C1, C2, C3, C4, C5, C9, C10).
+
+The aluminum electrolytic capacitors ARE polarized so pay attention to the polarity.  Install the 22uF electrolytic capacitor (C8 ).  The striped, negative side of the capacitor should point towards the bottom card edge connector.
+
+Before installing the 100uF electrolytic capacitor (C12), turn it with the negative stripe facing away from you then bend the legs 90 degrees down so the capacitor will lay down against the PCB.  Make sure you don’t them too close to the capacitor or you might short them on the aluminum case.  Install the capacitor with the striped, negative side of the capacitor towards the top edge of the PCB.
+
+[b]SD Card Slot[/b]
+
+Install the SD card slot.  One leg of the reader is intentionally left disconnected.
+
+[url=https://postimg.org/image/cghc2gjt3/][img]https://s23.postimg.org/cghc2gjt3/004.jpg[/img][/url]
+
+[b]Optional Pin Headers[/b]
+
+Installing the Pin Headers (JP2, JP3, JP4, JP5) is completely optional.  If you decide to install them, you need to carefully break the 11-Pin header into a 5-Pin header and three 2-Pin headers.  JP2 is the Alarm header, JP3 is an expansion header, and JP3/JP4 are forward/backward disk change headers.
+
+[b]Crystals[/b]
+
+First install the 8MHz crystal (Q1).  Be careful not to use too much solder as it could short on the metal casing if it flows to underneath the component.  Next, bend the legs of the 32.768KHz (Q2) 90 degrees.  Be careful not to bend the legs too close to the crystal casing or you could cause a short.  Install the crystal.
+
+[b]SN74LS245N[/b]
+
+Install the SN74LS245N IC Bus Transceiver (IC3).  It is the only through-hole chip that is directly soldered to the PCB.
+
+[url=https://postimg.org/image/y46acwk7b/][img]https://s23.postimg.org/y46acwk7b/005.jpg[/img][/url]
+
+[b]Sockets[/b]
+
+There are two 32-Pin IC sockets (IC1, IC2).  The plastic in the center of one of these sockets needs to be removed.  The unmodified 32-Pin socket should be installed in IC1 and the socket with the center removed should be installed in IC2.  Align the notch of the socket with the markings on the PCB.
+
+[url=https://postimg.org/image/le21ztc93/][img]https://s23.postimg.org/le21ztc93/006.jpg[/img][/url]
+
+Install the 44-Pin LCC socket (IC4).  Pay attention to match the orientation of the socket to that on the PCB.
+
+Install the 40-Pin IC socket (IC5).  Align the notch of the socket with the markings on the PCB.  Some of the resistor legs under this socket interfere with the socket so it will not sit flush against the PCB.  Just make sure the gap between the socket and PCB is about the same all the way around the socket.
+
+[url=https://postimg.org/image/asi6nt5xj/][img]https://s23.postimg.org/asi6nt5xj/007.jpg[/img][/url] [url=https://postimg.org/image/43bn7sklj/][img]https://s23.postimg.org/43bn7sklj/008.jpg[/img][/url]
+
+[b]LEDs[/b]
+
+Install the red (LED+R) and green (LED-R) LEDs.  The following image shows a height that works well for the COREi64 case.  This height will also work for a standard case if you cut holes in the top of the case.  You will have to play with the length if you want to do them in another configuration.
+
+[url=https://postimg.org/image/80ywx77ev/][img]https://s23.postimg.org/80ywx77ev/009.jpg[/img][/url]
+
+[b]Switches[/b]
+
+Install the DIP Switch Array (SW1).  Pay attention to the orientation.  The numbers should be pointed toward the 40-Pin IC socket.
+
+Next, install the tactile switches (B1, B2).  The red switch (B1) is marked RESET RED on the PCB.  The black switch (B2) is marked DRV_RST BLUE on the PCB.
+
+[b]Battery Clip[/b]
+
+Install the CR2032 Battery Clip with the opening towards the edge of the PCB.
+
+[b]Optional DIN Connectors[/b]
+
+The two DIN connectors (IEC) are optional.  You can install them now or you can solder an IEC cable (not provided) directly to the PCB if you want a more low profile solution like the older Final Expansion 3 revisions.  There are holes in the PCB that can be used with cable ties to provide strain relief on the IEC cables.
+
+[url=https://postimg.org/image/xl173mssn/][img]https://s23.postimg.org/xl173mssn/010.jpg[/img][/url]
+
+[b]DIP Switch Settings[/b]
+
+Set the default DIP Switch settings as follows: 1: Off – 2: Off – 3: On – 4: On
+
+[url=https://postimg.org/image/drp3axfev/][img]https://s23.postimg.org/drp3axfev/image.jpg[/img][/url]
+
+[b]IC Chips[/b]
+
+Before installing the ICs, you need to lay down the capacitor under the 40-Pin IC socket (C10) so that the chip will sit flush in the socket.
+
+[url=https://postimg.org/image/5ngz66szr/][img]https://s23.postimg.org/5ngz66szr/image.jpg[/img][/url]
+
+Install all the ICs (IC1, IC2, IC4, IC5).  Make sure you align Pin 1 of the chip with Pin 1 on the socket.
+
+[url=https://postimg.org/image/uuwgk6lhj/][img]https://s23.postimg.org/uuwgk6lhj/013.jpg[/img][/url] [url=https://postimg.org/image/7hyf1o5dz/][img]https://s23.postimg.org/7hyf1o5dz/014.jpg[/img][/url]
+
+Finally, Insert a CR2032 battery (not included) if you’d like to use the battery backed up clock.
+
+[b]Usage[/b]
+
+All the chips have been pre-programmed and tested so the device will be fully functional once assembled.  There are many games by Jeffrey Daniels pre-programmed in the EEPROM.  You can access these through the Cart Loader menu.  For full usage details, download the user manual.  I’m going to rewrite this manual soon to make it easier to understand but it should get you going.
+
+http://koti.kapsi.fi/~jvaltane/vic20/fe/VIC-20%20Final%20Expansion%20User%20Manual.pdf
+
+[b]COREi64 Label Application[/b]
+
+The most important thing to remember when applying the label to your COREi64 3D printed case is to TAKE YOUR TIME and apply it in a well-lit area so you can see the edges of the label and case.  In addition, the label is quite strong except for the bottom of the label under the DIP cutout.  This is just a small strand of label material so take care that you don’t tear it.
+
+For the best fit, turn the cartridge so the side with the LEDs is facing you.  Begin installation of the label at the LEDs and slowly smooth the label over the case.  Use the edges of the IEC headers to line up your label.  The edges are marked green in the following image.
+
+[url=https://postimg.org/image/foqet8vgn/][img]https://s23.postimg.org/foqet8vgn/015.jpg[/img][/url]
+
+Let me know if you have any questions!
+
+Heather

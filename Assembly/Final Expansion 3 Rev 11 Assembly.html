@@ -1,0 +1,630 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html dir="ltr"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>Final Expansion 3 Rev 11 Assembly - Commodore 64 (C64) Forum</title>
+
+<link rel="prev" href="http://www.lemon64.com/forum/viewtopic.php?t=63079&amp;view=previous" title="View previous topic">
+<link rel="next" href="http://www.lemon64.com/forum/viewtopic.php?t=63079&amp;view=next" title="View next topic">
+<link rel="up" href="http://www.lemon64.com/forum/viewforum.php?f=15" title="Other 8-bit Commodore computers">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=2" title="General">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=10" title="Games">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=7" title="Games Competitions">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=1" title="Help &amp; Support">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=18" title="Emulators">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=4" title="Scene">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=6" title="New Releases">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=3" title="Supermarket">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=9" title="Protovision">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=17" title="RGCD/Psytronik">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=15" title="Other 8-bit Commodore computers">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=12" title="Member Introductions">
+<link rel="chapter forum" href="http://www.lemon64.com/forum/viewforum.php?f=5" title="Chit Chat">
+
+<link rel="stylesheet" href="Final%20Expansion%203%20Rev%2011%20Assembly_files/subSilver.css" type="text/css">
+<!--[if IE ]>
+  <link rel="stylesheet" href="templates/subSilver/ie.css" type="text/css">
+<![endif]-->
+<script type="text/javascript" src="Final%20Expansion%203%20Rev%2011%20Assembly_files/forum_pop.js"></script>
+</head><style id="stylish-1" class="stylish" type="text/css">html body table,
+    html body table tbody tr td.bodyline table.forumline tbody tr td table.x_posttable tbody tr td.x_postcell div.postbody,
+    html body table tbody tr td.bodyline form table.forumline tbody tr td.row2 input,
+    html body table tbody tr td.bodyline form table.forumline tbody tr td.row2 span.gen table tbody tr td span.gen textarea
+    {
+        width: 100% !important;
+    } </style>
+<body text="#000000" vlink="#5493B4" link="#006699" bgcolor="#5287B8">
+
+<a name="top"></a>
+
+<iframe src="Final%20Expansion%203%20Rev%2011%20Assembly_files/banner_forum.html" scrolling="no" frameborder="0" width="735" height="90"></iframe>
+
+<!--a href="http://lemon.spreadshirt.net" target="blank"><img src="/gfx/retrostore_banner.png" width="735" height="90" title="Buy some cool C64 T-shirts in the Lemon Retro Store!" border="0"></a><br>
+
+<br-->
+
+<table style="margin-top: 13px;" width="735" cellspacing="0" cellpadding="7" border="0">
+	<tbody><tr>
+		<td class="bodyline"><table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tbody><tr>
+				<td><a href="http://www.lemon64.com/forum/index.php"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/forum_logo.gif" alt="Commodore 64 (C64) Forum Index" vspace="1" border="0"></a></td>
+				<td valign="middle" width="100%" align="center">
+				<table cellspacing="0" cellpadding="2" border="0">
+					<tbody><tr>
+						<td valign="top" nowrap="nowrap" align="center"><span class="mainmenu">&nbsp;<a href="http://www.lemon64.com/forum/faq.php" class="mainmenu"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_mini_faq.gif" alt="FAQ" width="12" hspace="3" height="13" border="0">FAQ</a></span><span class="mainmenu">&nbsp; &nbsp;<a href="http://www.lemon64.com/forum/search.php" class="mainmenu" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_mini_search.gif" alt="Search" width="12" hspace="3" height="13" border="0">Search</a>&nbsp; &nbsp;<a href="http://www.lemon64.com/forum/memberlist.php" class="mainmenu" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_mini_members.gif" alt="Memberlist" width="12" hspace="3" height="13" border="0">Memberlist</a>&nbsp; &nbsp;<a href="http://www.lemon64.com/forum/groupcp.php" class="mainmenu" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_mini_groups.gif" alt="Usergroups" width="12" hspace="3" height="13" border="0">Usergroups</a>&nbsp;
+						</span></td>
+					</tr>
+					<tr>
+						<td valign="top" height="25" nowrap="nowrap" align="center"><span class="mainmenu">&nbsp;<a href="http://www.lemon64.com/forum/profile.php?mode=editprofile" class="mainmenu" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_mini_profile.gif" alt="Profile" width="12" hspace="3" height="13" border="0">Profile</a>&nbsp; &nbsp;<a href="http://www.lemon64.com/forum/privmsg.php?folder=inbox" class="mainmenu" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_mini_message.gif" alt="You have no new messages" width="12" hspace="3" height="13" border="0">You have no new messages</a>&nbsp; &nbsp;<a href="http://www.lemon64.com/forum/login.php?logout=true&amp;sid=7bfd85ec543300deb65ba22c040fd0a4" class="mainmenu" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_mini_login.gif" alt="Log out [ SkydivinGirl ]" width="12" hspace="3" height="13" border="0">Log out [ SkydivinGirl ]</a>&nbsp;</span></td>
+					</tr>
+				</tbody></table></td>
+			</tr>
+		</tbody></table>
+
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+  <tbody><tr>
+	<td colspan="2" valign="bottom" align="left"><a class="maintitle" href="http://www.lemon64.com/forum/viewtopic.php?t=63079&amp;start=0&amp;postdays=0&amp;postorder=asc&amp;highlight=">Final Expansion 3 Rev 11 Assembly</a><br>
+	  <span class="gensmall"><b></b><br>
+	  &nbsp; </span></td>
+  </tr>
+</tbody></table>
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+  <tbody><tr>
+	<td valign="bottom" nowrap="nowrap" align="left"><span class="nav"><a href="http://www.lemon64.com/forum/posting.php?mode=newtopic&amp;f=15" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/post.gif" alt="Post new topic" border="0" align="middle"></a>&nbsp;&nbsp;&nbsp;<a href="http://www.lemon64.com/forum/posting.php?mode=reply&amp;t=63079" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/reply.gif" alt="Reply to topic" border="0" align="middle"></a></span></td>
+	<td valign="middle" width="100%" align="left"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="http://www.lemon64.com/forum/index.php" class="nav">Commodore 64 (C64) Forum Index</a>
+	  -&gt; <a href="http://www.lemon64.com/forum/viewforum.php?f=15" class="nav">Other 8-bit Commodore computers</a></span></td>
+  </tr>
+</tbody></table>
+
+<table class="forumline" width="100%" cellspacing="1" cellpadding="3" border="0">
+	<tbody><tr align="right">
+		<td class="catHead" colspan="2" height="28"><span class="nav"><a href="http://www.lemon64.com/forum/viewtopic.php?t=63079&amp;view=previous" class="nav" rel="nofollow">View previous topic</a> :: <a href="http://www.lemon64.com/forum/viewtopic.php?t=63079&amp;view=next" class="nav" rel="nofollow">View next topic</a> &nbsp;</span></td>
+	</tr>
+	
+	<tr>
+		<th class="thLeft" width="150" height="26" nowrap="nowrap">Author</th>
+		<th class="thRight" nowrap="nowrap">Message</th>
+	</tr>
+	<tr>
+		<td class="row1" valign="top" width="150" align="left"><div old="span" class="name" style="width:150px;overflow:hidden"><a name="767044"></a><b>SkydivinGirl</b></div><xbr><span class="postdetails">Grandmaster of C64<br><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/ale_5.gif" alt="Grandmaster of C64" title="Grandmaster of C64" border="0"><br><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/11834998354a8bf4fc88c73.jpg" alt="" style="max-width:80px;max-height:80px" border="0"><br><br>Joined: 18 Aug 2009<br>Age: 44<br>Posts: 1934<br>Location: Raleigh, NC USA</span><br></xbr></td>
+		<td class="row1" valign="top" width="100%" height="28"><table class="x_posttable" width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tbody><tr>
+				<td xwidth="100%"><a href="http://www.lemon64.com/forum/viewtopic.php?p=767044#767044"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_minipost.gif" alt="Post" title="Post" width="12" height="9" border="0"></a><span class="postdetails">Posted: Mon Jan 09, 2017 9:58 pm<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: Final Expansion 3 Rev 11 Assembly</span></td>
+				<td valign="top" nowrap="nowrap" align="right"><a href="http://www.lemon64.com/forum/posting.php?mode=quote&amp;p=767044" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0"></a> <a href="http://www.lemon64.com/forum/posting.php?mode=editpost&amp;p=767044"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_edit.gif" alt="Edit/Delete this post" title="Edit/Delete this post" border="0"></a> <a href="http://www.lemon64.com/forum/posting.php?mode=delete&amp;p=767044&amp;sid=7bfd85ec543300deb65ba22c040fd0a4"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_delete.gif" alt="Delete this post" title="Delete this post" border="0"></a>  </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr></td>
+			</tr>
+			<tr>
+				<td colspan="2" class="x_postcell"><div class="postbody"><span style="font-weight: bold">Final Expansion 3 Rev 11 Assembly</span>
+<br>
+
+<br>
+<span style="font-weight: bold">*UPDATE* The latest PCB revision fixed 
+the PCB error mentioned below so there is no need to cut a trace.  The 
+40-Pin socket now fits completely flush with the PCB.  Other components 
+have been moved to make assembly easier.</span>
+<br>
+
+<br>
+Verify the contents of your kit with the following Bill of Materials.  
+The ‘Markings’ column lists the text that can be found on each 
+component.  Some of this text may be small or difficult to read so use a
+ magnifying glass if necessary to identify them.
+<br>
+
+<br>
+The Chips are inserted into the sockets for shipping and should be 
+separated before assembly.  Take care while doing this to prevent 
+damaging the chip or the sockets.
+<br>
+
+<br>
+<span style="font-weight: bold">Bill of Materials</span>
+<br>
+<table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tbody><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code">Qty&nbsp; Location&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Markings&nbsp; &nbsp; Description
+<br>
+1&nbsp; &nbsp; B1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Tactile 
+Switch Red
+<br>
+1&nbsp; &nbsp; B2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Tactile 
+Switch Black
+<br>
+7&nbsp; &nbsp; C1,C2,C3,C4,C5,C9,C10&nbsp; 104J&nbsp; &nbsp; &nbsp; &nbsp; Multilayer Ceramic Capacitor 0.1uF
+<br>
+1&nbsp; &nbsp; C11&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; 220&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Multilayer 
+Ceramic Capacitor 22pF
+<br>
+1&nbsp; &nbsp; C12&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; 100uF10V&nbsp; &nbsp; Aluminum Electrolytic 
+Capacitor 100uF
+<br>
+2&nbsp; &nbsp; C6,C7&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Multilayer 
+Ceramic Capacitor SMD 33pF
+<br>
+1&nbsp; &nbsp; C8&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp;22uF10V&nbsp; &nbsp; &nbsp;Aluminum Electrolytic 
+Capacitor 22uF
+<br>
+1&nbsp; &nbsp; CR2032&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CR2032 Battery 
+Clip
+<br>
+3&nbsp; &nbsp; D1,D2,D3&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Schottky Diode 30V 200MA
+<br>
+1&nbsp; &nbsp; IC1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; AM29F040B&nbsp; &nbsp;AM29F040B-90PI 512KB Flash 
+DIP
+<br>
+2&nbsp; &nbsp; IC1,IC2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; IC Socket 32-Pin
+<br>
+1&nbsp; &nbsp; IC2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; AS6C4008&nbsp; &nbsp; 512K SRAM
+<br>
+1&nbsp; &nbsp; IC3&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; SN74LS245N&nbsp; IC Bus Transceiver 8BIT 20DIP
+<br>
+1&nbsp; &nbsp; IC4&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LCC 
+Socket 44-Pin
+<br>
+1&nbsp; &nbsp; IC4&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ATF1504AS&nbsp; &nbsp;CPLD
+<br>
+1&nbsp; &nbsp; IC5&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; IC Socket
+ 40-Pin
+<br>
+1&nbsp; &nbsp; IC5&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ATMEGA1284&nbsp; ATmega 1284P AVR
+<br>
+1&nbsp; &nbsp; IC6&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; MCP1703&nbsp; &nbsp; &nbsp;LDO Voltage Regulator
+<br>
+1&nbsp; &nbsp; IC7&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; 8583T&nbsp; &nbsp; &nbsp; &nbsp;Real Time Clock
+<br>
+2&nbsp; &nbsp; IEC&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Circular 
+DIN Connector 6-Pin
+<br>
+11&nbsp; &nbsp;JP2,JP3,JP4,JP5&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Pin Header 11 Positions
+<br>
+1&nbsp; &nbsp; LABEL&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Label
+<br>
+1&nbsp; &nbsp; LED+R&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Diffused LED Red
+<br>
+1&nbsp; &nbsp; LED-G&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Diffused LED 
+Green
+<br>
+1&nbsp; &nbsp; PCB&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; PCB
+<br>
+1&nbsp; &nbsp; Q1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp;A080F6F&nbsp; &nbsp; &nbsp;Crystal 8MHz
+<br>
+1&nbsp; &nbsp; Q2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp;32.768&nbsp; &nbsp; &nbsp; Crystal 32.768KHz
+<br>
+3&nbsp; &nbsp; R1,R2,R3&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp;O,O R,G&nbsp; &nbsp; &nbsp;Carbon Film Resistor 3.3K ohm
+<br>
+2&nbsp; &nbsp; R12,R13&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Y,P,BR,G&nbsp; &nbsp; Carbon Film Resistor 470ohm
+<br>
+5&nbsp; &nbsp; R4,R5,R6,R8,R9&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BR,GRY,R,G&nbsp; Carbon Film Resistor 1.8K
+<br>
+3&nbsp; &nbsp; R7,R10,R11&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BR,BL,O,G&nbsp; &nbsp;Carbon Film Resistor 10K
+<br>
+1&nbsp; &nbsp; SD&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;PD00305A&nbsp; &nbsp; SD Card Slot
+<br>
+1&nbsp; &nbsp; SW1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; CTS 206-4&nbsp; &nbsp;DIP Switch Array 4 Switches</td>	</tr></tbody></table><span class="postbody">
+<br>
+
+<br>
+There is a small design error on the PCB.  Pins 20 and 21 are connected 
+together and carry 5VDC but only Pin 21 should be connected.  Pin 20 is 
+normally not connected to anything in the VIC-20 so this should not be a
+ problem.  However, I highly suggest cutting the trace on Pin 20 before 
+beginning assembly.  I left this choice up to you in case you don’t want
+ to mar the PCB.  You can cut this trace right at the edge of the solder
+ mask to minimize any unsightly damage done by the modification.
+<br>
+
+<br>
+Pin 20 is easily identified as it is below the 8/9/10/11 drive numbers.  The number 11 is directly above Pin 20.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/glnnams7b/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/001.jpg" border="0"></a>
+<br>
+
+<br>
+The component installation order below can be changed to suit your 
+assembly style.  However, if you change the order, you should read 
+through the directions at least once before beginning assembly.
+<br>
+
+<br>
+<span style="font-weight: bold">Surface Mount Components</span>
+<br>
+
+<br>
+Install the surface mount components first.  These include two 33pF SMD 
+capacitors (C6, C7), the LDO Voltage Regulator (IC6), and the Real Time 
+Clock (IC7).
+<br>
+
+<br>
+<span style="font-weight: bold">Diodes</span>
+<br>
+
+<br>
+Next, install the three Schottky diodes (D1–D3).  Be sure to match the stripe on the diode to the stripe printed on the PCB.
+<br>
+
+<br>
+<span style="font-weight: bold">Resistors</span>
+<br>
+
+<br>
+Install all the resistors (R1–R13).  Resistors R1 and R3 should be 
+pushed as close to R2 as possible during assembly.  This will make 
+installing the 40-Pin socket around them easier.  Resistors R7 and R13 
+should similarly be pushed towards the center of the socket area.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/72dyh64p3/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/002.jpg" border="0"></a> <a href="https://postimg.cc/image/crysf8093/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/003.jpg" border="0"></a>
+<br>
+
+<br>
+<span style="font-weight: bold">Capacitors</span>
+<br>
+
+<br>
+The blue ceramic capacitors are not polarized so direction does not 
+matter.  Begin by installing the 22pF ceramic capacitor (C11).  It is 
+located next to the Real Time Clock.  Next, install the remaining 0.1uF 
+ceramic capacitors (C1, C2, C3, C4, C5, C9, C10).
+<br>
+
+<br>
+The aluminum electrolytic capacitors ARE polarized so pay attention to 
+the polarity.  Install the 22uF electrolytic capacitor (C8 ).  The 
+striped, negative side of the capacitor should point towards the bottom 
+card edge connector.
+<br>
+
+<br>
+Before installing the 100uF electrolytic capacitor (C12), turn it with 
+the negative stripe facing away from you then bend the legs 90 degrees 
+down so the capacitor will lay down against the PCB.  Make sure you 
+don’t them too close to the capacitor or you might short them on the 
+aluminum case.  Install the capacitor with the striped, negative side of
+ the capacitor towards the top edge of the PCB.
+<br>
+
+<br>
+<span style="font-weight: bold">SD Card Slot</span>
+<br>
+
+<br>
+Install the SD card slot.  One leg of the reader is intentionally left disconnected.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/cghc2gjt3/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/004.jpg" border="0"></a>
+<br>
+
+<br>
+<span style="font-weight: bold">Optional Pin Headers</span>
+<br>
+
+<br>
+Installing the Pin Headers (JP2, JP3, JP4, JP5) is completely optional. 
+ If you decide to install them, you need to carefully break the 11-Pin 
+header into a 5-Pin header and three 2-Pin headers.  JP2 is the Alarm 
+header, JP3 is an expansion header, and JP3/JP4 are forward/backward 
+disk change headers.
+<br>
+
+<br>
+<span style="font-weight: bold">Crystals</span>
+<br>
+
+<br>
+First install the 8MHz crystal (Q1).  Be careful not to use too much 
+solder as it could short on the metal casing if it flows to underneath 
+the component.  Next, bend the legs of the 32.768KHz (Q2) 90 degrees.  
+Be careful not to bend the legs too close to the crystal casing or you 
+could cause a short.  Install the crystal.
+<br>
+
+<br>
+<span style="font-weight: bold">SN74LS245N</span>
+<br>
+
+<br>
+Install the SN74LS245N IC Bus Transceiver (IC3).  It is the only through-hole chip that is directly soldered to the PCB.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/y46acwk7b/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/005.jpg" border="0"></a>
+<br>
+
+<br>
+<span style="font-weight: bold">Sockets</span>
+<br>
+
+<br>
+There are two 32-Pin IC sockets (IC1, IC2).  The plastic in the center 
+of one of these sockets needs to be removed.  The unmodified 32-Pin 
+socket should be installed in IC1 and the socket with the center removed
+ should be installed in IC2.  Align the notch of the socket with the 
+markings on the PCB.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/le21ztc93/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/006.jpg" border="0"></a>
+<br>
+
+<br>
+Install the 44-Pin LCC socket (IC4).  Pay attention to match the orientation of the socket to that on the PCB.
+<br>
+
+<br>
+Install the 40-Pin IC socket (IC5).  Align the notch of the socket with 
+the markings on the PCB.  Some of the resistor legs under this socket 
+interfere with the socket so it will not sit flush against the PCB.  
+Just make sure the gap between the socket and PCB is about the same all 
+the way around the socket.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/asi6nt5xj/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/007.jpg" border="0"></a> <a href="https://postimg.cc/image/43bn7sklj/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/008.jpg" border="0"></a>
+<br>
+
+<br>
+<span style="font-weight: bold">LEDs</span>
+<br>
+
+<br>
+Install the red (LED+R) and green (LED-R) LEDs.  The following image 
+shows a height that works well for the COREi64 case.  This height will 
+also work for a standard case if you cut holes in the top of the case.  
+You will have to play with the length if you want to do them in another 
+configuration.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/80ywx77ev/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/009.jpg" border="0"></a>
+<br>
+
+<br>
+<span style="font-weight: bold">Switches</span>
+<br>
+
+<br>
+Install the DIP Switch Array (SW1).  Pay attention to the orientation.  
+The numbers should be pointed toward the 40-Pin IC socket.
+<br>
+
+<br>
+Next, install the tactile switches (B1, B2).  The red switch (B1) is 
+marked RESET RED on the PCB.  The black switch (B2) is marked DRV_RST 
+BLUE on the PCB.
+<br>
+
+<br>
+<span style="font-weight: bold">Battery Clip</span>
+<br>
+
+<br>
+Install the CR2032 Battery Clip with the opening towards the edge of the PCB.
+<br>
+
+<br>
+<span style="font-weight: bold">Optional DIN Connectors</span>
+<br>
+
+<br>
+The two DIN connectors (IEC) are optional.  You can install them now or 
+you can solder an IEC cable (not provided) directly to the PCB if you 
+want a more low profile solution like the older Final Expansion 3 
+revisions.  There are holes in the PCB that can be used with cable ties 
+to provide strain relief on the IEC cables.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/xl173mssn/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/010.jpg" border="0"></a>
+<br>
+
+<br>
+<span style="font-weight: bold">DIP Switch Settings</span>
+<br>
+
+<br>
+Set the default DIP Switch settings as follows: 1: Off – 2: Off – 3: On – 4: On
+<br>
+
+<br>
+<a href="https://postimg.cc/image/drp3axfev/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/image_002.jpg" border="0"></a>
+<br>
+
+<br>
+<span style="font-weight: bold">IC Chips</span>
+<br>
+
+<br>
+Before installing the ICs, you need to lay down the capacitor under the 
+40-Pin IC socket (C10) so that the chip will sit flush in the socket.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/5ngz66szr/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/image.jpg" border="0"></a>
+<br>
+
+<br>
+Install all the ICs (IC1, IC2, IC4, IC5).  Make sure you align Pin 1 of the chip with Pin 1 on the socket.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/uuwgk6lhj/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/013.jpg" border="0"></a> <a href="https://postimg.cc/image/7hyf1o5dz/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/014.jpg" border="0"></a>
+<br>
+
+<br>
+Finally, Insert a CR2032 battery (not included) if you’d like to use the battery backed up clock.
+<br>
+
+<br>
+<span style="font-weight: bold">Usage</span>
+<br>
+
+<br>
+All the chips have been pre-programmed and tested so the device will be 
+fully functional once assembled.  There are many games by Jeffrey 
+Daniels pre-programmed in the EEPROM.  You can access these through the 
+Cart Loader menu.  For full usage details, download the user manual.  
+I’m going to rewrite this manual soon to make it easier to understand 
+but it should get you going.
+<br>
+
+<br>
+<a href="http://koti.kapsi.fi/~jvaltane/vic20/fe/VIC-20%20Final%20Expansion%20User%20Manual.pdf" target="_blank">http://koti.kapsi.fi/~jvaltane...Manual.pdf</a>
+<br>
+
+<br>
+<span style="font-weight: bold">COREi64 Label Application</span>
+<br>
+
+<br>
+The most important thing to remember when applying the label to your 
+COREi64 3D printed case is to TAKE YOUR TIME and apply it in a well-lit 
+area so you can see the edges of the label and case.  In addition, the 
+label is quite strong except for the bottom of the label under the DIP 
+cutout.  This is just a small strand of label material so take care that
+ you don’t tear it.
+<br>
+
+<br>
+For the best fit, turn the cartridge so the side with the LEDs is facing
+ you.  Begin installation of the label at the LEDs and slowly smooth the
+ label over the case.  Use the edges of the IEC headers to line up your 
+label.  The edges are marked green in the following image.
+<br>
+
+<br>
+<a href="https://postimg.cc/image/foqet8vgn/" target="_blank" class="postlink"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/015.jpg" border="0"></a>
+<br>
+
+<br>
+Let me know if you have any questions!
+<br>
+
+<br>
+Heather</span></div><span class="gensmall"></span></td>
+			</tr>
+		</tbody></table></td>
+	</tr>
+	<tr>
+		<td class="row1" valign="middle" width="150" align="left"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" valign="bottom" width="100%" height="28" nowrap="nowrap"><table width="18" height="18" cellspacing="0" cellpadding="0" border="0">
+			<tbody><tr>
+				<td valign="middle" nowrap="nowrap"><a href="http://www.lemon64.com/forum/profile.php?mode=viewprofile&amp;u=16892" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0"></a> <a href="http://www.lemon64.com/forum/privmsg.php?mode=post&amp;u=16892" rel="nofollow"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/icon_pm.gif" alt="Send private message" title="Send private message" border="0"></a>     <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script></td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div><noscript></noscript></td>
+			</tr>
+		</tbody></table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/spacer.gif" alt="" width="1" height="1"></td>
+	</tr>
+
+	<tr align="center">
+		<td class="catBottom" colspan="2" height="28"><table cellspacing="0" cellpadding="0" border="0">
+			<tbody><tr><form method="post" action="viewtopic.php?t=63079&amp;start=0"></form>
+				<td align="center"><span class="gensmall">Display posts from previous: <select name="postdays"><option value="0" selected="selected">All Posts</option><option value="1">1 Day</option><option value="7">7 Days</option><option value="14">2 Weeks</option><option value="30">1 Month</option><option value="90">3 Months</option><option value="180">6 Months</option><option value="364">1 Year</option></select>&nbsp;<select name="postorder"><option value="asc" selected="selected">Oldest First</option><option value="desc">Newest First</option></select>&nbsp;<input value="Go" class="liteoption" name="submit" type="submit"></span></td>
+			</tr>
+		</tbody></table></td>
+	</tr>
+</tbody></table>
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+  <tbody><tr>
+	<td valign="middle" nowrap="nowrap" align="left"><span class="nav"><a href="http://www.lemon64.com/forum/posting.php?mode=newtopic&amp;f=15"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/post.gif" alt="Post new topic" border="0" align="middle"></a>&nbsp;&nbsp;&nbsp;<a href="http://www.lemon64.com/forum/posting.php?mode=reply&amp;t=63079"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/reply.gif" alt="Reply to topic" border="0" align="middle"></a></span></td>
+	<td valign="middle" width="100%" align="left"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="http://www.lemon64.com/forum/index.php" class="nav">Commodore 64 (C64) Forum Index</a>
+	  -&gt; <a href="http://www.lemon64.com/forum/viewforum.php?f=15" class="nav">Other 8-bit Commodore computers</a></span></td>
+	<td valign="top" nowrap="nowrap" align="right"><span class="gensmall">All times are GMT</span><br><span class="nav"></span>
+	  </td>
+  </tr>
+  <tr>
+	<td colspan="3" align="left"><span class="nav">Page <b>1</b> of <b>1</b></span></td>
+  </tr>
+</tbody></table>
+
+<table width="100%" cellspacing="2" border="0" align="center">
+  <tbody><tr>
+	<td valign="top" width="40%" nowrap="nowrap" align="left"><span class="gensmall"><a href="http://www.lemon64.com/forum/viewtopic.php?t=63079&amp;unwatch=topic&amp;start=0&amp;sid=7bfd85ec543300deb65ba22c040fd0a4">Stop watching this topic</a></span><br>
+	  &nbsp;<br>
+	  </td>
+	<td valign="top" nowrap="nowrap" align="right">
+<form method="get" name="jumpbox" action="viewforum.php" onsubmit="if(document.jumpbox.f.value == -1){return false;}"><table cellspacing="0" cellpadding="0" border="0">
+	<tbody><tr>
+		<td nowrap="nowrap"><span class="gensmall">Jump to:&nbsp;<select name="f" onchange="if(this.options[this.selectedIndex].value != -1){ forms['jumpbox'].submit() }"><option value="-1">Select a forum</option><option value="-1">&nbsp;</option><option value="-1">Commodore 64</option><option value="-1">----------------</option><option value="2">General</option><option value="10">Games</option><option value="7">Games Competitions</option><option value="1">Help &amp; Support</option><option value="18">Emulators</option><option value="4">Scene</option><option value="6">New Releases</option><option value="3">Supermarket</option><option value="9">Protovision</option><option value="17">RGCD/Psytronik</option><option value="-1">&nbsp;</option><option value="-1">Off-Topic</option><option value="-1">----------------</option><option value="15" selected="selected">Other 8-bit Commodore computers</option><option value="12">Member Introductions</option><option value="5">Chit Chat</option></select><input name="sid" value="7bfd85ec543300deb65ba22c040fd0a4" type="hidden">&nbsp;<input value="Go" class="liteoption" type="submit"></span></td>
+	</tr>
+</tbody></table></form>
+
+<span class="gensmall">You <b>can</b> post new topics in this forum<br>You <b>can</b> reply to topics in this forum<br>You <b>can</b> edit your posts in this forum<br>You <b>can</b> delete your posts in this forum<br>You <b>can</b> vote in polls in this forum<br></span></td>
+  </tr>
+</tbody></table>
+
+<script type="text/javascript" src="Final%20Expansion%203%20Rev%2011%20Assembly_files/custom.js"></script><a href="http://www.lemon64.com/forum/0/t63079.php"><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/0.gif" alt=" " width="1" height="1" border="0"></a><div style="padding: 6px; background-color: #FFFFCC; border: 1px solid #FFCC00; margin-top: 5px; margin-bottom: 5px; clear: left; font-size: 11px;" align="center">
+<strong>Tip:</strong> Get <a href="http://www.lemon64.com/links/redirect.php?id=1531" target="blank" style="font-family: arial; font-size: 11px; font-weight: bold; text-decoration: none;"><strong>C64 Forever</strong><img src="Final%20Expansion%203%20Rev%2011%20Assembly_files/popup_window.gif" style="margin-left: 3px;" width="11" height="10" border="0"></a> for super-comfy C64 emulation with pre-installed games, demos and other goodies!
+</div>
+
+
+<div align="center"><span class="copyright"><br><br>
+<!--
+	We request you retain the full copyright notice below including the link to www.phpbb.com.
+	This not only gives respect to the large amount of time given freely by the developers
+	but also helps build interest, traffic and use of phpBB 2.0. If you cannot (for good
+	reason) retain the full copyright we request you at least leave in place the
+	Powered by phpBB line, with phpBB linked to www.phpbb.com. If you refuse
+	to include even this then support on our forums may be affected.
+
+	The phpBB Group : 2002
+--
+Powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a> &copy; 2001, 2005 phpBB Group<br />// -->
+</span></div>
+		</td>
+	</tr>
+</tbody></table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="Final%20Expansion%203%20Rev%2011%20Assembly_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-2170817-21");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+
+
+</body></html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html><head>
+
+
+<script type="text/javascript" src="VC-20%20Final%20Expansion%20v3%20Intern_files/analytics.js"></script>
+<script type="text/javascript">archive_analytics.values.server_name="wwwb-app1.us.archive.org";archive_analytics.values.server_ms=689;</script>
+<link type="text/css" rel="stylesheet" href="VC-20%20Final%20Expansion%20v3%20Intern_files/banner-styles.css">
+
+
+  <title>VC-20 Final Expansion v3 Intern</title>
+  <link rel="stylesheet" type="text/css" href="VC-20%20Final%20Expansion%20v3%20Intern_files/nils.htm">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta content="Thomas Winkler" name="author">
+  <meta content="Speichererweiterung für Commodore VC20 mit 512KB EEPROM, 512KB SRAM und SD Karte (SD2IEC)" name="description">
+<script>try {  for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){    var lastpass_f = document.forms[lastpass_iter];    if(typeof(lastpass_f.lpsubmitorig)=="undefined"){      if (typeof(lastpass_f.submit) == "function") {        lastpass_f.lpsubmitorig = lastpass_f.submit;        lastpass_f.submit = function(){          var form = this;          try {            if (document.documentElement && 'createEvent' in document)            {              var forms = document.getElementsByTagName('form');              for (var i=0 ; i<forms.length ; ++i)                if (forms[i]==form)                {                  var element = document.createElement('lpformsubmitdataelement');                  element.setAttribute('formnum',i);                  element.setAttribute('from','submithook');                  document.documentElement.appendChild(element);                  var evt = document.createEvent('Events');                  evt.initEvent('lpformsubmit',true,false);                  element.dispatchEvent(evt);                  break;                }            }          } catch (e) {}          try {            form.lpsubmitorig();          } catch (e) {}        }      }    }  }} catch (e) {}</script></head>
+<body><div id="wm-ipp" style="display: none;" class="" lang="en">
+
+<div style="position:fixed;left:0;top:0;width:100%!important">
+<div id="wm-ipp-inside">
+   <table style="width:100%;"><tbody><tr>
+   <td id="wm-logo">
+       <a href="https://web.archive.org/web/" title="Wayback Machine home page"><img src="VC-20%20Final%20Expansion%20v3%20Intern_files/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" border="0" height="39"></a>
+   </td>
+   <td class="c">
+       <table style="margin:0 auto;"><tbody><tr>
+       <td class="u" colspan="2">
+       <form target="_top" method="get" action="/web/form-submit.jsp" name="wmtb" id="wmtb"><input name="url" id="wmtbURL" value="http://vc20final.t-winkler.net/docu/internals_e.html" style="width:400px;" onfocus="this.focus();this.select();" type="text"><input name="type" value="replay" type="hidden"><input name="date" value="20130213042005" type="hidden"><input value="Go" type="submit"><span id="wm_tb_options" style="display:block;"></span></form>
+       </td>
+       <td class="n" rowspan="2">
+           <table><tbody>
+           <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+           <tr class="m">
+           	<td class="b" nowrap="nowrap">
+		
+		    <a href="https://web.archive.org/web/20111111094838/http://vc20final.t-winkler.net/docu/internals_e.html" title="11 Nov 2011">NOV</a>
+		
+		</td>
+		<td class="c" id="displayMonthEl" title="You are here: 4:20:05 Feb 13, 2013">Feb</td>
+		<td class="f" nowrap="nowrap">
+		
+		    Mar
+		
+                </td>
+	    </tr>
+           <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+           <tr class="d">
+               <td class="b" nowrap="nowrap">
+               
+                   <a href="https://web.archive.org/web/20111111094838/http://vc20final.t-winkler.net/docu/internals_e.html" title="9:48:38 Nov 11, 2011"><img src="VC-20%20Final%20Expansion%20v3%20Intern_files/wm_tb_prv_on.png" alt="Previous capture" width="14" border="0" height="16"></a>
+               
+               </td>
+               <td class="c" id="displayDayEl" style="width:34px;font-size:24px;" title="You are here: 4:20:05 Feb 13, 2013">13</td>
+	       <td class="f" nowrap="nowrap">
+               
+                   <img src="VC-20%20Final%20Expansion%20v3%20Intern_files/wm_tb_nxt_off.png" alt="Next capture" width="14" border="0" height="16">
+               
+	       </td>
+           </tr>
+           <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+           <tr class="y">
+	       <td class="b" nowrap="nowrap">
+               
+                   <a href="https://web.archive.org/web/20111111094838/http://vc20final.t-winkler.net/docu/internals_e.html" title="11 Nov 2011"><strong>2011</strong></a>
+               
+               </td>
+               <td class="c" id="displayYearEl" title="You are here: 4:20:05 Feb 13, 2013">2013</td>
+	       <td class="f" nowrap="nowrap">
+               
+                   2014
+               
+	       </td>
+           </tr>
+           </tbody></table>
+       </td>
+       </tr>
+       <tr>
+       <td class="s">
+           <a class="t" href="https://web.archive.org/web/20130213042005*/http://vc20final.t-winkler.net/docu/internals_e.html" title="See a list of every capture for this URL">4 captures</a>
+           <div class="r" title="Timespan for captures of this URL">29 May 11 - 13 Feb 13</div>
+       </td>
+       <td class="k">
+       <a href="https://web.archive.org/web/20031001000000/http://vc20final.t-winkler.net/docu/internals_e.html" id="wm-graph-anchor">
+       <div id="wm-ipp-sparkline" title="Explore captures for this URL">
+	 <img id="sparklineImgId" alt="sparklines" onmouseover="__wm.st(1)" onmouseout="__wm.st(0)" onmousemove="__wm.mv(event,this)" src="VC-20%20Final%20Expansion%20v3%20Intern_files/graph.png" width="525" border="0" height="27">
+       <div class="yt" style="display: none; width: 25px; height: 27px; left: 175px;"></div><div class="mt" style="display: none; width: 2px; height: 27px; left: 194px;"></div></div>
+       </a>
+       </td>
+       </tr></tbody></table>
+   </td>
+   <td class="r">
+       <a href="#close" onclick="__wm.h();return false;" style="background-image:url(/static/images/toolbar/wm_tb_close.png);top:5px;" title="Close the toolbar">Close</a>
+       <a href="http://faq.web.archive.org/" style="background-image:url(/static/images/toolbar/wm_tb_help.png);bottom:5px;" title="Get some help using the Wayback Machine">Help</a>
+   </td>
+   </tr></tbody></table>
+</div>
+</div>
+</div>
+
+
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script type="text/javascript" src="VC-20%20Final%20Expansion%20v3%20Intern_files/disclaim-element.js"></script>
+<script type="text/javascript" src="VC-20%20Final%20Expansion%20v3%20Intern_files/graph-calc.js"></script>
+<script type="text/javascript">//<![CDATA[
+var __wm = (function(imgWidth,imgHeight,yearImgWidth,monthImgWidth){
+var wbPrefix = "/web/";
+var wbCurrentUrl = "http://vc20final.t-winkler.net/docu/internals_e.html";
+
+var firstYear = 1996;
+var displayDay = "13";
+var displayMonth = "Feb";
+var displayYear = "2013";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var $D=document,$=function(n){return document.getElementById(n)};
+var trackerVal,curYear = -1,curMonth = -1;
+var yearTracker,monthTracker;
+function showTrackers(val) {
+  if (val===trackerVal) return;
+  var $ipp=$("wm-ipp");
+  var $y=$("displayYearEl"),$m=$("displayMonthEl"),$d=$("displayDayEl");
+  if (val) {
+    $ipp.className="hi";
+  } else {
+    $ipp.className="";
+    $y.innerHTML=displayYear;$m.innerHTML=displayMonth;$d.innerHTML=displayDay;
+  }
+  yearTracker.style.display=val?"inline":"none";
+  monthTracker.style.display=val?"inline":"none";
+  trackerVal = val;
+}
+function trackMouseMove(event,element) {
+  var eventX = getEventX(event);
+  var elementX = getElementX(element);
+  var xOff = Math.min(Math.max(0, eventX - elementX),imgWidth);
+  var monthOff = xOff % yearImgWidth;
+
+  var year = Math.floor(xOff / yearImgWidth);
+  var monthOfYear = Math.min(11,Math.floor(monthOff / monthImgWidth));
+  // 1 extra border pixel at the left edge of the year:
+  var month = (year * 12) + monthOfYear;
+  var day = monthOff % 2==1?15:1;
+  var dateString = zeroPad(year + firstYear) + zeroPad(monthOfYear+1,2) +
+    zeroPad(day,2) + "000000";
+
+  $("displayYearEl").innerHTML=year+firstYear;
+  $("displayMonthEl").innerHTML=prettyMonths[monthOfYear];
+  // looks too jarring when it changes..
+  //$("displayDayEl").innerHTML=zeroPad(day,2);
+  var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+  $("wm-graph-anchor").href=url;
+
+  if(curYear != year) {
+    var yrOff = year * yearImgWidth;
+    yearTracker.style.left = yrOff + "px";
+    curYear = year;
+  }
+  if(curMonth != month) {
+    var mtOff = year + (month * monthImgWidth) + 1;
+    monthTracker.style.left = mtOff + "px";
+    curMonth = month;
+  }
+}
+function hideToolbar() {
+  $("wm-ipp").style.display="none";
+}
+function bootstrap() {
+  var $spk=$("wm-ipp-sparkline");
+  yearTracker=$D.createElement('div');
+  yearTracker.className='yt';
+  with(yearTracker.style){
+    display='none';width=yearImgWidth+"px";height=imgHeight+"px";
+  }
+  monthTracker=$D.createElement('div');
+  monthTracker.className='mt';
+  with(monthTracker.style){
+    display='none';width=monthImgWidth+"px";height=imgHeight+"px";
+  }
+  $spk.appendChild(yearTracker);
+  $spk.appendChild(monthTracker);
+
+  var $ipp=$("wm-ipp");
+  $ipp&&disclaimElement($ipp);
+}
+return{st:showTrackers,mv:trackMouseMove,h:hideToolbar,bt:bootstrap};
+})(525, 27, 25, 2);//]]>
+</script>
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  min-width:800px !important;
+}
+</style>
+
+<script type="text/javascript">__wm.bt();</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+<h1>FE3 Docu - technology and programming<br>
+</h1>
+<hr style="width: 100%; height: 2px;"><a href="https://web.archive.org/web/20130213042005/http://www.t-winkler.net/">Home</a>
+| <a href="mailto:t.winkler@tirol.com">Mail</a>
+| <a href="https://web.archive.org/web/20130213042005/http://vc20final.t-winkler.net/index_1.html">Final Expansion v1</a> | <a href="https://web.archive.org/web/20130213042005/http://vc20final.t-winkler.net/index_2.html">Final Expansion v2</a>
+| <a href="https://web.archive.org/web/20130213042005/http://vc20final.t-winkler.net/index_en.html">Final Expansion v3</a>&nbsp;<span style="font-weight: bold;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</span> | <a href="https://web.archive.org/web/20130213042005/http://vc20final.t-winkler.net/docu/internals.html">GERMAN</a><span style="font-weight: bold;"><a href="https://web.archive.org/web/20130213042005/http://vc20final.t-winkler.net/xs1541/index_en.html"> </a>&nbsp;</span>
+<hr>
+<p><br>
+Thanks to <span style="font-weight: bold;">Vic20-Ian</span> from
+denial board who made this translation!!<br>
+<br>
+</p>
+<p><br>
+</p>
+<p>The <span style="font-weight: bold;">Final Expansion</span>
+contains <span style="font-weight: bold;">512KB SRAM and 512KB Flash
+memory</span>. In order to access the expanded memory one has to enable
+it sequentially. This is due to the constraints of the address range of
+the 6502 processor which can only see 64KB at any time. On the Vic-20
+the free address space is constrained to 4 x 8KB + 3KB (See memory map):</p>
+<br>
+<a href="https://web.archive.org/web/20130213042005/http://vc20final.t-winkler.net/index-Dateien/vc20-v2-2.GIF"><img alt="" src="VC-20%20Final%20Expansion%20v3%20Intern_files/vc20-v2-2a.GIF" style="border: 2px solid ; width: 160px; height: 108px;"></a><br>
+<br>
+<br>
+<br>
+<h2><span style="text-decoration: underline;"><strong>Registers:</strong></span></h2>
+<p>The Final Expansion has 2 registers in order to configure it through
+software. The registers are accessed like memory addresses and can be
+read from (PEEKed) and written too (POKEed). The registers have 8 bits
+as for other memory addresses. After a Hard Reset or after switching on
+the Vic20, both registers contain Zero.</p>
+<br>
+<p><span style="font-weight: bold;"><br>
+</span></p>
+<h3><strong>Register 1</strong> ($9c02)<strong>:</strong></h3>
+<p>With Register 1 the MODE of the Final Expansion can be selected. The
+Register is located at address 39938 ($9c02).<br>
+Values are written to the register With <span style="font-weight: bold;">POKE 39938,x.</span> Values are read from
+the Register with <span style="font-weight: bold;">PEEK(39938)</span>.</p>
+<p>The highest 3 bits (Bit 5,6 and 7) control the usage mode of the
+Final Expansion. The lowest 5 bits (Bit 0,1,2,3 and 4) provide <span style="font-weight: bold;">additional information</span> the selected
+mode of use. It is possible to build a value for the register using AND
+and OR logic and then poke the resulting number to the Register.
+(Register 1: MMMIIIII).&nbsp;</p>
+<p><br>
+M - Mode of Use<br>
+I - Additional Information <br>
+<br>
+<br>
+</p>
+<h3><strong>Register 2</strong> ($9c03)<strong>:</strong></h3>
+<p>With Register 2 the RESOURCES of Final Expansion can be enabled or
+disabled. The Register is located at 39939 ($9c03). Values are written
+to the register With POKE 39939,Y. Values are read from the Register
+with PEEK(39939).</p>
+<p>The Vic-20 has 5 free address ranges (memory blocks). The Final
+expansion can make these 5 blocks available independently. This means
+the Final Expansion memory can be made available in one or more blocks
+to the Vic-20 (Banking)<br>
+</p>
+<p>The lower 5 bits (Bit 0,1,2,3 and 4) of Register 2 control the
+visibility of the 5 memory blocks in the Vic-20. A 0 switches the
+relevant block on and a 1 swiches it off. The configuration of
+individual blocks is needed to enable compatibility with other
+expansion modules.</p>
+<p>The highest bit (Bit 7) of Register 2 controls the visibility of the
+Registers themselves. A 0 makes the Registers visible, a 1 hides the
+Registers (Deactivates the Registers)</p>
+<p><span style="text-decoration: underline;">ATTENTION:</span> if the
+Registers are deactivated then it is no longer possible for the
+software to alter the memory configuration. Only after a Reset will the
+Register become visible again.<br>
+</p>
+<p>Disabling these Registers is used to prevent new software from
+altering the configuration of the Final Expansion without intention.
+With this facility the compatibility of the Final Expansion with any
+conceivable software is ensured.</p>
+<p><br>
+Bit 0 ... Visibility of the Vic-20 memory block 0 (Blk0 - $0400-$0FFF)<br>
+Bit 1 ... Visibility of the Vic-20 memory block 1 (Blk1 - $2000-$3FFF)<br>
+Bit 2 ... Visibility of the Vic-20 memory block 2 (Blk2 - $4000-$5FFF)<br>
+Bit 3 ... Visibility of the Vic-20 memory block 3 (Blk3 - $6000-$7FFF)<br>
+Bit 4 ... Visibility of the Vic-20 memory block 05 (Blk5 - $A000-$BFFF)<br>
+Bit 5 ... 1: invert A13<br>
+Bit 6 ... 1: invert A14<br>
+Bit 7 ... Visibility of IO-3 (Register 1 und 2)<br>
+<br>
+<br>
+</p>
+<h3><strong>Banking:</strong></h3>
+<p>In order to access the full memory of the Final Expansion, the
+memory must be switched on in stages. In order to achieve this, a
+number of modes are available for use in order to cover every
+requirement.<br>
+<br>
+</p>
+<hr>
+<span style="font-weight: bold;"><br>
+</span>
+<h2>Final Expansion Modes of use:<br>
+</h2>
+<h2></h2>
+<ul style="list-style-type: disc;">
+  <li>
+    <h4><span style="text-decoration: underline;"><strong>START MODE</strong>
+(000zzzzz):</span></h4>
+    <p>After a reset with the red button or after initial power on, all
+the bits in the register are set to zero, in this way the FE is always
+in START MODE after a reset With POKE 39938,0 the START MODE can be
+activated from software.<br>
+    </p>
+  </li>
+</ul>
+<p style="margin-left: 40px;">Write operations to the FE memory go to
+RAM in Bank 1.<br>
+<br>
+The 0 Block of the Vic 20 (3k expansion) is disabled.<br>
+<br>
+The START MODE of Final Expansion is provided for maximum compatibility
+with other modules. In order to avoid possible incompatibility with
+other expansion modules, The Final Expansion controls only Block 5
+(Memory range $A000 - $BFFF). Block 5 must be active, otherwise the
+firmware of the Final Expansion itself cannot be automatically started.<br>
+</p>
+<p style="margin-left: 40px;">Because the Final Expansion in START MODE
+only uses block 5, one can simply deactivate the FE by disconnecting
+the BLK5 circuit path. (e.g. with a switch). N.B. This would require a
+modification to the Final Expansion or the Vic-20 expansion port.</p>
+<p style="margin-left: 40px;">The registers are deactiviated in START
+MODE, the Lockbit serves as a control for this.<br>
+The lockbit functions only in START MODE in order to avoid
+incompatibility with other modules that may use the same addresses as
+Final Expansion for registers.</p>
+<p style="margin-left: 40px;">The lockbit can be cleared via a POKE to
+Block 5. A PEEK resets the lockbit again.<br>
+This way programs in Block 5 cannot write to an FE register as long as
+the FE is in START MODE.</p>
+<p style="margin-left: 40px;">In START MODE only block 5 is controlled.
+<br>
+Read operations are from the Flash at address $6000 (Flash Block 3,
+highest block of the first 32k bank - Bank 0).<br>
+Write operations always go to SRAM. This way the whole firmware can be
+simply copied to SRAM.<br>
+Write operations to Block 5 go to SRAM address $E000 (SRAM Block 7,
+highest block of the second 32k bank - Bank 1).<br>
+If the SRAM 1 mode is switched to, the SRAM Block 7 lies exactly in
+Block 5 of the Vic-20.<br>
+<br>
+</p>
+<br>
+<ul style="list-style-type: disc;">
+  <li>
+    <h4><span style="text-decoration: underline;"><strong>SUPER ROM MODE</strong>
+(010zzzzz):</span></h4>
+    <p>With Poke 39938,64 the flash memory of the Final Expansion is
+enabled.</p>
+    <p>Read operations come from the ROM (Flash) i.e. from the selected
+Bank.</p>
+    <p>Write operations go to the RAM in Bank 1.<br>
+    <br>
+The Block 0 of the Vic-20 (3k expansion) is enabled.<br>
+    <br>
+    </p>
+    <p>The 512KB of the Flash are divided into 16 pages of 32KB, any
+one of which can be selected for access. These 32KB are further divided
+into 8KB pieces and are assigned to the addresses $2000 (Blk 1), $4000
+(Blk 2), $6000 (Blk 3) and $A000 (Blk 5).</p>
+    <p>The additional information in the Register (zzzzz) select the
+relevant 32KB block of the Flash memory,<br>
+In 512KB there are 16 x 32KB pages. The additional register values can
+therefore take the values 0 to 15.<br>
+Readers will notice that the additional register information can hold 5
+bits or 32 values.<br>
+Correct, the Final Expansion can also address 1MB chips. However, these
+are not available to buy in DIL packages, therefore this cannot be used.<br>
+    <br>
+    <br>
+    </p>
+  </li>
+  <li> <span style="text-decoration: underline;"><strong>RAM 1 MODE</strong>
+(100zzzzz):</span></li>
+</ul>
+<div style="margin-left: 40px;">
+<p>With POKE 39938,128 the SRAM of the Final Expansion is activated.</p>
+<p>Read operations are always from RAM Bank 1.</p>
+<p>Write operations go to RAM Bank 1 or optionallt to Bank 2.</p>
+<p>The Block 0 of the Vic-20 (3K Expansion) is switched on. The Bit 0
+of Register 1 controls the write protection. There is up to 35KB of
+SRAM available to configure (4 x 8KB + 3KB) at the addresses $0400 (Blk
+0), $2000 (Blk 1), $4000 (Blk 2), $6000 (Blk 3) and $A000 (Blk 5). The
+3KB expansion (Vic-20 Blk 0) comes from Bank 0 (The first 32KB in SRAM)
+of the SRAM. The four 8KB blocks in the Vic-20 (Blk 1 - Blk 5) come
+from Bank 1 (The second 32KB in SRAM) of the SRAM. This way all the
+addressable space in the Vic-20 is filled with RAM and therefore the
+maximum expansion with memory is achieved.</p>
+<p>The additional information bits in Register 1 (zzzzz) control the
+write access to the RAM blocks. Bit 4 controls Blk 5, Bit 3 Controls
+Blk 3, Bit 2 Controls Blk 2, Bit 1 Controls Blk 1 and Bit 0 Controls
+Blk 0. If the Bit is set to 0 then the RAM Block 0 can only be read not
+written. (1: write protection = on??? Off??? The bits for Blocks 1 to 5
+control the target for the write operation. If the bit is not set (0)
+then the write operation is to Bank 1 of the RAM. If the Bit is set to
+(1) then the write operation is to Bank 2 of the RAM.</p>
+<p>Changing the target for the write operation functions as a kind of
+write protection. A write protection is needed in order to emulate a
+ROM cartridge. First one writes the ROM content to RAM and then one
+protects it from being overwritten.<br>
+</p>
+<p>Why do we need this? Some game cartridges overwrite themselves
+(intentionally), so that they won't run in RAM.<br>
+<br>
+</p>
+<br>
+</div>
+<ul style="list-style-type: disc;">
+  <li>
+    <h4><span style="text-decoration: underline;"><strong>RAM 2 MODE</strong>
+(110zzzzz):</span> </h4>
+  </li>
+</ul>
+<div style="margin-left: 40px;">With POKE 39938,192 RAM Mode 2 of the
+Final Expansion is activated.&nbsp;</div>
+<p style="margin-left: 40px;">Read operations come from the RAM Bank 1
+or optionally from Bank 2.</p>
+<p style="margin-left: 40px;">Write operations are always to RAM Bank 1.</p>
+<p style="margin-left: 40px;">The Block 0 of the Vic-20 (3K Expansion)
+is switched on. The Bit 0 of Register 1 controls the write protection.
+There is up to 35KB of SRAM available to configure (4 x 8KB + 3KB) at
+the addresses $0400 (Blk 0), $2000 (Blk 1), $4000 (Blk 2), $6000 (Blk
+3) and $A000 (Blk 5).</p>
+<p style="margin-left: 40px;">The 3KB expansion (Vic-20 Blk 0) comes
+from Bank 0 (The first 32KB in SRAM) of the SRAM.</p>
+<p style="margin-left: 40px;">The four 8KB blocks in the Vic-20 (Blk 1
+- Blk 5) come from Bank 1 (The second 32KB in SRAM) of the SRAM.<br>
+This way all the addressable space in the Vic-20 is filled with RAM and
+therefore the maximum expansion with memory is achieved.</p>
+<p style="margin-left: 40px;">The additional information bits in
+Register 1 (zzzzz) control the write access to the RAM blocks. Bit 4
+controls Blk 5, Bit 3 Controls Blk 3, Bit 2 Controls Blk 2, Bit 1
+Controls Blk 1 and Bit 0 Controls Blk 0.</p>
+<p style="margin-left: 40px;">If the Bit is set to 0 then the RAM Block
+0 can only be read not written.</p>
+<p style="margin-left: 40px;">The bits for Blocks 1 to 5 control the
+write operation. If the bit is not set (0) then it reads from Bank 1 of
+the RAM. If the Bit is set to (1) then it reads from Bank 2 of the RAM.
+In this way you have 64KB available (instead of 32KB). This way the RAM
+in Bank 2 can not be overwritten. The Ram in Bank 2 functions with
+write protection (like ROM). Through this you can leave a program
+running without losing access to the RAM, one has a sort of RAM under a
+ROM, like in the C64.<br>
+</p>
+<p style="margin-left: 40px;">Why do we need this? : one could for
+example program a machine code monitor to run in Bank 2 and display the
+contents of the whole of Bank 1.<br>
+</p>
+<p style="margin-left: 40px;">This monitor would need almost no memory
+for itself.<br>
+</p>
+<div style="margin-left: 40px;"><br>
+</div>
+<br>
+<ul style="list-style-type: disc;">
+  <li><span style="text-decoration: underline;"><strong>SUPER RAM MODE</strong>
+(101zzzzz):</span> <br>
+    <br>
+With Poke 39938,160 the SUPER RAM MODE of Final Expansion is activated.
+    <p>Read operations come from the RAM from the selected Bank.</p>
+    <p>Write operations go to the RAM in the selected Bank.</p>
+    <p>Block 0 of the Vic-20 (3K Expansion) is switched on.</p>
+    <p>There are 32KB of SRAM enabled (4 x 8KB) at the addresses $2000
+(Block 1), $4000 (Block 2), $6000 (Block 3) and $A000 (Block 5).</p>
+    <p>The usage of SUPER RAM is similar to a Flash read mode, except
+that RAM instead of EEPROM is used so that access to the full 512KB is
+possible.</p>
+    <p>The additional information in the Register (zzzzz) selects the
+32KB Block of the SRAM.</p>
+    <p>In 512KB one has 16 x 32KB Blocks. The additional information
+can take the values 0 to 15.</p>
+    <p>What can you do with an 8 Bit computer like the Vic-20 with half
+a megabyte of RAM?</p>
+    <p>Who knows what innovative uses resourceful developers will find,
+one could for example easily save 3 full disks in there ...&nbsp; </p>
+    <br>
+    <br>
+  </li>
+  <li>
+    <h4><span style="text-decoration: underline;"><strong>RAM / ROM
+MODE</strong> (011zzzzz):</span> </h4>
+    <p>With Poke 39938,96 the RAM/ROM mode of the Final Expansion is
+enabled.</p>
+    <p>Read operations come from the RAM Bank 1 or optionallt from the
+ROM Bank 0.</p>
+    <p>Write operations go always to the RAM, either in the Bank 1 (RAM
+Mode) or in the Bank 2 (ROM Mode).</p>
+    <p>The Block 0 of the Vic-20 (3K Expansion) is switched on. </p>
+    <p>The Bit 0 of Register 1 controls the write protection.</p>
+    <p>There is up to 35KB of SRAM available to configure (4 x 8KB +
+3KB) at the addresses $0400 (Blk 0), $2000 (Blk 1), $4000 (Blk 2),
+$6000 (Blk 3) and $A000 (Blk 5).</p>
+    <p>The 3KB expansion (Vic-20 Blk 0) comes from Bank 0 (The first
+32KB in SRAM) of the SRAM.</p>
+    <p>The four 8KB blocks in the Vic-20 (Blk 1 - Blk 5) come from Bank
+1 (The second 32KB in SRAM) of the SRAM.</p>
+    <p>This way all the addressable space in the Vic-20 is filled with
+RAM and therefore the maximum expansion with memory is achieved.</p>
+    <p>The additional information in Register 1 (zzzzz) controls the
+selection of the Vic-20 Blocks. Bit 4 controls Blk 5, Bit 3 Controls
+Blk 3, Bit 2 Controls Blk 2, Bit 1 Controls Blk 1 and Bit 0 Controls
+Blk 0. If the Bit is set to 0 then the RAM Block 0 can only be read not
+written. </p>
+    <p>The Bits of the Blocks 1 to 5 control the access mode. If the
+Bit is not set (0) then access is to the RAM Bank 1. If the Bit is set
+(1) then read access is to the Bank 0 of the ROM (Flash) and write
+access is to the RAM Bank 1. </p>
+    <p>In this way there is access to a mix of RAM and ROM. In ROM mode
+the RAM in Bank 2 can be written to. This way one can simply copy ROM
+code into into the RAM Bank.&nbsp; </p>
+    <p>Why do we need this?: The firmware can activate the ROM BLock
+where the code has just been added. Simultaneously one can access the
+remaining RAM.</p>
+    <br>
+    <br>
+  </li>
+  <li>
+    <h4><span style="text-decoration: underline;"><strong>Flash Write
+Mode</strong>
+(001zzzzz): <br>
+    </span></h4>
+  </li>
+</ul>
+<p style="margin-left: 40px;">With Poke 39938,32 the FLash Mode of the
+Final Expansion is activated.</p>
+<p style="margin-left: 40px;">Read access comes from the enabled Bank.</p>
+<p style="margin-left: 40px;">Write access goes to the ROM (Flash) in
+the selected Bank.</p>
+<p style="margin-left: 40px;">The Block 0 of the Vic-20 (3k Expansion)
+is enabled.</p>
+<p style="margin-left: 40px;">In this mode it is possible to examine
+and erase the Flash memory. In order to do this the special command
+sequence must be followed as prepared by the manufacturer of the Flash
+memory (See AM29F040 Data Sheet).</p>
+<p style="margin-left: 40px;">The Banking follows the same methos as
+Super ROM mode.</p>
+<p style="margin-left: 40px;">The FE Firmware Flasher (fe3flash) uses
+this method.</p>
+<span style="font-weight: bold;"><br>
+</span><span style="font-weight: bold;"><br>
+</span>
+<h3></h3>
+<hr>
+<h2>Disclaimer</h2>
+All named goods or trademarks belong to their respective owners. All
+information is provided without review of rights or patents for
+educational purposes only. Use of this material is at the reader's own
+risk.<br>
+<br>
+Please do not contact me if: your Vic20, CPLD or your PC ceases to
+work; a fire takes hold in your house, street or city; the climate
+temperature is raised 30 degrees by the resulting smoke; Millions die
+of thirst and hunger and the rest are captured by aliens, who arrive
+because it it so cuddly warm...be warned and think carefully about your
+actions.<br>
+<span style="font-weight: bold;"><br>
+</span>
+<hr>first
+edit 2009-10-24, last edit 2010-04-05
+<hr>
+
+
+
+
+
+
+
+
+</body></html>
+<!--
+     FILE ARCHIVED ON 4:20:05 Feb 13, 2013 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 13:15:45 Oct 16, 2016.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->

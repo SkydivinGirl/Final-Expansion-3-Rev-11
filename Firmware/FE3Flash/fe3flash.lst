@@ -1,0 +1,689 @@
+------- FILE fe3flash.asm LEVEL 1 PASS 2
+      1  1536 ????
+      2  1536 ????				      processor	6502	; VIC20
+      3  1536 ????
+      4  1536 ????
+      5  1536 ????	       00 7a	   CHRPTR     =	$7a	; Get Char Pointer
+      6  1536 ????	       00 22	   PT1	      =	$22	; Pointer
+      7  1536 ????	       00 24	   PT2	      =	$24	; Pointer
+      8  1536 ????	       00 14	   PT3	      =	$14	; Pointer
+      9  1536 ????
+     10  1536 ????	       00 61	   FAC	      =	$61	; Floating Point Accumulator
+     11  1536 ????
+     12  1536 ????	       00 d1	   C_LINE     =	$d1	; Pointer Current Screen Line Char RAM
+     13  1536 ????	       00 f3	   C_COLP     =	$f3	; Pointer Current Screen Line Color RAM
+     14  1536 ????
+     15  1536 ????	       00 d6	   C_ROW      =	$d6	; Value Cursor Row Current Line
+     16  1536 ????	       00 d3	   C_COL      =	$d3	; Value Cursor Column Current Line
+     17  1536 ????	       00 d7	   C_CHR      =	$d7	; Value Current Character
+     18  1536 ????
+     19  1536 ????	       00 c6	   KEYANZ     =	$c6	; Value Characters in Keyboard Buffer
+     20  1536 ????
+     21  1536 ????	       00 73	   CHRGET     =	$73	; Kernal Routine Get Character
+     22  1536 ????	       00 79	   CHRGOT     =	$79	; Kernal Routine Get Last Character
+     23  1536 ????
+     24  1536 ????	       02 00	   BIP	      =	$0200	; BASIC Input Buffer 88 Bytes
+     25  1536 ????	       03 3c	   CAS_BUF    =	$033C	; Cassette Buffer
+     26  1536 ????
+     27  1536 ????	       9c 02	   IO_FINAL   =	$9c02	; FINAL EXPANSION REGISTER 1 (39938,39939)
+     28  1536 ????
+     29  1536 ????	       00 00	   FEMOD_START =	$00	; MODE START
+     30  1536 ????	       00 40	   FEMOD_ROM  =	$40	; MODE EEPROM (READ EEPROM, WRITE RAM)
+     31  1536 ????	       00 20	   FEMOD_ROM_P =	$20	; MODE FLASH EEPROM (READ EEPROM, WRITE EEPROM)
+     32  1536 ????	       00 80	   FEMOD_RAM  =	$80	; MODE SRAM (SRAM 40KB, BANK 0 and BANK 1)
+     33  1536 ????	       00 a0	   FEMOD_RAM2 =	$A0	; MODE BIG SRAM (SRAM 512KB, BANK 0 TO 15)
+     34  1536 ????
+     35  1536 ????	       00 c3	   LOADPTR    =	$c3	; Pointer Tape Load Temporary Address
+     36  1536 ????	       00 ae	   LOADEND    =	$ae	; Pointer End of Program Address
+     37  1536 ????
+     38  1536 ????
+     39  1536 ????	       fd 22	   SOFT_RESET =	64802	; SOFT RESET
+     40  1536 ????	       e5 0a	   CURSOR_POS =	$e50a	; Save or Restore Cursor Position
+     41  1536 ????
+     42  1536 ????	       ff d2	   BSOUT      =	$ffd2	; Kernal Routine Output One Byte
+     43  1536 ????	       ff e4	   GETIN      =	$ffe4	; Kernal Routine Get Keyboard Input
+     44  1536 ????
+     45  1536 ????	       12 00	   START_ADR  =	$1200	; Program Load Address
+     46  1536 ????
+     47  11ff					      org	START_ADR -1	; Set Origin
+     48  11ff
+     49  11ff		       01 12		      byte.b	<(START_ADR +1),>(START_ADR +1)
+     50  1201				   loader_start
+     51  1201		       1b 10 d9 07*	      byte.b	$1b,$10,$d9,$07,$9e,$c2,"(44)",$ac,"256",$aa,$c2,"(43)",$aa,"26",0,0,0	; 2009 SYSPEEK(44)*256+PEEK(43)+28
+     52  121b
+     53  121b
+     54  121b
+     55  121b							; ==============================================================
+     56  121b							; START OF CODE
+     57  121b							; ==============================================================
+     58  121b
+     59  121b		       03 36	   PRG_LEN    =	FLASHER_E - START_ADR
+     60  121b
+     61  121b				   START
+     62  121b		       a5 2c		      lda	44
+     63  121d		       c9 12		      cmp	#>(START_ADR)
+     64  121f		       f0 28		      beq	START_2
+     65  1221
+     66  1221							; MOVE CODE
+     67  1221		       a6 2b		      ldx	43
+     68  1223		       ca		      dex
+     69  1224		       18		      clc
+     70  1225		       69 03		      adc	#>(PRG_LEN)
+     71  1227		       85 25		      sta	PT2 +1	; REAL END ADDRESS
+     72  1229		       86 24		      stx	PT2
+     73  122b
+     74  122b		       a2 00		      ldx	#<(START_ADR)
+     75  122d		       a9 15		      lda	#(>START_ADR + >PRG_LEN)
+     76  122f		       86 22		      stx	PT1
+     77  1231		       85 23		      sta	PT1 +1	; TARGET END ADDRESS
+     78  1233
+     79  1233		       a2 04		      ldx	#>PRG_LEN +1
+     80  1235		       a0 00		      ldy	#0
+     81  1237				   START_0
+     82  1237		       b1 24		      lda	(PT2),y
+     83  1239		       91 22		      sta	(PT1),y
+     84  123b		       c8		      iny
+     85  123c		       d0 f9		      bne	START_0
+     86  123e		       c6 23		      dec	PT1 +1
+     87  1240		       c6 25		      dec	PT2 +1
+     88  1242		       ca		      dex
+     89  1243		       d0 f2		      bne	START_0
+     90  1245
+     91  1245		       a2 12		      ldx	#>(START_ADR)
+     92  1247		       86 2c		      stx	44
+     93  1249
+     94  1249				   START_2
+     95  1249		       4c 4c 12 	      jmp	FLASHER
+     96  124c
+     97  124c
+     98  124c							; ==============================================================
+     99  124c							; MAIN CODE
+    100  124c							; ==============================================================
+    101  124c
+    102  124c				   FLASHER
+    103  124c		       8d 00 a0 	      sta	$a000	; UNLOCK IO
+    104  124f		       a9 20		      lda	#FEMOD_ROM_P	; PROG MODE
+    105  1251		       8d 02 9c 	      sta	IO_FINAL
+    106  1254		       20 7e 12 	      jsr	TestEE
+    107  1257		       b0 1c		      bcs	START_E
+    108  1259
+    109  1259		       20 ee 14 	      jsr	BLANK_CHECK
+    110  125c		       f0 14		      beq	START_5
+    111  125e
+    112  125e		       20 e1 14 	      jsr	FLASH_ERASE
+    113  1261		       b0 05		      bcs	START_ERR	; ERROR -->
+    114  1263
+    115  1263		       20 ee 14 	      jsr	BLANK_CHECK
+    116  1266		       f0 0a		      beq	START_5
+    117  1268
+    118  1268				   START_ERR
+    119  1268		       a9 30		      lda	#<MSG_ERROR
+    120  126a		       a0 14		      ldy	#>MSG_ERROR
+    121  126c		       20 fb 13 	      jsr	STROUT	; Error
+    122  126f		       4c 75 12 	      jmp	START_E
+    123  1272
+    124  1272				   START_5
+    125  1272		       20 63 14 	      jsr	FLASH_FIRMWARE
+    126  1275
+    127  1275				   START_E
+    128  1275		       20 c5 12 	      jsr	FlashCodeEndSequ	; RESET
+    129  1278
+    130  1278		       a9 40		      lda	#FEMOD_ROM	; EEP MODE
+    131  127a		       8d 02 9c 	      sta	IO_FINAL
+    132  127d		       60		      rts
+    133  127e
+    134  127e
+    135  127e
+    136  127e
+    137  127e
+    138  127e							; ==============================================================
+    139  127e							; TEST FOR RIGHT EEPROM TYPE
+    140  127e							; ==============================================================
+    141  127e
+    142  127e				   TestEE
+    143  127e		       a9 40		      lda	#<MSG_VENDOR
+    144  1280		       a0 13		      ldy	#>MSG_VENDOR
+    145  1282		       20 fb 13 	      jsr	STROUT	; Vendor:
+    146  1285
+    147  1285		       20 23 13 	      jsr	FlashCodeVendorID	; GET VENDOR ID IN X AND DEVICE ID IN Y
+    148  1288		       98		      tya
+    149  1289		       48		      pha
+    150  128a		       e0 01		      cpx	#$01	; AMD
+    151  128c		       f0 04		      beq	VENDOROK
+    152  128e		       e0 c2		      cpx	#$c2	; AMD by MX
+    153  1290							;  beq VENDOROK
+    154  1290							;  cpx #$20				  ; AMD by STMicroelectronics
+    155  1290		       d0 1e		      bne	EE_ERR0
+    156  1292
+    157  1292				   VENDOROK
+    158  1292		       a9 00		      lda	#0
+    159  1294		       20 63 13 	      jsr	HEXOUT
+    160  1297
+    161  1297		       a9 4b		      lda	#<MSG_DEVICE
+    162  1299		       a0 13		      ldy	#>MSG_DEVICE
+    163  129b		       20 fb 13 	      jsr	STROUT	; Device:
+    164  129e		       68		      pla
+    165  129f		       aa		      tax
+    166  12a0							;  ldx #$a4
+    167  12a0		       e0 a4		      cpx	#$a4	; AMD or MX 29F040
+    168  12a2							;  beq DEVICEOK
+    169  12a2							;  cpx #$20				  ; STMicroelectronics 29F040
+    170  12a2							;  cpx #$e2				  ; STMicroelectronics 29F040
+    171  12a2		       d0 0d		      bne	EE_ERR1
+    172  12a4
+    173  12a4				   DEVICEOK
+    174  12a4		       a9 00		      lda	#0
+    175  12a6		       20 63 13 	      jsr	HEXOUT
+    176  12a9
+    177  12a9		       a9 0d		      lda	#13
+    178  12ab		       20 87 13 	      jsr	CHROUT	; CR/LF
+    179  12ae		       18		      clc
+    180  12af		       60		      rts
+    181  12b0
+    182  12b0				   EE_ERR0
+    183  12b0		       68		      pla
+    184  12b1				   EE_ERR1
+    185  12b1		       a9 55		      lda	#<MSG_EEE
+    186  12b3		       a0 13		      ldy	#>MSG_EEE
+    187  12b5		       20 fb 13 	      jsr	STROUT	; Bad EEPROM!
+    188  12b8		       38		      sec
+    189  12b9		       60		      rts
+    190  12ba
+    191  12ba
+    192  12ba
+    193  12ba
+    194  12ba							; ==============================================================
+    195  12ba							; 29F040 SUBS
+    196  12ba							; ==============================================================
+    197  12ba
+    198  12ba		       20 00	   _flashBase =	$2000	; Base EEPROM Address
+    199  12ba		       25 55	   _flash555  =	_flashBase + $555	; EEPROM Address + $555
+    200  12ba		       22 aa	   _flash2aa  =	_flashBase + $2aa	; EEPROM Address + $2aa
+    201  12ba
+    202  12ba		       00 20	   FLASH_ALG_ERROR_BIT =	$20	; Erase Error DQ3=1 DQ5=1
+    203  12ba							; FLASH_ALG_RUNNING_BIT  = $08
+    204  12ba
+    205  12ba
+    206  12ba				   _flashCodeMagic		; COMMON DATA COMMANDS FOR EEPROM BUS OPERATIONS
+    207  12ba		       a9 aa		      lda	#$aa
+    208  12bc		       8d 55 25 	      sta	_flash555	; Address/Data: 555/AA
+    209  12bf		       a9 55		      lda	#$55
+    210  12c1		       8d aa 22 	      sta	_flash2aa	; Address/Data: 2AA/55
+    211  12c4		       60		      rts
+    212  12c5
+    213  12c5				   FlashCodeEndSequ		; RESET
+    214  12c5				   _flashCodeEndSequ
+    215  12c5		       a9 f0		      lda	#$f0
+    216  12c7		       8d 00 20 	      sta	_flashBase
+    217  12ca		       60		      rts
+    218  12cb
+    219  12cb				   _flashCodeSectorErase		; ERASE FLASH SECTORS
+    220  12cb		       20 ba 12 	      jsr	_flashCodeMagic	; Address/Data: 555/AA 2AA/55
+    221  12ce		       a9 80		      lda	#$80
+    222  12d0		       8d 55 25 	      sta	_flash555	; Address/Data: 555/80
+    223  12d3		       20 ba 12 	      jsr	_flashCodeMagic	; Address/Data: 555/AA 2AA/55
+    224  12d6		       a9 30		      lda	#$30
+    225  12d8		       8d 00 20 	      sta	_flashBase	; Address/Data: _flashBase/30
+    226  12db		       60		      rts
+    227  12dc
+    228  12dc				   _flashCodeChipErase
+    229  12dc		       20 ba 12 	      jsr	_flashCodeMagic	; Address/Data: 555/AA 2AA/55
+    230  12df		       a9 80		      lda	#$80
+    231  12e1		       8d 55 25 	      sta	_flash555	; Address/Data: 555/80
+    232  12e4		       20 ba 12 	      jsr	_flashCodeMagic	; Address/Data: 555/AA 2AA/55
+    233  12e7		       a9 10		      lda	#$10
+    234  12e9		       8d 55 25 	      sta	_flash555	; Address/Data: 555/10
+    235  12ec		       60		      rts
+    236  12ed
+    237  12ed				   _flashCodeWrite
+    238  12ed		       48		      pha
+    239  12ee		       20 ba 12 	      jsr	_flashCodeMagic	; Address/Data: 555/AA 2AA/55
+    240  12f1		       a9 a0		      lda	#$A0
+    241  12f3		       8d 55 25 	      sta	_flash555	; Address/Data: 555/A0
+    242  12f6		       68		      pla
+    243  12f7		       a0 00		      ldy	#0
+    244  12f9		       91 c3		      sta	(LOADPTR),y
+    245  12fb		       60		      rts
+    246  12fc
+    247  12fc
+    248  12fc				   _flashCodeCheckProgress		; TOGGLE CHECK
+    249  12fc							; Push Accumulator and X to Stack
+    250  12fc		       48		      PHA
+    251  12fd		       8a		      txa
+    252  12fe		       48		      pha
+    253  12ff				   _flashCodeCP0
+    254  12ff		       a2 02		      ldx	#2
+    255  1301				   _flashCodeCP1
+    256  1301		       ad 00 20 	      lda	_flashBase
+    257  1304		       cd 00 20 	      cmp	_flashBase
+    258  1307		       f0 12		      beq	_flashCodeCP2
+    259  1309
+    260  1309		       29 20		      and	#FLASH_ALG_ERROR_BIT
+    261  130b		       f0 f2		      beq	_flashCodeCP0
+    262  130d
+    263  130d							; ERROR!!
+    264  130d		       ad 00 20 	      lda	_flashBase
+    265  1310		       cd 00 20 	      cmp	_flashBase
+    266  1313		       f0 09		      beq	_flashCodeCP4
+    267  1315
+    268  1315		       20 c5 12 	      jsr	FlashCodeEndSequ	; RESET
+    269  1318		       38		      sec
+    270  1319		       b0 04		      bcs	_flashCodeCPE	; ERROR!
+    271  131b
+    272  131b				   _flashCodeCP2
+    273  131b		       ca		      dex
+    274  131c		       d0 e3		      bne	_flashCodeCP1
+    275  131e				   _flashCodeCP4
+    276  131e		       18		      clc
+    277  131f				   _flashCodeCPE
+    278  131f		       68		      pla
+    279  1320		       aa		      tax
+    280  1321		       68		      pla
+    281  1322		       60		      rts
+    282  1323
+    283  1323
+    284  1323							;=============== GET VENDOR/DEVICE ID in X,Y
+    285  1323				   FlashCodeVendorID		; ENTER AUTOSELECT MODE TO READ VENDOR/DEVICE ID
+    286  1323		       20 ba 12 	      jsr	_flashCodeMagic	; Address/Data: 555/AA 2AA/55
+    287  1326		       a9 90		      lda	#$90
+    288  1328		       8d 55 25 	      sta	_flash555	; Address/Data: 555/90
+    289  132b		       ae 00 20 	      ldx	_flashBase
+    290  132e		       ac 01 20 	      ldy	_flashBase+1
+    291  1331		       4c c5 12 	      jmp	_flashCodeEndSequ
+    292  1334
+    293  1334							;=============== ERASE SECTOR
+    294  1334				   FlashCodeSectorErase
+    295  1334		       20 cb 12 	      jsr	_flashCodeSectorErase
+    296  1337		       4c fc 12 	      jmp	_flashCodeCheckProgress
+    297  133a
+    298  133a							;=============== FLASH BYTE	AC ==> (LOADPTR)
+    299  133a				   FlashCodeWrite
+    300  133a		       20 ed 12 	      jsr	_flashCodeWrite
+    301  133d		       4c fc 12 	      jmp	_flashCodeCheckProgress
+    302  1340
+    303  1340
+    304  1340
+    305  1340
+    306  1340							;------------
+    307  1340				   MSG_VENDOR
+    308  1340		       0e 12 76 45*	      dc.b	FONT2,RVSON,"vENDOR:",RVSOFF,0
+    309  134b				   MSG_DEVICE
+    310  134b		       12 64 45 56*	      dc.b	RVSON,"dEVICE:",RVSOFF,0
+    311  1355
+    312  1355				   MSG_EEE
+    313  1355		       3f 3f 0d 42*	      dc.b	"??",13,"BAD EEPROM",0
+    314  1363
+    315  1363
+    316  1363							;------------
+    317  1363				   HEXOUT
+    318  1363		       48		      pha
+    319  1364		       a9 24		      lda	#"$"
+    320  1366		       20 d2 ff 	      jsr	BSOUT	; Write $ to Screen
+    321  1369		       68		      pla
+    322  136a		       f0 03		      beq	HEX0
+    323  136c		       20 70 13 	      jsr	HEX2
+    324  136f				   HEX0
+    325  136f		       8a		      txa
+    326  1370				   HEX2
+    327  1370		       48		      pha
+    328  1371		       4a		      lsr
+    329  1372		       4a		      lsr
+    330  1373		       4a		      lsr
+    331  1374		       4a		      lsr
+    332  1375		       20 7b 13 	      jsr	HEX1
+    333  1378		       68		      pla
+    334  1379		       29 0f		      and	#15
+    335  137b				   HEX1
+    336  137b		       18		      clc
+    337  137c		       69 f6		      adc	#246
+    338  137e		       90 02		      bcc	HEX1_2
+    339  1380		       69 06		      adc	#6
+    340  1382				   HEX1_2
+    341  1382		       69 3a		      adc	#58
+    342  1384		       4c d2 ff 	      jmp	BSOUT
+    343  1387
+    344  1387
+    345  1387
+    346  1387
+    347  1387							; ==============================================================
+    348  1387							; DISPLAY CHAR
+    349  1387							; ==============================================================
+    350  1387
+    351  1387				   CHROUT
+    352  1387		       48		      pha
+    353  1388		       85 d7		      STA	$d7
+    354  138a		       8a		      txa
+    355  138b		       48		      pha
+    356  138c		       98		      tya
+    357  138d		       48		      pha
+    358  138e		       a5 d7		      lda	$d7
+    359  1390		       30 2b		      bmi	CHOU_7
+    360  1392		       c9 20		      cmp	#$20
+    361  1394		       b0 03		      bcs	CHOU_1
+    362  1396		       4c 56 e7 	      jmp	$e756
+    363  1399
+    364  1399				   CHOU_1
+    365  1399		       c9 60		      cmp	#$60
+    366  139b		       90 04		      bcc	CHOU_2
+    367  139d		       29 df		      and	#$df
+    368  139f		       d0 02		      bne	CHOU_3
+    369  13a1				   CHOU_2
+    370  13a1		       29 3f		      and	#$3f
+    371  13a3				   CHOU_3
+    372  13a3		       a6 c7		      ldx	$c7	;revers?
+    373  13a5		       f0 02		      beq	CHOU_4
+    374  13a7		       09 80		      ora	#$80
+    375  13a9				   CHOU_4
+    376  13a9		       ae 86 02 	      ldx	$0286	;Farbcode
+    377  13ac		       20 a1 ea 	      jsr	$eaa1	;Zeichen ausgeben
+    378  13af		       a5 d3		      lda	$d3
+    379  13b1		       c9 15		      cmp	#$15
+    380  13b3		       f0 02		      beq	CHOU_5
+    381  13b5		       e6 d3		      inc	$d3
+    382  13b7				   CHOU_5
+    383  13b7		       68		      pla
+    384  13b8		       a8		      tay
+    385  13b9		       68		      pla
+    386  13ba		       aa		      tax
+    387  13bb		       68		      pla
+    388  13bc		       60		      rts
+    389  13bd
+    390  13bd				   CHOU_7
+    391  13bd		       29 7f		      and	#$7f
+    392  13bf		       c9 20		      cmp	#$20
+    393  13c1		       b0 03		      bcs	CHOU_8
+    394  13c3		       4c 2a e8 	      jmp	$e82a
+    395  13c6				   CHOU_8
+    396  13c6		       09 40		      ora	#$40
+    397  13c8		       d0 d9		      bne	CHOU_3
+    398  13ca
+    399  13ca				   PUTCHR
+    400  13ca		       48		      pha
+    401  13cb		       20 b2 ea 	      jsr	$eab2	;zeiger in color RAM
+    402  13ce		       68		      pla
+    403  13cf				   PUTCHR2
+    404  13cf		       a4 d3		      ldy	C_COL
+    405  13d1				   PUTCHR3
+    406  13d1		       91 d1		      sta	(C_LINE),y
+    407  13d3		       ad 86 02 	      lda	$0286	;Farbcode
+    408  13d6		       91 f3		      sta	(C_COLP),y
+    409  13d8		       60		      rts
+    410  13d9
+    411  13d9							; ==============================================================
+    412  13d9							; CONVERT CHAR TO VRAM CODE	   C=1:CTRL CHAR
+    413  13d9							; ==============================================================
+    414  13d9
+    415  13d9				   CONVCHR
+    416  13d9		       85 d7		      STA	C_CHR
+    417  13db
+    418  13db		       29 7f		      and	#$7f
+    419  13dd		       c9 20		      cmp	#$20
+    420  13df		       90 19		      bcc	COCHO_9
+    421  13e1		       a6 d7		      ldx	C_CHR
+    422  13e3		       10 04		      bpl	COCHO_1
+    423  13e5		       09 40		      ora	#$40
+    424  13e7		       d0 0a		      bne	COCHO_3
+    425  13e9
+    426  13e9				   COCHO_1
+    427  13e9		       c9 60		      cmp	#$60
+    428  13eb		       90 04		      bcc	COCHO_2
+    429  13ed		       29 df		      and	#$df
+    430  13ef		       d0 b2		      bne	CHOU_3
+    431  13f1				   COCHO_2
+    432  13f1		       29 3f		      and	#$3f
+    433  13f3				   COCHO_3
+    434  13f3		       a6 c7		      ldx	$c7	;revers?
+    435  13f5		       f0 02		      beq	COCHO_4
+    436  13f7		       09 80		      ora	#$80
+    437  13f9				   COCHO_4
+    438  13f9		       38		      sec
+    439  13fa				   COCHO_9
+    440  13fa		       60		      rts
+    441  13fb
+    442  13fb
+    443  13fb							; ==============================================================
+    444  13fb							; DISPLAY STRING    in AC/YR
+    445  13fb							; ==============================================================
+    446  13fb
+    447  13fb				   STROUT
+    448  13fb		       85 22		      sta	PT1
+    449  13fd		       84 23		      sty	PT1 +1
+    450  13ff		       a0 00		      ldy	#0
+    451  1401							;sty 658			  ;Scroll Flag
+    452  1401							;dey
+    453  1401				   STOU_1
+    454  1401		       b1 22		      lda	(PT1),y
+    455  1403		       f0 06		      beq	STOU_E
+    456  1405		       20 87 13 	      jsr	CHROUT
+    457  1408		       c8		      iny
+    458  1409		       d0 f6		      bne	STOU_1
+    459  140b				   STOU_E
+    460  140b		       60		      rts
+    461  140c
+    462  140c
+    463  140c
+    464  140c							; ==============================================================
+    465  140c							; OPEN FIRMWARE FILE AND FLASH
+    466  140c							; ==============================================================
+    467  140c
+    468  140c				   LOADER_FN
+    469  140c		       46 45 33 46*	      dc.b	"FE3FIRMWARE"
+    470  1417				   LOADER_FN2
+    471  1417
+    472  1417				   MSG_ERRFNF
+    473  1417		       4e 4f 20 46*	      dc.b	"NO FIRMWARE FILE?",13,0
+    474  142a				   MSG_ERRFLSH
+    475  142a		       46 4c 41 53*	      dc.b	"FLASH "
+    476  1430				   MSG_ERROR
+    477  1430		       45 52 52 4f*	      dc.b	"ERROR",13,0
+    478  1437
+    479  1437				   MSG_FLASH
+    480  1437		       46 4c 41 53*	      dc.b	"FLASHING ...",13,0
+    481  1445				   MSG_ERASE
+    482  1445		       45 52 41 53*	      dc.b	"ERASING ...",13,0
+    483  1452				   MSG_BLANK
+    484  1452		       42 4c 41 4e*	      dc.b	"BLANK CHECK ...",13,0
+    485  1463
+    486  1463
+    487  1463
+    488  1463		       00 93	   SY_VERIFY  =	$93	; Load/Verify Select
+    489  1463		       00 90	   SY_STATUS  =	$90	; Kernal I/O Status Word
+    490  1463		       00 b9	   SY_SA      =	$b9	; Current Secondary Address
+    491  1463		       00 ba	   SY_DN      =	$ba	; Current Device Number
+    492  1463
+    493  1463		       ff ba	   SETFNUM    =	$ffba	; Kernal Routine Set Logical, First, and Second Addresses
+    494  1463		       ff bd	   SETFNAM    =	$ffbd	; Kernal Routine Set Filename
+    495  1463		       ff d5	   LOAD       =	$ffd5	; Kernal Routine Load from Device
+    496  1463
+    497  1463		       c6 59	   BASCLR     =	$c659
+    498  1463		       c5 33	   PGMLINK    =	$c533
+    499  1463
+    500  1463		       f4 95	   SYS_IECOPEN =	$f495
+    501  1463		       ee 14	   SYS_TALK   =	$ee14
+    502  1463		       ee ce	   SYS_TALKSA =	$eece
+    503  1463		       f5 87	   SYS_LOAD2  =	$f587
+    504  1463		       ef 19	   SYS_IECIN  =	$ef19
+    505  1463		       ee f6	   SYS_UNLISTEN =	$eef6
+    506  1463		       f6 da	   SYS_CLOSE  =	$f6da
+    507  1463		       ff cc	   SYS_CLRCH  =	$ffcc	; Kernal Routine Close input and output channels
+    508  1463		       ff e1	   SYS_STOP   =	$ffe1	; Kernal Routine Scan Stop Key
+    509  1463		       f7 87	   SYS_ERRFNF =	$f787
+    510  1463
+    511  1463
+    512  1463				   FLASH_FIRMWARE
+    513  1463							;  lda #1				    ; SA
+    514  1463		       a9 01		      lda	#1
+    515  1465		       a2 08		      ldx	#8
+    516  1467		       20 ba ff 	      jsr	SETFNUM
+    517  146a
+    518  146a		       a9 0b		      lda	#LOADER_FN2-LOADER_FN
+    519  146c		       a0 14		      ldy	#>LOADER_FN
+    520  146e		       a2 0c		      ldx	#<LOADER_FN
+    521  1470		       20 bd ff 	      jsr	SETFNAM
+    522  1473
+    523  1473		       20 0f 15 	      jsr	SET_PTR
+    524  1476
+    525  1476							;LOAD_CART
+    526  1476		       a9 00		      lda	#0	;load
+    527  1478		       aa		      tax		;SA - LOAD AT ADDRESS
+    528  1479		       85 93		      sta	SY_VERIFY
+    529  147b		       85 90		      sta	SY_STATUS
+    530  147d		       a9 60		      lda	#$60
+    531  147f		       85 b9		      sta	SY_SA
+    532  1481		       20 95 f4 	      jsr	SYS_IECOPEN
+    533  1484		       a5 ba		      lda	SY_DN
+    534  1486		       20 14 ee 	      jsr	SYS_TALK
+    535  1489		       a5 b9		      lda	SY_SA
+    536  148b		       20 ce ee 	      jsr	SYS_TALKSA
+    537  148e							;  jmp SYS_LOAD2
+    538  148e
+    539  148e		       20 19 ef 	      jsr	SYS_IECIN
+    540  1491		       48		      pha
+    541  1492		       a5 90		      lda	SY_STATUS
+    542  1494		       4a		      lsr
+    543  1495		       4a		      lsr
+    544  1496		       b0 29		      bcs	FLFI_ER3
+    545  1498
+    546  1498		       a9 37		      lda	#<MSG_FLASH
+    547  149a		       a0 14		      ldy	#>MSG_FLASH
+    548  149c		       20 fb 13 	      jsr	STROUT	; Flashing ...
+    549  149f		       68		      pla
+    550  14a0		       20 cc 14 	      jsr	DOBYTE
+    551  14a3				   FLFI_5
+    552  14a3		       a9 fd		      lda	#$fd
+    553  14a5		       25 90		      and	SY_STATUS
+    554  14a7		       85 90		      sta	SY_STATUS
+    555  14a9		       20 19 ef 	      jsr	SYS_IECIN
+    556  14ac		       aa		      tax
+    557  14ad		       a5 90		      lda	SY_STATUS
+    558  14af		       4a		      lsr
+    559  14b0		       4a		      lsr
+    560  14b1		       b0 f0		      bcs	FLFI_5
+    561  14b3
+    562  14b3		       8a		      txa
+    563  14b4		       20 cc 14 	      jsr	DOBYTE
+    564  14b7		       24 90		      bit	SY_STATUS
+    565  14b9		       50 e8		      bvc	FLFI_5	; EOI?
+    566  14bb
+    567  14bb				   FLFI_9
+    568  14bb		       20 f6 ee 	      jsr	SYS_UNLISTEN
+    569  14be		       4c da f6 	      jmp	SYS_CLOSE
+    570  14c1
+    571  14c1
+    572  14c1				   FLFI_ER3
+    573  14c1		       68		      pla
+    574  14c2		       a9 17		      lda	#<MSG_ERRFNF
+    575  14c4		       a0 14		      ldy	#>MSG_ERRFNF
+    576  14c6				   ERROUT
+    577  14c6		       20 fb 13 	      jsr	STROUT	; No Firmware File?
+    578  14c9		       4c cc ff 	      jmp	SYS_CLRCH
+    579  14cc
+    580  14cc
+    581  14cc				   DOBYTE
+    582  14cc							;jsr HEX2
+    583  14cc		       20 3a 13 	      jsr	FlashCodeWrite
+    584  14cf		       b0 07		      bcs	DOBY_err
+    585  14d1
+    586  14d1		       d1 c3		      cmp	(LOADPTR),y
+    587  14d3		       d0 03		      bne	DOBY_err
+    588  14d5
+    589  14d5		       4c 29 15 	      jmp	INC_PTR
+    590  14d8
+    591  14d8				   DOBY_err
+    592  14d8		       68		      pla
+    593  14d9		       68		      pla
+    594  14da				   DOBY_err2
+    595  14da		       a9 2a		      lda	#<MSG_ERRFLSH
+    596  14dc		       a0 14		      ldy	#>MSG_ERRFLSH
+    597  14de		       4c c6 14 	      jmp	ERROUT
+    598  14e1
+    599  14e1
+    600  14e1
+    601  14e1				   FLASH_ERASE
+    602  14e1		       a9 45		      lda	#<MSG_ERASE
+    603  14e3		       a0 14		      ldy	#>MSG_ERASE
+    604  14e5		       20 fb 13 	      jsr	STROUT	; Erasing ...
+    605  14e8							;  jsr _flashCodeChipErase
+    606  14e8		       20 34 13 	      jsr	FlashCodeSectorErase
+    607  14eb		       b0 ed		      bcs	DOBY_err2
+    608  14ed		       60		      rts
+    609  14ee
+    610  14ee
+    611  14ee
+    612  14ee				   BLANK_CHECK
+    613  14ee		       a9 52		      lda	#<MSG_BLANK
+    614  14f0		       a0 14		      ldy	#>MSG_BLANK
+    615  14f2		       20 fb 13 	      jsr	STROUT	; Blank Check ...
+    616  14f5
+    617  14f5		       20 0f 15 	      jsr	SET_PTR
+    618  14f8		       20 00 15 	      jsr	BLANK_CHECK_2
+    619  14fb		       d0 11		      bne	BLCH_E
+    620  14fd
+    621  14fd		       20 1c 15 	      jsr	SET_PTR2
+    622  1500				   BLANK_CHECK_2
+    623  1500		       a9 ff		      lda	#$ff
+    624  1502				   BLCH_2
+    625  1502		       d1 c3		      cmp	(LOADPTR),y
+    626  1504		       d0 08		      bne	BLCH_E
+    627  1506		       c8		      iny
+    628  1507		       d0 f9		      bne	BLCH_2
+    629  1509		       e6 c4		      inc	LOADPTR +1
+    630  150b		       ca		      dex
+    631  150c		       d0 f4		      bne	BLCH_2
+    632  150e				   BLCH_E
+    633  150e		       60		      rts
+    634  150f
+    635  150f
+    636  150f
+    637  150f				   SET_PTR
+    638  150f		       a9 70		      lda	#$70	;DEFAULT CARTRIDGE ADDRESS
+    639  1511		       85 c4		      sta	LOADPTR +1
+    640  1513		       a9 00		      lda	#$00	;DEFAULT CARTRIDGE ADDRESS
+    641  1515		       85 c3		      sta	LOADPTR
+    642  1517		       a2 10		      ldx	#16	;BLOCK COUNT
+    643  1519		       a0 00		      ldy	#0
+    644  151b		       60		      rts
+    645  151c
+    646  151c				   SET_PTR2
+    647  151c		       a9 a0		      lda	#$a0	;DEFAULT CARTRIDGE ADDRESS
+    648  151e		       85 c4		      sta	LOADPTR +1
+    649  1520		       a9 00		      lda	#$00	;DEFAULT CARTRIDGE ADDRESS
+    650  1522		       85 c3		      sta	LOADPTR
+    651  1524		       a2 20		      ldx	#32	;BLOCK COUNT
+    652  1526		       a0 00		      ldy	#0
+    653  1528		       60		      rts
+    654  1529
+    655  1529				   INC_PTR
+    656  1529		       e6 c3		      inc	LOADPTR
+    657  152b		       d0 08		      bne	INPT_2
+    658  152d		       e6 c4		      inc	LOADPTR +1
+    659  152f
+    660  152f		       a5 c4		      lda	LOADPTR +1
+    661  1531		       c9 80		      cmp	#$80
+    662  1533		       f0 e7		      beq	SET_PTR2
+    663  1535				   INPT_2
+    664  1535		       60		      rts
+    665  1536
+    666  1536
+    667  1536				   FLASHER_E
+    668  1536
+    669  1536
+    670  1536							; ==============================================================
+    671  1536							; Define some common PETSCII codes
+    672  1536							; http://sta.c64.org/cbm64petkey.html
+    673  1536							; ==============================================================
+    674  1536
+    675  1536		       00 93	   CLRHOME    =	$93
+    676  1536		       00 13	   HOME       =	$13
+    677  1536		       00 12	   RVSON      =	$12
+    678  1536		       00 92	   RVSOFF     =	$92
+    679  1536		       00 0d	   CR	      =	$0D
+    680  1536		       00 90	   BLACK      =	$90
+    681  1536		       00 05	   WHITE      =	$05
+    682  1536		       00 1c	   RED	      =	$1C
+    683  1536		       00 1f	   BLUE       =	$1F
+    684  1536		       00 9c	   PURPLE     =	$9C
+    685  1536		       00 9e	   YELLOW     =	$9E
+    686  1536		       00 8e	   FONT1      =	142	; BIG LETTERS & GRAFIC
+    687  1536		       00 0e	   FONT2      =	14	; BIG AND SMALL LETTERS
+    688  1536		       00 40	   AT	      =	$40

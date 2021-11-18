@@ -1,0 +1,930 @@
+------- FILE fe3diag.asm LEVEL 1 PASS 2
+      1  169d ????						; VIC 20 Final Expansion Cartridge - Diagnose Programm  r002
+      2  169d ????						; Thomas Winkler - 2009
+      3  169d ????
+      4  169d ????
+      5  169d ????						; Testet die FE3/FE1 Hardware durch
+      6  169d ????						; Testbedingung:
+      7  169d ????						;  - Firmware aus (starten mit Commodore Taste)
+      8  169d ????						;  - Firmware ab $6 geflashed
+      9  169d ????						;  - Rest des Flashspeicher leer ($ff)
+     10  169d ????
+     11  169d ????
+     12  169d ????				      processor	6502	;VIC20
+     13  169d ????
+     14  169d ????
+     15  169d ????	       00 08	   FLGCOM     =	$08
+     16  169d ????
+     17  169d ????
+     18  169d ????	       00 7a	   CHRPTR     =	$7a	;Char Pointer
+     19  169d ????	       00 22	   PT1	      =	$22	;Pointer
+     20  169d ????	       00 24	   PT2	      =	$24	;Pointer
+     21  169d ????	       00 14	   PT3	      =	$14	;Pointer
+     22  169d ????
+     23  169d ????	       00 61	   FAC	      =	$61
+     24  169d ????
+     25  169d ????	       00 d1	   C_LINE     =	$d1	;pointer current line char RAM
+     26  169d ????	       00 f3	   C_COLP     =	$f3	;pointer current line color RAM
+     27  169d ????
+     28  169d ????	       00 d6	   C_ROW      =	$d6	;cursor row
+     29  169d ????	       00 d3	   C_COL      =	$d3	;cursor column
+     30  169d ????	       00 d7	   C_CHR      =	$d7	;cuurent char
+     31  169d ????
+     32  169d ????	       00 c6	   KEYANZ     =	$c6
+     33  169d ????
+     34  169d ????	       00 73	   CHRGET     =	$0073	;GET NEXT CHAR
+     35  169d ????	       00 79	   CHRGOT     =	$0079	;GET LAST CHAR
+     36  169d ????
+     37  169d ????	       02 00	   BIP	      =	$0200	;BASIC Input Buffer 88 Bytes
+     38  169d ????	       00 58	   BIP_LEN    =	88
+     39  169d ????
+     40  169d ????	       03 3c	   CAS_BUF    =	828	;Kassetten Buffer
+     41  169d ????
+     42  169d ????	       9c 02	   IO_FINAL   =	$9c02	;FINAL EXPANSION REGISTER 1 (39938,39939)
+     43  169d ????
+     44  169d ????	       00 00	   FEMOD_START =	$00	;MODE START
+     45  169d ????	       00 40	   FEMOD_ROM  =	$40	;MODE EEPROM (READ EEPROM, WRITE RAM)
+     46  169d ????	       00 20	   FEMOD_ROM_P =	$20	;MODE FLASH EEPROM (READ EEPROM, WRITE EEPROM)
+     47  169d ????	       00 80	   FEMOD_RAM  =	$80	;MODE SRAM (SRAM 40KB, BANK 0 and BANK 1)
+     48  169d ????	       00 a0	   FEMOD_RAM2 =	$A0	;MODE BIG SRAM (SRAM 512KB, BANK 0 TO 15)
+     49  169d ????
+     50  169d ????
+     51  169d ????	       00 c3	   LOADPTR    =	$c3
+     52  169d ????	       00 ae	   LOADEND    =	$ae
+     53  169d ????
+     54  169d ????
+     55  169d ????	       fd 22	   SOFT_RESET =	64802	;SOFT RESET
+     56  169d ????	       e5 0a	   CURSOR_POS =	$e50a
+     57  169d ????
+     58  169d ????	       ff d2	   BSOUT      =	$ffd2
+     59  169d ????	       ff e4	   GETIN      =	$ffe4
+     60  169d ????
+     61  169d ????
+     62  169d ????
+     63  169d ????	       dd cd	   PRNINT     =	$ddcd	; print integer in X/A
+     64  169d ????
+     65  169d ????
+     66  169d ????
+     67  169d ????	       12 00	   START_ADR  =	$1200
+     68  169d ????
+     69  169d ????
+     70  169d ????
+     71  11ff					      org	START_ADR -1	;
+     72  11ff
+     73  11ff		       01 12		      byte.b	<(START_ADR +1),>(START_ADR +1)
+     74  1201				   loader_start
+     75  1201		       1b 10 d9 07*	      byte.b	$1b,$10,$d9,$07,$9e,$c2,"(44)",$ac,"256",$aa,$c2,"(43)",$aa,"26",0,0,0	; 2009 SYSPEEK(44)*256+PEEK(43)+28
+     76  121b
+     77  121b
+     78  121b
+     79  121b							; ==============================================================
+     80  121b							; START OF CODE
+     81  121b							; ==============================================================
+     82  121b
+     83  121b		       04 9d	   PRG_LEN    =	END_ADR - START_ADR
+     84  121b
+     85  121b				   START
+     86  121b		       a5 2c		      lda	44
+     87  121d		       c9 12		      cmp	#>(START_ADR)
+     88  121f		       f0 28		      beq	START_2
+     89  1221
+     90  1221							; MOVE CODE
+     91  1221		       a6 2b		      ldx	43
+     92  1223		       ca		      dex
+     93  1224		       18		      clc
+     94  1225		       69 04		      adc	#>(PRG_LEN)
+     95  1227		       85 25		      sta	PT2 +1	; REAL END ADDRESS
+     96  1229		       86 24		      stx	PT2
+     97  122b
+     98  122b		       a2 00		      ldx	#<(START_ADR)
+     99  122d		       a9 16		      lda	#(>START_ADR + >PRG_LEN)
+    100  122f		       86 22		      stx	PT1
+    101  1231		       85 23		      sta	PT1 +1	; TARGET END ADDRESS
+    102  1233
+    103  1233		       a2 05		      ldx	#>PRG_LEN +1
+    104  1235		       a0 00		      ldy	#0
+    105  1237				   START_0
+    106  1237		       b1 24		      lda	(PT2),y
+    107  1239		       91 22		      sta	(PT1),y
+    108  123b		       c8		      iny
+    109  123c		       d0 f9		      bne	START_0
+    110  123e		       c6 23		      dec	PT1 +1
+    111  1240		       c6 25		      dec	PT2 +1
+    112  1242		       ca		      dex
+    113  1243		       d0 f2		      bne	START_0
+    114  1245
+    115  1245		       a2 12		      ldx	#>(START_ADR)
+    116  1247		       86 2c		      stx	44
+    117  1249
+    118  1249				   START_2
+    119  1249		       4c 4c 12 	      jmp	TEST_PROGGI
+    120  124c
+    121  124c
+    122  124c
+    123  124c
+    124  124c							; ==============================================================
+    125  124c							; START OF TEST CODE
+    126  124c							; ==============================================================
+    127  124c
+    128  124c		       00 61	   BANK       =	FAC	; BANK  (8b)
+    129  124c		       00 62	   BLOCK      =	FAC +1	; BLOCK (16b)
+    130  124c		       00 64	   PASS       =	FAC +3	; PASS  (8b)
+    131  124c		       00 65	   EC	      =	FAC +4	; ERROR CODE
+    132  124c
+    133  124c
+    134  124c		       00 c3	   FE1	      =	LOADPTR	; FE1 MODE
+    135  124c
+    136  124c
+    137  124c
+    138  124c		       00 08	   COUNT      =	FLGCOM
+    139  124c
+    140  124c
+    141  124c				   TEST_PROGGI
+    142  124c		       78		      sei
+    143  124d		       a9 00		      lda	#0
+    144  124f		       85 c3		      sta	FE1
+    145  1251		       20 78 12 	      jsr	TEST_REGISTER	; TEST FE3 REGISTER
+    146  1254		       b0 16		      bcs	TEPR_E
+    147  1256		       20 f5 12 	      jsr	TEST_ROM	; ROM READ MODE
+    148  1259		       20 b6 13 	      jsr	TEST_RAM	; RAM MODE
+    149  125c		       b0 0e		      bcs	TEPR_E
+    150  125e		       20 82 14 	      jsr	TEST_PROT	; TEST BLOCK WRITE PROTZECT
+    151  1261		       20 de 14 	      jsr	TEST_DISABLE	; TEST BLOCK DISABLE
+    152  1264		       20 7c 13 	      jsr	TEST_RAM2	; SUPER RAM MODE
+    153  1267		       b0 03		      bcs	TEPR_E
+    154  1269		       20 c9 15 	      jsr	FE_OK
+    155  126c				   TEPR_E
+    156  126c		       a2 00		      ldx	#FEMOD_START	; START MODE
+    157  126e		       8e 02 9c 	      stx	IO_FINAL
+    158  1271		       a2 00		      ldx	#0
+    159  1273		       8e 03 9c 	      stx	IO_FINAL +1
+    160  1276		       58		      cli
+    161  1277		       60		      rts
+    162  1278
+    163  1278
+    164  1278
+    165  1278
+    166  1278
+    167  1278							; ==============================================================
+    168  1278							; IO REGISTER TEST
+    169  1278							; ==============================================================
+    170  1278
+    171  1278				   TEST_REGISTER
+    172  1278		       a9 01		      lda	#1
+    173  127a		       85 65		      sta	EC	;ERROR CODE
+    174  127c
+    175  127c		       a9 d8		      lda	#<MSG_REGISTER
+    176  127e		       a0 15		      ldy	#>MSG_REGISTER
+    177  1280		       20 8c 16 	      jsr	STROUT
+    178  1283
+    179  1283		       78		      sei
+    180  1284		       a2 80		      ldx	#128
+    181  1286		       a9 00		      lda	#0
+    182  1288		       8d 00 a0 	      sta	$a000	;UNLOCK IO
+    183  128b		       8d 02 9c 	      sta	IO_FINAL	;START MODE!
+    184  128e		       8d 03 9c 	      sta	IO_FINAL +1	;ENABLE ALL BLOCKS
+    185  1291
+    186  1291		       ac 00 a0 	      ldy	$a000	;LOCK IO
+    187  1294		       8e 02 9c 	      stx	IO_FINAL
+    188  1297		       ec 02 9c 	      cpx	IO_FINAL
+    189  129a		       d0 0b		      bne	TERE_1	;ok
+    190  129c		       8d 02 9c 	      sta	IO_FINAL
+    191  129f		       cd 02 9c 	      cmp	IO_FINAL
+    192  12a2		       d0 03		      bne	TERE_1	;ok
+    193  12a4				   TERE_ERR
+    194  12a4							;  cli
+    195  12a4		       4c 8e 15 	      jmp	PRINT_ERR
+    196  12a7
+    197  12a7				   TERE_1
+    198  12a7		       8d 00 a0 	      sta	$a000	;UNLOCK IO
+    199  12aa
+    200  12aa		       e6 65		      inc	EC	;EC#=2
+    201  12ac							; TEST REGISTER 1
+    202  12ac		       8d 02 9c 	      sta	IO_FINAL
+    203  12af		       cd 02 9c 	      cmp	IO_FINAL
+    204  12b2		       d0 f0		      bne	TERE_ERR
+    205  12b4		       8e 02 9c 	      stx	IO_FINAL
+    206  12b7		       ec 02 9c 	      cpx	IO_FINAL
+    207  12ba		       d0 e8		      bne	TERE_ERR
+    208  12bc
+    209  12bc		       e6 65		      inc	EC	;EC#=3
+    210  12be							; TEST REGISTER 2
+    211  12be		       ca		      dex		;$7f
+    212  12bf		       8e 03 9c 	      stx	IO_FINAL +1
+    213  12c2		       ec 03 9c 	      cpx	IO_FINAL +1
+    214  12c5		       d0 dd		      bne	TERE_ERR
+    215  12c7		       8d 03 9c 	      sta	IO_FINAL +1
+    216  12ca		       cd 03 9c 	      cmp	IO_FINAL +1
+    217  12cd		       d0 d5		      bne	TERE_ERR
+    218  12cf
+    219  12cf		       e6 65		      inc	EC	;EC#=5
+    220  12d1							; TEST CPLD A0
+    221  12d1		       e8		      inx		;$80
+    222  12d2		       ec 02 9c 	      cpx	IO_FINAL
+    223  12d5		       d0 cd		      bne	TERE_ERR
+    224  12d7		       cd 03 9c 	      cmp	IO_FINAL +1
+    225  12da		       d0 c8		      bne	TERE_ERR
+    226  12dc
+    227  12dc		       e6 65		      inc	EC	;EC#=4
+    228  12de							; TEST CPLD A1
+    229  12de		       ca		      dex		;$7f
+    230  12df		       8e 01 9c 	      stx	IO_FINAL -1
+    231  12e2		       ec 01 9c 	      cpx	IO_FINAL -1
+    232  12e5		       d0 08		      bne	TERE_2
+    233  12e7		       8d 01 9c 	      sta	IO_FINAL -1
+    234  12ea		       cd 01 9c 	      cmp	IO_FINAL -1
+    235  12ed		       f0 03		      beq	TERE_ERR2
+    236  12ef				   TERE_2
+    237  12ef							;  cli
+    238  12ef		       4c bb 15 	      jmp	PRINT_OK
+    239  12f2
+    240  12f2
+    241  12f2				   TERE_ERR2
+    242  12f2		       4c 83 15 	      jmp	NO_RAM2
+    243  12f5
+    244  12f5
+    245  12f5
+    246  12f5							; ==============================================================
+    247  12f5							; ROM TEST
+    248  12f5							; ==============================================================
+    249  12f5
+    250  12f5				   TEST_ROM
+    251  12f5		       a9 00		      lda	#0
+    252  12f7		       85 65		      sta	EC	;ERROR CODE
+    253  12f9
+    254  12f9		       a9 40		      lda	#FEMOD_ROM	;ROM READ MODE
+    255  12fb		       8d 02 9c 	      sta	IO_FINAL
+    256  12fe
+    257  12fe		       a9 f9		      lda	#<MSG_ROMTEST
+    258  1300		       a0 15		      ldy	#>MSG_ROMTEST
+    259  1302		       20 8c 16 	      jsr	STROUT
+    260  1305
+    261  1305							; COPY PART OF ROM AS SIG
+    262  1305		       a2 57		      ldx	#BIP_LEN -1
+    263  1307				   TERO_2
+    264  1307		       bd 00 a0 	      lda	$A000,x
+    265  130a		       9d 00 02 	      sta	BIP,x
+    266  130d		       ca		      dex
+    267  130e		       10 f7		      bpl	TERO_2
+    268  1310
+    269  1310		       a9 04		      lda	#4
+    270  1312				   TERO_4
+    271  1312		       85 62		      sta	BLOCK
+    272  1314		       a9 00		      lda	#$00	;A13 / A14
+    273  1316		       20 48 13 	      jsr	CHECK_ROM
+    274  1319		       b0 23		      bcs	TERO_ERR
+    275  131b		       a9 20		      lda	#$20	;!A13 / A14
+    276  131d		       20 48 13 	      jsr	CHECK_ROM
+    277  1320		       b0 1c		      bcs	TERO_ERR
+    278  1322		       a9 40		      lda	#$40	;A13 / !A14
+    279  1324		       20 48 13 	      jsr	CHECK_ROM
+    280  1327		       b0 15		      bcs	TERO_ERR
+    281  1329		       a9 60		      lda	#$60	;!A13 / !A14
+    282  132b		       20 48 13 	      jsr	CHECK_ROM
+    283  132e		       b0 0e		      bcs	TERO_ERR
+    284  1330		       a9 00		      lda	#0
+    285  1332		       8d 03 9c 	      sta	IO_FINAL +1
+    286  1335
+    287  1335		       a9 10		      lda	#16
+    288  1337		       a6 62		      ldx	BLOCK
+    289  1339		       f0 06		      beq	TERO_6	;PASS1? -->
+    290  133b		       4c bb 15 	      jmp	PRINT_OK
+    291  133e
+    292  133e				   TERO_ERR
+    293  133e		       4c 8e 15 	      jmp	PRINT_ERR
+    294  1341
+    295  1341				   TERO_6
+    296  1341		       a2 41		      ldx	#FEMOD_ROM +1	;ROM READ MODE, BANK 1
+    297  1343		       8e 02 9c 	      stx	IO_FINAL
+    298  1346		       d0 ca		      bne	TERO_4
+    299  1348
+    300  1348
+    301  1348
+    302  1348
+    303  1348							;CHECK BLK 1,2,3,5
+    304  1348				   CHECK_ROM
+    305  1348		       8d 03 9c 	      sta	IO_FINAL +1
+    306  134b
+    307  134b		       a2 04		      ldx	#4
+    308  134d		       86 64		      stx	PASS
+    309  134f				   CHRO_2
+    310  134f		       e6 65		      inc	EC	;EC#=1,5,9,13 :: 17,21,25,29
+    311  1351		       e4 62		      cpx	BLOCK
+    312  1353		       08		      php
+    313  1354		       20 53 15 	      jsr	SET_BLK_X
+    314  1357		       20 6e 13 	      jsr	CHECK_SIG
+    315  135a		       f0 05		      beq	CHRO_4
+    316  135c
+    317  135c							;NO ROM!
+    318  135c		       28		      plp
+    319  135d		       d0 05		      bne	CHRO_6	;ok
+    320  135f
+    321  135f				   CHRO_ERR
+    322  135f		       38		      sec
+    323  1360		       60		      rts
+    324  1361
+    325  1361							;IS ROM!
+    326  1361				   CHRO_4
+    327  1361		       28		      plp
+    328  1362		       d0 fb		      bne	CHRO_ERR	;ok
+    329  1364
+    330  1364				   CHRO_6
+    331  1364		       c6 64		      dec	PASS
+    332  1366		       a6 64		      ldx	PASS
+    333  1368		       d0 e5		      bne	CHRO_2
+    334  136a		       c6 62		      dec	BLOCK
+    335  136c		       18		      clc
+    336  136d		       60		      rts
+    337  136e
+    338  136e
+    339  136e							; CHECK ROM SIG AT (PT1)  ZF=1:OK
+    340  136e				   CHECK_SIG
+    341  136e		       a0 57		      ldy	#BIP_LEN -1
+    342  1370				   CHSI_2
+    343  1370		       b9 00 02 	      lda	BIP,y
+    344  1373		       d1 22		      cmp	(PT1),y
+    345  1375		       d0 04		      bne	CHSI_E
+    346  1377		       88		      dey
+    347  1378		       10 f6		      bpl	CHSI_2
+    348  137a		       c8		      iny
+    349  137b				   CHSI_E
+    350  137b		       60		      rts
+    351  137c
+    352  137c
+    353  137c
+    354  137c
+    355  137c							; ==============================================================
+    356  137c							; RAM TEST
+    357  137c							; ==============================================================
+    358  137c
+    359  137c				   TEST_RAM2
+    360  137c		       a9 00		      lda	#0
+    361  137e		       85 65		      sta	EC	;ERROR CODE
+    362  1380
+    363  1380		       a9 15		      lda	#<MSG_RAMTEST2
+    364  1382		       a0 16		      ldy	#>MSG_RAMTEST2
+    365  1384		       20 8c 16 	      jsr	STROUT
+    366  1387
+    367  1387		       a9 02		      lda	#2
+    368  1389		       85 64		      sta	PASS
+    369  138b
+    370  138b				   TERA_20
+    371  138b		       a9 00		      lda	#0
+    372  138d		       85 61		      sta	BANK
+    373  138f		       85 62		      sta	BLOCK
+    374  1391		       85 63		      sta	BLOCK +1
+    375  1393
+    376  1393				   TERA_21
+    377  1393		       a5 61		      lda	BANK
+    378  1395		       09 a0		      ora	#FEMOD_RAM2	;SUPER RAM MODE
+    379  1397		       8d 02 9c 	      sta	IO_FINAL
+    380  139a
+    381  139a		       20 e6 13 	      jsr	TEST_BLOCKS2
+    382  139d		       90 09		      bcc	TERA_25
+    383  139f
+    384  139f		       a5 65		      lda	EC
+    385  13a1		       c9 21		      cmp	#33
+    386  13a3		       d0 3e		      bne	TERA_ERR
+    387  13a5		       4c 83 15 	      jmp	NO_RAM2
+    388  13a8
+    389  13a8				   TERA_25
+    390  13a8		       e6 61		      inc	BANK
+    391  13aa		       a5 61		      lda	BANK
+    392  13ac		       c9 10		      cmp	#16
+    393  13ae		       90 e3		      bcc	TERA_21
+    394  13b0
+    395  13b0		       c6 64		      dec	PASS
+    396  13b2		       d0 d7		      bne	TERA_20
+    397  13b4
+    398  13b4		       f0 2a		      beq	TERA_OK
+    399  13b6
+    400  13b6
+    401  13b6							; ==============================================================
+    402  13b6							; RAM TEST
+    403  13b6							; ==============================================================
+    404  13b6
+    405  13b6				   TEST_RAM
+    406  13b6		       a9 00		      lda	#0
+    407  13b8		       85 65		      sta	EC	;ERROR CODE
+    408  13ba
+    409  13ba		       a9 80		      lda	#FEMOD_RAM	;NORMAL RAM MODE
+    410  13bc		       8d 02 9c 	      sta	IO_FINAL
+    411  13bf
+    412  13bf		       a9 07		      lda	#<MSG_RAMTEST
+    413  13c1		       a0 16		      ldy	#>MSG_RAMTEST
+    414  13c3		       20 8c 16 	      jsr	STROUT
+    415  13c6
+    416  13c6		       a9 02		      lda	#2
+    417  13c8		       85 64		      sta	PASS
+    418  13ca				   TERA_0
+    419  13ca		       a9 00		      lda	#0
+    420  13cc		       85 61		      sta	BANK
+    421  13ce		       85 62		      sta	BLOCK
+    422  13d0		       85 63		      sta	BLOCK +1
+    423  13d2
+    424  13d2				   TERA_1
+    425  13d2		       20 f6 13 	      jsr	TEST_BLOCKS
+    426  13d5		       b0 0c		      bcs	TERA_ERR
+    427  13d7
+    428  13d7		       a9 9f		      lda	#FEMOD_RAM + $1f	;RAM MODE, PROTECT ALL BLOCKS
+    429  13d9		       8d 02 9c 	      sta	IO_FINAL
+    430  13dc
+    431  13dc		       c6 64		      dec	PASS
+    432  13de		       d0 ea		      bne	TERA_0
+    433  13e0
+    434  13e0				   TERA_OK
+    435  13e0		       4c bb 15 	      jmp	PRINT_OK
+    436  13e3
+    437  13e3				   TERA_ERR
+    438  13e3		       4c 8e 15 	      jmp	PRINT_ERR
+    439  13e6
+    440  13e6
+    441  13e6
+    442  13e6
+    443  13e6							; TEST SRAM BLOCKS MODE RAM 2
+    444  13e6				   TEST_BLOCKS2
+    445  13e6		       a5 61		      lda	BANK
+    446  13e8		       18		      clc
+    447  13e9		       69 41		      adc	#65
+    448  13eb		       20 d2 ff 	      jsr	BSOUT
+    449  13ee		       a9 9d		      lda	#157
+    450  13f0		       20 d2 ff 	      jsr	BSOUT
+    451  13f3		       4c 00 14 	      jmp	TEBL_1
+    452  13f6
+    453  13f6
+    454  13f6							; TEST SRAM BLOCKS MODE RAM 1
+    455  13f6				   TEST_BLOCKS
+    456  13f6		       e6 65		      inc	EC	;EC#=1,4
+    457  13f8		       20 76 15 	      jsr	SET_LORAM
+    458  13fb		       20 13 14 	      jsr	TEST_BLOCK
+    459  13fe		       b0 12		      bcs	TEBLS_ERR
+    460  1400
+    461  1400				   TEBL_1
+    462  1400		       e6 65		      inc	EC	;EC#=2,5
+    463  1402		       20 66 15 	      jsr	SET_BLK_2
+    464  1405		       20 13 14 	      jsr	TEST_BLOCK
+    465  1408		       b0 08		      bcs	TEBLS_ERR
+    466  140a
+    467  140a		       e6 65		      inc	EC	;EC#=3,6
+    468  140c		       20 6e 15 	      jsr	SET_BLK_A
+    469  140f		       20 13 14 	      jsr	TEST_BLOCK
+    470  1412							;  bcs TEBLS_ERR
+    471  1412				   TEBLS_ERR
+    472  1412		       60		      rts
+    473  1413
+    474  1413
+    475  1413							; TEST SRAM BLOCKS
+    476  1413				   TEST_BLOCK
+    477  1413		       a5 64		      lda	PASS
+    478  1415		       c9 02		      cmp	#2
+    479  1417		       d0 22		      bne	TEBL_5
+    480  1419
+    481  1419		       a6 62		      ldx	BLOCK
+    482  141b		       20 5c 14 	      jsr	TEST_SECTOR	;TEST 256 BYTE BLOCK
+    483  141e		       b0 19		      bcs	TEBL_ERR
+    484  1420
+    485  1420							; WRITE BLOCK ID
+    486  1420		       a5 62		      lda	BLOCK
+    487  1422		       91 22		      sta	(PT1),y
+    488  1424		       a5 63		      lda	BLOCK +1
+    489  1426		       c8		      iny
+    490  1427		       91 22		      sta	(PT1),y
+    491  1429		       a5 61		      lda	BANK
+    492  142b		       c8		      iny
+    493  142c		       91 22		      sta	(PT1),y
+    494  142e
+    495  142e		       20 4c 15 	      jsr	INC_BLOCK
+    496  1431		       e6 23		      inc	PT1 +1
+    497  1433
+    498  1433		       c6 08		      dec	COUNT
+    499  1435		       d0 dc		      bne	TEST_BLOCK
+    500  1437		       18		      clc
+    501  1438		       60		      rts
+    502  1439
+    503  1439				   TEBL_ERR
+    504  1439		       38		      sec
+    505  143a		       60		      rts
+    506  143b
+    507  143b							;TEST ONLY (PASS 2)
+    508  143b				   TEBL_5
+    509  143b							;lda #"."
+    510  143b							;jsr BSOUT
+    511  143b		       a0 00		      ldy	#0
+    512  143d		       a5 62		      lda	BLOCK
+    513  143f		       d1 22		      cmp	(PT1),y
+    514  1441		       d0 f6		      bne	TEBL_ERR
+    515  1443		       a5 63		      lda	BLOCK +1
+    516  1445		       c8		      iny
+    517  1446		       d1 22		      cmp	(PT1),y
+    518  1448		       d0 ef		      bne	TEBL_ERR
+    519  144a		       a5 61		      lda	BANK
+    520  144c		       c8		      iny
+    521  144d		       d1 22		      cmp	(PT1),y
+    522  144f		       d0 e8		      bne	TEBL_ERR
+    523  1451
+    524  1451		       20 4c 15 	      jsr	INC_BLOCK
+    525  1454		       e6 23		      inc	PT1 +1
+    526  1456
+    527  1456		       c6 08		      dec	COUNT
+    528  1458		       d0 b9		      bne	TEST_BLOCK
+    529  145a		       18		      clc
+    530  145b		       60		      rts
+    531  145c
+    532  145c
+    533  145c							;TEST MEMORY SECTOR (256 BYTES)
+    534  145c				   TEST_SECTOR
+    535  145c		       a0 00		      ldy	#0
+    536  145e				   TESE_1
+    537  145e		       e8		      inx
+    538  145f		       8a		      txa
+    539  1460		       91 22		      sta	(PT1),y
+    540  1462		       d1 22		      cmp	(PT1),y
+    541  1464		       d0 d3		      bne	TEBL_ERR
+    542  1466		       49 ff		      eor	#$ff
+    543  1468		       91 22		      sta	(PT1),y
+    544  146a		       d1 22		      cmp	(PT1),y
+    545  146c		       d0 cb		      bne	TEBL_ERR
+    546  146e		       c8		      iny
+    547  146f		       d0 ed		      bne	TESE_1
+    548  1471		       18		      clc
+    549  1472		       60		      rts
+    550  1473
+    551  1473
+    552  1473							;TEST MEMORY SECTOR (256 BYTES)
+    553  1473				   TEST_SECTOR_RD
+    554  1473		       a0 00		      ldy	#0
+    555  1475				   TESE_RD_1
+    556  1475		       e8		      inx
+    557  1476		       8a		      txa
+    558  1477		       49 ff		      eor	#$ff
+    559  1479		       d1 22		      cmp	(PT1),y
+    560  147b		       d0 bc		      bne	TEBL_ERR
+    561  147d		       c8		      iny
+    562  147e		       d0 f5		      bne	TESE_RD_1
+    563  1480		       18		      clc
+    564  1481		       60		      rts
+    565  1482
+    566  1482
+    567  1482
+    568  1482							; ==============================================================
+    569  1482							; TEST PROTECTED RAM
+    570  1482							; ==============================================================
+    571  1482
+    572  1482				   TEST_PROT
+    573  1482		       a9 00		      lda	#0
+    574  1484		       85 65		      sta	EC	;ERROR CODE
+    575  1486
+    576  1486							;  lda #FEMOD_RAM			  ;RAM READ MODE
+    577  1486							;  sta IO_FINAL
+    578  1486
+    579  1486		       a9 23		      lda	#<MSG_PROT
+    580  1488		       a0 16		      ldy	#>MSG_PROT
+    581  148a		       20 8c 16 	      jsr	STROUT
+    582  148d
+    583  148d							;PROT_4
+    584  148d		       a9 11		      lda	#$11	;BLK0, BLK5
+    585  148f		       20 af 14 	      jsr	CHECK_PROT
+    586  1492		       b0 18		      bcs	PROT_ERR
+    587  1494		       a9 0e		      lda	#$0e	;BLK1, BLK2, BLK3
+    588  1496		       20 af 14 	      jsr	CHECK_PROT
+    589  1499		       b0 11		      bcs	PROT_ERR
+    590  149b		       a9 05		      lda	#$05	;BLK1, BLK3
+    591  149d		       20 af 14 	      jsr	CHECK_PROT
+    592  14a0		       b0 0a		      bcs	PROT_ERR
+    593  14a2		       a9 1a		      lda	#$1a	;BLK0, BLK2, BLK5
+    594  14a4		       20 af 14 	      jsr	CHECK_PROT
+    595  14a7		       b0 03		      bcs	PROT_ERR
+    596  14a9		       4c bb 15 	      jmp	PRINT_OK
+    597  14ac
+    598  14ac				   PROT_ERR
+    599  14ac		       4c 8e 15 	      jmp	PRINT_ERR
+    600  14af
+    601  14af
+    602  14af
+    603  14af
+    604  14af							;CHECK BLK 0,1,2,3,5
+    605  14af				   CHECK_PROT
+    606  14af		       09 80		      ora	#FEMOD_RAM	;NORMAL RAM MODE
+    607  14b1		       8d 02 9c 	      sta	IO_FINAL
+    608  14b4		       85 64		      sta	PASS
+    609  14b6
+    610  14b6		       a2 00		      ldx	#0
+    611  14b8		       86 62		      stx	BLOCK
+    612  14ba				   CHPR_2
+    613  14ba		       e6 65		      inc	EC	;ERROR CODE
+    614  14bc		       46 64		      lsr	PASS
+    615  14be		       08		      php
+    616  14bf		       20 53 15 	      jsr	SET_BLK_X
+    617  14c2		       20 5c 14 	      jsr	TEST_SECTOR
+    618  14c5		       b0 0a		      bcs	CHPR_4
+    619  14c7		       20 73 14 	      jsr	TEST_SECTOR_RD
+    620  14ca		       b0 05		      bcs	CHPR_4
+    621  14cc
+    622  14cc							;WRITE OK
+    623  14cc		       28		      plp
+    624  14cd		       90 05		      bcc	CHPR_6	;not protected? --> ok
+    625  14cf
+    626  14cf				   CHPR_ERR
+    627  14cf		       38		      sec
+    628  14d0		       60		      rts
+    629  14d1
+    630  14d1							;WRITE ERROR
+    631  14d1				   CHPR_4
+    632  14d1		       28		      plp
+    633  14d2		       90 fb		      bcc	CHPR_ERR	;not protected? -->
+    634  14d4
+    635  14d4				   CHPR_6
+    636  14d4		       e6 62		      inc	BLOCK
+    637  14d6		       a6 62		      ldx	BLOCK
+    638  14d8		       e0 05		      cpx	#5
+    639  14da		       90 de		      bcc	CHPR_2
+    640  14dc		       18		      clc
+    641  14dd		       60		      rts
+    642  14de
+    643  14de
+    644  14de
+    645  14de							; ==============================================================
+    646  14de							; TEST BLOCK DISABLE
+    647  14de							; ==============================================================
+    648  14de
+    649  14de				   TEST_DISABLE
+    650  14de		       a9 00		      lda	#0
+    651  14e0		       85 65		      sta	EC	;ERROR CODE
+    652  14e2
+    653  14e2		       a9 80		      lda	#FEMOD_RAM	;RAM READ MODE
+    654  14e4		       8d 02 9c 	      sta	IO_FINAL
+    655  14e7
+    656  14e7		       a9 31		      lda	#<MSG_DISABLE
+    657  14e9		       a0 16		      ldy	#>MSG_DISABLE
+    658  14eb		       20 8c 16 	      jsr	STROUT
+    659  14ee
+    660  14ee		       a9 11		      lda	#$11	;BLK0, BLK5
+    661  14f0		       20 10 15 	      jsr	CHECK_DISA
+    662  14f3		       b0 18		      bcs	DISA_ERR
+    663  14f5		       a9 0e		      lda	#$0e	;BLK1, BLK2, BLK3
+    664  14f7		       20 10 15 	      jsr	CHECK_DISA
+    665  14fa		       b0 11		      bcs	DISA_ERR
+    666  14fc		       a9 05		      lda	#$05	;BLK1, BLK3
+    667  14fe		       20 10 15 	      jsr	CHECK_DISA
+    668  1501		       b0 0a		      bcs	DISA_ERR
+    669  1503		       a9 1a		      lda	#$1a	;BLK0, BLK2, BLK5
+    670  1505		       20 10 15 	      jsr	CHECK_DISA
+    671  1508		       b0 03		      bcs	DISA_ERR
+    672  150a		       4c bb 15 	      jmp	PRINT_OK
+    673  150d
+    674  150d				   DISA_ERR
+    675  150d		       4c 8e 15 	      jmp	PRINT_ERR
+    676  1510
+    677  1510
+    678  1510
+    679  1510
+    680  1510							;CHECK BLK 0,1,2,3,5
+    681  1510				   CHECK_DISA
+    682  1510		       85 64		      sta	PASS
+    683  1512		       85 14		      sta	PT3
+    684  1514
+    685  1514		       a2 00		      ldx	#0
+    686  1516		       86 62		      stx	BLOCK
+    687  1518				   CHDI_2
+    688  1518		       e6 65		      inc	EC	;ERROR CODE
+    689  151a		       46 64		      lsr	PASS
+    690  151c		       08		      php
+    691  151d		       20 53 15 	      jsr	SET_BLK_X
+    692  1520
+    693  1520		       a9 00		      lda	#0	;ENABLE ALL BLOCKS
+    694  1522		       8d 03 9c 	      sta	IO_FINAL +1
+    695  1525		       a6 62		      ldx	BLOCK
+    696  1527		       20 5c 14 	      jsr	TEST_SECTOR
+    697  152a		       b0 11		      bcs	CHDI_ERR
+    698  152c
+    699  152c		       e6 65		      inc	EC	;ERROR CODE
+    700  152e		       a5 14		      lda	PT3
+    701  1530		       8d 03 9c 	      sta	IO_FINAL +1
+    702  1533		       a6 62		      ldx	BLOCK
+    703  1535		       20 73 14 	      jsr	TEST_SECTOR_RD
+    704  1538		       b0 97		      bcs	CHPR_4
+    705  153a
+    706  153a							;READ OK
+    707  153a		       28		      plp
+    708  153b		       90 05		      bcc	CHDI_6	;not disabled? --> ok
+    709  153d
+    710  153d				   CHDI_ERR
+    711  153d		       38		      sec
+    712  153e		       60		      rts
+    713  153f
+    714  153f							;READ ERROR
+    715  153f				   CHDI_4
+    716  153f		       28		      plp
+    717  1540		       90 fb		      bcc	CHDI_ERR	;not disabled? --> ERROR
+    718  1542
+    719  1542				   CHDI_6
+    720  1542		       e6 62		      inc	BLOCK
+    721  1544		       a6 62		      ldx	BLOCK
+    722  1546		       e0 05		      cpx	#5
+    723  1548		       90 ce		      bcc	CHDI_2
+    724  154a		       18		      clc
+    725  154b		       60		      rts
+    726  154c
+    727  154c
+    728  154c
+    729  154c
+    730  154c
+    731  154c							; ==============================================================
+    732  154c							; SUB PROCEDURES
+    733  154c							; ==============================================================
+    734  154c
+    735  154c				   INC_BLOCK
+    736  154c		       e6 62		      inc	BLOCK
+    737  154e		       d0 02		      bne	INBL_2
+    738  1550		       e6 63		      inc	BLOCK +1
+    739  1552				   INBL_2
+    740  1552		       60		      rts
+    741  1553
+    742  1553
+    743  1553							; SET BLK IN XR
+    744  1553				   SET_BLK_X
+    745  1553		       ca		      dex
+    746  1554		       30 20		      bmi	SET_LORAM
+    747  1556		       e0 03		      cpx	#3
+    748  1558		       b0 14		      bcs	SET_BLK_A
+    749  155a							;  ldx #3
+    750  155a							;SERX_1
+    751  155a		       bd 63 15 	      lda	SERX_TAB,x
+    752  155d		       a0 00		      ldy	#0
+    753  155f		       a2 20		      ldx	#32
+    754  1561		       d0 19		      bne	SET_PTR
+    755  1563
+    756  1563
+    757  1563				   SERX_TAB
+    758  1563		       20 40 60 	      .byte.b	$20,$40,$60
+    759  1566
+    760  1566
+    761  1566							; SET BLK 1,2,3
+    762  1566				   SET_BLK_2
+    763  1566		       a9 20		      lda	#>$2000
+    764  1568		       a0 00		      ldy	#<$2000
+    765  156a		       a2 60		      ldx	#96
+    766  156c		       d0 0e		      bne	SET_PTR
+    767  156e
+    768  156e							; SET BLK 5
+    769  156e				   SET_BLK_A
+    770  156e		       a9 a0		      lda	#>$A000
+    771  1570		       a0 00		      ldy	#<$A000
+    772  1572		       a2 20		      ldx	#32
+    773  1574		       d0 06		      bne	SET_PTR
+    774  1576
+    775  1576							; SET BLK 0
+    776  1576				   SET_LORAM
+    777  1576		       a9 04		      lda	#>$0400
+    778  1578		       a0 00		      ldy	#<$0400
+    779  157a		       a2 0c		      ldx	#12
+    780  157c				   SET_PTR
+    781  157c		       85 23		      sta	PT1 +1
+    782  157e		       84 22		      sty	PT1
+    783  1580		       86 08		      stx	COUNT
+    784  1582		       60		      rts
+    785  1583
+    786  1583
+    787  1583
+    788  1583							; ==============================================================
+    789  1583							; MESSAGES
+    790  1583							; ==============================================================
+    791  1583
+    792  1583				   NO_RAM2
+    793  1583		       a9 4d		      lda	#<MSG_NO_RAM2
+    794  1585		       a0 16		      ldy	#>MSG_NO_RAM2
+    795  1587		       20 8c 16 	      jsr	STROUT
+    796  158a		       e6 c3		      inc	FE1
+    797  158c		       18		      clc
+    798  158d		       60		      rts
+    799  158e
+    800  158e
+    801  158e				   PRINT_ERR
+    802  158e		       a9 00		      lda	#0	;ENABLE ALL BLOCKS
+    803  1590		       8d 03 9c 	      sta	IO_FINAL +1
+    804  1593
+    805  1593		       a5 23		      lda	PT1 +1
+    806  1595		       48		      pha
+    807  1596		       a5 22		      lda	PT1
+    808  1598		       48		      pha
+    809  1599
+    810  1599		       a9 3f		      lda	#<MSG_ERROR
+    811  159b		       a0 16		      ldy	#>MSG_ERROR
+    812  159d		       20 8c 16 	      jsr	STROUT
+    813  15a0		       a6 65		      ldx	EC
+    814  15a2		       a9 00		      lda	#0
+    815  15a4		       20 cd dd 	      jsr	PRNINT
+    816  15a7		       a9 47		      lda	#<MSG_ERROR2
+    817  15a9		       a0 16		      ldy	#>MSG_ERROR2
+    818  15ab		       20 8c 16 	      jsr	STROUT
+    819  15ae		       68		      pla
+    820  15af		       aa		      tax
+    821  15b0		       68		      pla
+    822  15b1		       20 cd dd 	      jsr	PRNINT
+    823  15b4		       a9 0d		      lda	#13
+    824  15b6		       20 d2 ff 	      jsr	BSOUT
+    825  15b9		       38		      sec
+    826  15ba		       60		      rts
+    827  15bb
+    828  15bb
+    829  15bb				   PRINT_OK
+    830  15bb		       a9 00		      lda	#0	;ENABLE ALL BLOCKS
+    831  15bd		       8d 03 9c 	      sta	IO_FINAL +1
+    832  15c0
+    833  15c0		       a9 5a		      lda	#<MSG_OK
+    834  15c2		       a0 16		      ldy	#>MSG_OK
+    835  15c4		       20 8c 16 	      jsr	STROUT
+    836  15c7		       18		      clc
+    837  15c8		       60		      rts
+    838  15c9
+    839  15c9
+    840  15c9				   FE_OK
+    841  15c9		       a9 61		      lda	#<MSG_FE3OK
+    842  15cb		       a0 16		      ldy	#>MSG_FE3OK
+    843  15cd		       a6 c3		      ldx	FE1
+    844  15cf		       f0 04		      beq	FEOK_1
+    845  15d1		       a9 77		      lda	#<MSG_FE1OK
+    846  15d3		       a0 16		      ldy	#>MSG_FE1OK
+    847  15d5				   FEOK_1
+    848  15d5		       4c 8c 16 	      jmp	STROUT
+    849  15d8
+    850  15d8
+    851  15d8
+    852  15d8				   MSG_REGISTER
+    853  15d8		       1f 0d 46 45*	      dc.b	BLUE,13,"FE3 DIAGNOSTICS",13,13,"REGISTER.....",0
+    854  15f9				   MSG_ROMTEST
+    855  15f9		       52 4f 4d 2f*	      dc.b	"ROM/XMODE....",0
+    856  1607				   MSG_RAMTEST
+    857  1607		       52 41 4d 2d*	      dc.b	"RAM-MODE1....",0
+    858  1615				   MSG_RAMTEST2
+    859  1615		       52 41 4d 2d*	      dc.b	"RAM-MODE2....",0
+    860  1623				   MSG_PROT
+    861  1623		       42 4c 4b 2d*	      dc.b	"BLK-PROTECT..",0
+    862  1631				   MSG_DISABLE
+    863  1631		       42 4c 4b 2d*	      dc.b	"BLK-DISABLE..",0
+    864  163f
+    865  163f				   MSG_ERROR
+    866  163f		       1c 45 52 52*	      dc.b	RED,"ERROR#",0
+    867  1647				   MSG_ERROR2
+    868  1647		       1f 0d 48 50*	      dc.b	BLUE,13,"HP=",0
+    869  164d				   MSG_NO_RAM2
+    870  164d		       9c 46 45 31*	      dc.b	PURPLE,"FE1??",BLUE,13,0
+    871  1656
+    872  1656				   MSG_HP
+    873  1656		       48 50 3d 00	      dc.b	"HP=",0
+    874  165a
+    875  165a				   MSG_OK
+    876  165a		       1e 4f 4b 2e*	      dc.b	GREEN,"OK.",BLUE,13,0
+    877  1661
+    878  1661				   MSG_FE3OK
+    879  1661		       0d 46 45 33*	      dc.b	13,"FE3-512KB DETECTED.",13,0
+    880  1677				   MSG_FE1OK
+    881  1677		       0d 46 45 31*	      dc.b	13,"FE1-40KB DETECTED.",13,0
+    882  168c
+    883  168c
+    884  168c							; ==============================================================
+    885  168c							; DISPLAY STRING    in AC/YR
+    886  168c							; ==============================================================
+    887  168c
+    888  168c				   STROUT
+    889  168c		       85 22		      sta	PT1
+    890  168e		       84 23		      sty	PT1 +1
+    891  1690		       a0 00		      ldy	#0
+    892  1692							;sty 658			  ;Scroll Flag
+    893  1692							;dey
+    894  1692				   STOU_1
+    895  1692		       b1 22		      lda	(PT1),y
+    896  1694		       f0 06		      beq	STOU_E
+    897  1694		       16 97	   _relo0140  =	. +1
+    898  1696		       20 d2 ff 	      jsr	BSOUT
+    899  1699		       c8		      iny
+    900  169a		       d0 f6		      bne	STOU_1
+    901  169c				   STOU_E
+    902  169c		       60		      rts
+    903  169d
+    904  169d
+    905  169d
+    906  169d
+    907  169d				   END_ADR
+    908  169d
+    909  169d
+    910  169d							; ==============================================================
+    911  169d							; Define some common PETSCII codes
+    912  169d							; http://sta.c64.org/cbm64petkey.html
+    913  169d							; ==============================================================
+    914  169d
+    915  169d		       00 93	   CLRHOME    =	$93
+    916  169d		       00 13	   HOME       =	$13
+    917  169d		       00 12	   RVSON      =	$12
+    918  169d		       00 92	   RVSOFF     =	$92
+    919  169d		       00 0d	   CR	      =	$0D
+    920  169d		       00 90	   BLACK      =	$90
+    921  169d		       00 05	   WHITE      =	$05
+    922  169d		       00 1c	   RED	      =	$1C
+    923  169d		       00 1f	   BLUE       =	$1F
+    924  169d		       00 1e	   GREEN      =	$1E
+    925  169d		       00 9c	   PURPLE     =	$9C
+    926  169d		       00 9e	   YELLOW     =	$9E
+    927  169d		       00 8e	   FONT1      =	142	; BIG LETTERS & GRAFIC
+    928  169d		       00 0e	   FONT2      =	14	; BIG AND SMALL LETTERS
+    929  169d		       00 40	   AT	      =	$40

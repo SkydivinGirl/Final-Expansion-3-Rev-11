@@ -1,0 +1,282 @@
+FE3Firmware Revisions (compile with: dasm.exe fe3rxxx.asm -ofe3firmware.prg -llist.txt):
+
+R022d:
++ Added support for large loader files (patched by denial-user "dabone")
+
++ auto-start of first entry in loader file by pressing the <CTRL>-key on startup 
+
+R021:
+
++ Added support for AMD flash chips with MX signature ($c2 instead of $01)
+  (Patch by Nils Eilers)
+  
++ Added Makefile to assemble under Linux / OSX environment
+
++ Changed filename from FE3FIRMWARE.PRG to FEFIRMWARE without .PRG since the 
+  firmware's updater supports both filenames, but FE3FLASH.PRG 
+  supports only FE3FIRMWARE without .PRG
+
+R020:
+
++ bugfix: BLKD now works as designed
+
++ bugfix: Diskloader is improved and works fine with cassettebuffer demos (thanks to "Kratznagel")
+
++ New feature for FE3 wedge: SAVE works also with key <left arrow>.
+
+  For files already existing you can choose "update" (two versions) or "replace".
+
+                                                                                
+
+
+R019a:
+
++ bug: SJLOAD doesn't close channel on Jffy devices so LED burns after LOAD (thanks to nbla000).
+
+
+
+R019:
+
++ SJLOAD: Improved loading speed by 40%
+
++ SJLOAD: Now nearly all kernal IO vectors used: CHKIN,CKOUT,BSOUT,BASIN,CLALL,CLRCH (not only LOAD, SAVE)
+
+  This improves data access to jiffy devices (also in BASIC). 
+  Is not supported in Mini Wedge (Wedge in 3K LO-RAM, memory config F7).
+
++ SJLOAD: Messages only in direct mode. In program mode messages are suppressed.
+
+
+
+R018a (bugfix):
+
++ Bug: device# not initialized after (reset) + F7
+
+
+
+R018 (bugfix):
+
++ Bug: drive# always set to 8 on entering main menu
+
++ Package Count should viewed in decimal (not hex)
+
++ new message after flashing (Cart Flasher): "press any key"
+
++ Bug: crash after F1, F7, yellow reset
+
+
+
+
+R017b (bugfix):
+
++ Flash bug - Bank 0 as package buffer
+
++ return from diskloader to main menu after diskcommands or failed loads
+
++ change to root of SD bevore firmware flashing
+
++ internal firmware flasher now uses filename "FE3FIRMWARE.PRG" for compatibility with DirMaster
+
++ erasing flash bank 2 to 14 if isn't empty
+
+
+
+
+R017:
+
++ Cart Loader (f5)
+
+
+
+R016:
+
++ Flash Firmware (firmware update) im Utility Menü
+
++ Flash Program (Cart Flasher) im Utility Menü
+
++ Flash Info (Cart Memory Statistic) im Utility Menü
+
+
+R015a: bug fixes, changes in menus
+
+
+R014:
+
++ Menü Timeout entfernt
+
++ probeweise Diskloader mit Joystick Support
+
++ RAM Test: wenn kein RAM da fährt das FE3 trotzdem hoch. Beim Diskloader kommt ohne RAM eine Fehlermeldung
+
++ FE3 Utilities Menü - allerdings noch ohne Funktion
+
+
+R013: bug fixes
+
+
+R012:
+
++ fix für verify
+
++ Verify Kurzbefehl ">"
+
+
+R011:
+
++ SJLOAD / SJSAVE :: schnelles laden und speichern für SD2IEC und Jiffy Laufwerke
+
+
+R010:
+
++ Eigene FE3 Wedge läuft jetzt in jedem Speicherbereich.
+
+
+R009: bug fixes
+
+
+R008:
+
++ kleiner Bugfix (Unnew Schirm in original Farbe)
+
++ Diskloader kann jetzt auch mehrere Parameter in einer Zeile richtig verarbeiten (+BLK3,5:NOIO)
+
++ Die Wedge versteht jetzt die Befehle OLD und UNNEW.
+
+
+R007:
+
++ Eigene FE3 Wedge mit folgenden Befehlen:
+
+  * Keine Änderung der CHRGET Routine. Wedge arbeitet rein mit Vektoren.
+
+    Da die CHRGET Routine erhalten bleibt ist die Kompatibilität zu BASIC Programmen besser und die
+    laufen dadurch auch wieder mit 100% Geschwindigkeit. Die Wedge Befehle sind sozusagen sauber ins
+    VC-20 System integriert.
+
+  * Eigene LOAD und SAVE Routine (Vektoren modifiziert)
+
+    Der normale LOAD Befehl hat bis zu 3 Argumente: Dateiname, primäre Adresse (PA), sekundäre Adresse (SA).
+    Jetzt kommt ein viertes (optionales) Argument dazu, eine erzwungene Ladeadresse. Dadurch kann ein
+    Programm oder eine Datei auf eine bestimmte Adresse geladen werden, unabhängig davon was im Datei Start
+    für eine Adresse gespeichert ist.
+
+    Die SA konnte schon vorher 0 (BASIC) oder 1 (Programm) sein. Nun gibt es zusätzlich eine 2 für
+    Cartridges. Im Modus 2 werden die ersten beiden Bytes einer Datei nicht länger als Startadresse
+    interpretiert, sondern sind normaler Bestandteil der Datei. VC-20 Cartridges sind oft so gespeichert,
+    also ohne Ladeadresse in der Datei. Wenn bei Modus 2 keine Ladeadresse angegeben wir, dann ladet die
+    Cartridge ab BASIC Start.
+
+    Es wird nach dem Ladevorgang die Start und Endadresse der Datei angezeigt, auch bei VERIFY.
+    Also die tatsächliche Lade- und Endadresse die verwendet wurde.
+
+  * Veränderte FRMEVL Routine zur Unterstützung von HEX Zahlen ($) und Binären Zahlen (%).
+
+  * Zahlen Umrechnung mit dem Befehl (,). Ausdruck wird in DEZ, HEX, BIN und ASCII angezeigt.
+
+  * Die "eigentlichen" Wedge Befehle (/,%,#,$,@) sind erweitert und verbessert:
+
+    SD Karten bedingt gibt es Dateien die mehr als 99 Blöcke haben. Daher ist die Struktur der
+    Directory Anzeige mit $ angepasst auf VC-20 mit SD2IEC.
+
+    Alle Befehle die String Parameter benötigen (/,%,$,@) nehmen den String direkt (ohne "" Zeichen)
+    oder wahlweise in Anführungszeichen.
+
+    Wenn ein Anführungszeichen an Spalte 4 ist (das ist beim Directory so) dann wird das String Argument
+    dort gelesen und Zeichen davor ignoriert. Dadurch kann man ein Directory anzeigen, mit dem Cursor 
+    rauf gehen, einen Ladebefehl (/ oder %) schreiben und ENTER drücken, - fertig.
+
+    Mit # kann die Standard Geräte Adresse geändert oder angezeigt werden. Normal ist sie auf 8 eingestellt.
+
+    Die Ladebefehle können auch optional eine gezwungene Ladeadresse haben, wenn der String Parameter 
+    in Anführungszeichen steht. Durch Angabe einer Ladeadresse geht der % Befehl in den Cartridge 
+    Lademodus (SA=2). Wie beim normalen LOAD werden jetzt Start- und Endadresse angezeigt.
+
+  * Befehl RESET:
+
+    Der Befehl löst einen Software RESET aus. Es werden die VIC IO gesetzt und die Adresse 64802 angesprungen. Wie alle Befehle im VC-20 können auch die FE3 Befehle abgekürzt werden. Man kann also genauso R+shift-E schreiben oder RE+shift-S.
+
+  * Befehle BLK, BLKD, BLKP:
+
+    Die Blockbefehle aus dem Diskloader gehen jetzt auch im Direkt Modus. Ohne Argument werden die IO Register der FE3 angezeigt. Hinter den BLK Befehlen können in beliebieger Reihenfolge die Zahlen 0,1,2,3 und 5 eingegeben werden. Die Zahlen können Komma separiert oder zusammen geschrieben werden.
+
+    Die Befehle BLK und BLKP tun dasselbe, nämlich den Schreibschutz der FE3 aktivieren für die angegeben Blöcke. Also es werden die Bits 0 bis 4 im Register eins (39938) gesetzt.
+
+      Der Befehl BLKD wirkt auf das Register 2. Damit kann man die angegebenen Blöcke deaktivieren, also komplett ausblenden. Also es werden die Bits 0 bis 4 im Register zwei (39939) gesetzt.
+
+  * Befehl NOIO
+
+    Schaltet die Register der FE3 aus. Die Register sind unsichtbar und über 39938/39 nicht mehr erreichbar.
+
+  * Befehl OFF: Schaltet die Wedge ab
+
+    Wenn die Befehlserweiterung Grund von Inkompatibilität ist, kann sie abgeschaltet werden. Es werden alle Vektoren (BASIC und IO) neu gesetzt. Alle erweiterten Befehl funktionieren nun nicht mehr. Auch das erweiterte LOAD ist nun wieder normal. Es können keine HEX oder binären Zahlen mehr verwendet werden.
+
+  * Befehl KILL
+
+    Schaltet alles ab (Wedge, FE3 Register und Speicher Maps) und macht einen Soft - RESET.
+
+  * Code wurde etwas aufgeräumt, Müll entsorgt und ähnlicher Code zu Unterprogramme optimiert
+
+  * Wie schon bei der EasyWedge kann man beim Start (einschalten) des VC-20 die Tasten Shift oder Commodore gedrückt halten. Man startet dann ohne Firmware Menü direkt ins BASIC mit Wedge (Shift) oder ohne (Commodore).
+
+
+R006:
+
++ Revision r006, diese Firmware verbessert den Softreset.
+
+  Dadurch laufen jetzt wieder alle bekannten VC-20 Spiele, auch das problematische Moonpatrol und Ms.Pacman.
+
+
+R005:
+
++ diese Firmware läuft mit dem neuen CPLD Design 3.1.
+
+  Auch fe3flash und fe3erase sind hier angepasst, wegen dem Lockbit.
+
+
+R004:
+
++ Der RAM Test wird umgangen beim RAM Manager, dadurch startet der VIC viel schneller.
+
+
+R003:
+
++ Das Flash Utility wurde überarbeitet. Es funktioniert jetzt zuverlässig auch wenn schon was auf dem EEPROM drauf ist. Die Firmware hat jetzt r003.
+
++ Es wird ein Test über den ganzen $A und $B Bereich gefahren, ob das EEPROM leer ist (Blankcheck)
+
++ Nach dem Flash Erase wird der Blank Check nochmals gefahren und ggf. abgebrochen.
+
++ Der Flasher kontrolliert nun nicht nur den Rückgabewert des EEPROM sondern macht auch ein Verify.
+
++ Getestet mit 29F040 und 29F040B
+
++ Zudem gibt es ein neues Tool "fe3erase" das den Flash (nur) löscht. Wird normal nicht benötigt nur wenn es mit dem fe3flash nicht funktionieren sollte.
+
+
+R002:
+
++ Der Diskloader der r001 zeigt schlimme Schwächen die in der r002 alle gefixed sind:
+
+    * Systemfarben werden gesetzt (für Startoption RUN und SYS)
+    * Die BASIC initialisierung wird nochmals durchlaufen um die aktuelle RAM Einstellung zu aktualisieren.
+    * Programme die im Kasettenbuffer liegen funktionieren nun, müssen aber als letztes File geladen werden.
+    * Der Loader hatte Probleme mit A000 Cartridges wenn kein RESET Kommando nachfolgt. Die r002 kopiert im Abbruchfalle die Firmware erneut ins RAM und kann jetzt mit allen Startoptionen umgehen.
+
++ Es funktionieren jetzt alle bekannten Problemfälle. Mir ist kein Programm bekannt dass der Loader nicht starten könnte. Bitte Problemfälle an mich melden, sollten welche auftreten.
+
+
+R001:
+
++ Die Final Expansion kommt mit programmierten CPLD und leerem EEPROM. Das EEPROM soll die aktuelle Firmware der FE beinhalten.
+
++ Um die aktuelle Firmware in das EEPROM zu bringen, braucht man den Firmware Flasher. Der Firmware Flasher kann neue EEPROMS beschreiben und natürlich künftige Updates der Firmware über die alte Firmware brennen. Der Firmware Flasher befindet sich im Disk Image und heißt: FE3FLASH
+
++ Um das EEPROM der Final Expansion zu programmieren müssen folgende Schritte ausgeführt werden:
+
+    * Firmware auf die SD Karte schreiben (zwei Dateien: FE3FLASH und FE3FIRMWARE).
+    * VC-20 ausschalten!
+    * Final Expansion in den Erweiterungsslot des VC-20 stecken.
+    * VC-20 einschalten.
+    * LOAD "FE3FLASH",8 eingeben oder LOAD "*",8 wenn die Datei FE3FLASH die erste Datei auf der SD ist.
+    * RUN eingeben.

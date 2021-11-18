@@ -1,0 +1,100 @@
+- T-R and T-W
+If your hardware features RTC support the commands T-R (time read) and T-W
+(time write) are available. If the RTC isn't present, both commands return
+30,SYNTAX ERROR,00,00; if the RTC is present but not set correctly T-R will
+return 31,SYNTAX ERROR,00,00.
+
+Both commands expect a fourth character that specifies the time format
+to be used. T-W expects that the new time follows that character
+with no space or other characters inbetween. For the A, B and D
+formats, the expected input format is exactly the same as returned
+by T-R with the same format character; for the I format the day of
+week is ignored and calculated based on the date instead.
+
+The possible formats are:
+- "A"SCII: "SUN. 01/20/08 01:23:45 PM"+CHR$(13)
+The day-of-week string can be any of "SUN.", "MON.", "TUES", "WED.",
+"THUR", "FRI.", "SAT.". The year field is modulo 100.
+
+- "B"CD or "D"ecimal:
+Both these formats use 9 bytes to specify the time. For BCD everything
+is BCD-encoded, for Decimal the numbers are sent/parsed as-is.
+Byte 0: Day of the week (0 for sunday)
+1: Year (modulo 100 for BCD; -1900 for Decimal, i.e. 108 for 2008)
+2: Month (1-based)
+3: Day (1-based)
+4: Hour (1-12)
+5: Minute (0-59)
+6: Second (0-59)
+7: AM/PM-Flag (0 is AM, everything else is PM)
+8: CHR$(13)
+
+When the time is set a year less than 80 is interpreted as 20xx.
+
+- "I"SO 8601 subset: "2008-01-20T13:23:45 SUN"+CHR$(13)
+This format complies with ISO 8601 and adds a day of week
+abbreviation using the same table as the A format, but omitting
+the fourth character. When it is used with T-W, anything beyond
+the seconds field is ignored and the day of week is calculated
+based on the specified date. The year must always be specified
+including the century if this format is used to set the time.
+To save space, sd2iec only accepts this particular date/time
+representation when setting the time with T-WI and no other ISo
+8601-compliant representation.
+
+Example:
+
+@T-WASAT. 05/03/14 09:45:33 PM
+@
+00:OK:00
+
+@T-R
+@
+SAT. 05/03/14 09:46:54 PM
+
+------------------------------
+
+Clock setting is a bit picky, expanding on the section below on clock setting
+
+Example full command:
+
+@T-WASUN. 01/20/08 01:23:45 PM
+
+IMPORTANT NOTE : there is NO SPACE between the COMMAND T-WA and the DAY.
+
+IMPORTANT NOTE : there IS a space between the time and PM if used
+
+
+NOTE : "TUES" and "THUR" are the only day names of 4 letters, the rest are 3 letters and a full stop e.g. "MON."
+
+
+Detailed settings below:
+
+- T-R and T-W
+If your hardware features RTC support the commands T-R (time read) and T-W
+(time write) are available. If the RTC isn't present, both commands return
+30,SYNTAX ERROR,00,00; if the RTC is present but not set correctly T-R will
+return 31,SYNTAX ERROR,00,00.
+
+Both commands expect a fourth character that specifies the time format
+to be used, T-W expects that the new time follows that character in exactly
+the format returned by T-R with the same format char.
+
+The possible formats are:
+- "A"SCII: "SUN. 01/20/08 01:23:45 PM"+CHR$(13)
+The day-of-week string can be any of "SUN.", "MON.", "TUES", "WED.",
+"THUR", "FRI.", "SAT.". The year field is modulo 100.
+- "B"CD or "D"ecimal:
+Both these formats use 9 bytes to specify the time. For BCD everything
+is BCD-encoded, for Decimal the numbers are sent/parsed as-is.
+Byte 0: Day of the week (0 for sunday)
+1: Year (modulo 100 for BCD; -1900 for Decimal, i.e. 108 for 2008)
+2: Month (1-based)
+3: Day (1-based)
+4: Hour (1-12)
+5: Minute (0-59)
+6: Second (0-59)
+7: AM/PM-Flag (0 is AM, everything else is PM)
+8: CHR$(13)
+
+When the time is set a year less than 80 is interpreted as 20xx.
